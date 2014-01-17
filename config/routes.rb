@@ -9,6 +9,7 @@ Qaselfservice::Application.routes.draw do
   resources :uploads
   resources :reports
   resources :runs
+  resources :runners
   resources :run_details
   
   resources :report_services do
