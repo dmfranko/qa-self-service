@@ -1,0 +1,77 @@
+<div class="container">
+	<div class="page-header">
+		<h1>Run details</h1>
+	</div>
+	
+	<script>
+	$(function () {
+    $('#container').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Test results'
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.y}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Percentage',
+            data: [
+                ['Passed',   <%= @counts["Passed"] %>],
+                ['Failed',   <%= @counts["Failed"] %>],
+                ['Pending',  <%= @counts["Pending"] %>]
+            ]
+        }]
+    });
+});
+</script>
+	
+	
+	<div id="container" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+
+	<%= link_to "Back", runs_path, class: "btn btn-default" %>
+	<br />
+	
+	<div class="alert alert-danger">
+		There are no results for some reason :(?
+	</div>
+
+	<div id="users">
+		  <input class="search" placeholder="Search" />
+  <button class="sort" data-sort="name">
+    Sort
+  </button>
+		<ul class="list-group list">
+			<% @tree.roots.each do |t| %>
+				<%= nested_messages t.subtree.arrange %>
+			<% end %>
+		</ul>
+	</div>
+	
+	
+<script>	
+var options = {
+  valueNames: [ 'name', 'born','panel-title' ]
+};
+
+var userList = new List('users', options);
+</script>
+	
+	<%= link_to "Back", runs_path, class: "btn btn-default" %>
+</div>

@@ -1,0 +1,39 @@
+<div class="container">
+	<h2>Details</h2>
+	<div class="list-group">
+		<% @result.each do |result| %>
+		<a class="list-group-item clearfix" href="#"> <h4 class="list-group-item-heading">Status : <%= result.status %></h4> <span class="badge pull-right">Duration : <%= result.duration %></span>
+		<p class="list-group-item-text">
+			<div class="well">
+				Description : <%= result.description %>
+			</div>
+			<br />
+			<span>Screenshot : <%= image_tag "big-logo.png" %></span>
+			<br />
+			<% if result.exception %>
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					<h3 class="panel-title">Exception</h3>
+				</div>
+				<div class="panel-body">
+					<%= simple_format(result.exception) %>
+				</div>
+			</div>
+
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					<h3 class="panel-title">Exception Details</h3>
+				</div>
+				<div class="panel-body">
+					<%= result.exception_details.html_safe %>
+				</div>
+			</div>
+			<% end %>
+
+			<br />
+			<span>Location : <%= result.location %></span>
+		</a>
+		<% end %>
+	</div>
+</div>
+<%= link_to 'Back', reports_path %>

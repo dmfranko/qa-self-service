@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title><%= @page_title || "QA Self Service" %></title>
+		<script type="text/javascript" charset="utf-8" language="javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<%= stylesheet_link_tag    "application", :media => "all" %>
+		<%= javascript_include_tag "application" %>
+		<%= javascript_include_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js" %>
+		<%= stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" %>
+		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/list.js/1.0.0/list.min.js" %>
+		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+		<%= csrf_meta_tags %>
+		<script src="http://code.highcharts.com/highcharts.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+		<style>
+			/* Ruby code, style similar to vibrant ink */
+			.ruby {
+				font-size: 12px;
+				font-family: monospace;
+				color: white;
+				background-color: black;
+				padding: 0.1em 0 0.2em 0;
+			}
+
+			.ruby .keyword {
+				color: #FF6600;
+			}
+			.ruby .constant {
+				color: #339999;
+			}
+			.ruby .attribute {
+				color: white;
+			}
+			.ruby .global {
+				color: white;
+			}
+			.ruby .module {
+				color: white;
+			}
+			.ruby .class {
+				color: white;
+			}
+			.ruby .string {
+				color: #66FF00;
+			}
+			.ruby .ident {
+				color: white;
+			}
+			.ruby .method {
+				color: #FFCC00;
+			}
+			.ruby .number {
+				color: white;
+			}
+			.ruby .char {
+				color: white;
+			}
+			.ruby .comment {
+				color: #9933CC;
+			}
+			.ruby .symbol {
+				color: white;
+			}
+			.ruby .regex {
+				color: #44B4CC;
+			}
+			.ruby .punct {
+				color: white;
+			}
+			.ruby .escape {
+				color: white;
+			}
+			.ruby .interp {
+				color: white;
+			}
+			.ruby .expr {
+				color: white;
+			}
+
+			.ruby .offending {
+				background-color: gray;
+			}
+			.ruby .linenum {
+				width: 75px;
+				padding: 0.1em 1em 0.2em 0;
+				color: #000000;
+				background-color: #FFFBD3;
+			}
+
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-default" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">QA Self Service</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<% if session[:cas_user] %>
+				<p class="navbar-text navbar-right">
+					You are <a href="#" class="navbar-link"><%= session[:cas_user] %></a>
+				</p>
+				<% end %>
+				<ul class="nav navbar-nav">
+					<li class="active">
+						<%= link_to "Home", root_path %>
+					</li>
+					<li>
+						<%= link_to "Applications", apps_path %>
+					</li>
+					<li>
+						<%= link_to "Reports", runs_path %>
+					</li>
+					<% if session[:cas_user] && User.find_by(netid: session[:cas_user]).admin %>
+					<li>
+						<%= link_to "Users", users_path %>
+					</li>
+					
+					<li>
+						<%= link_to "Resque", resque_web_path,:target => "_blank" %>
+					</li>
+					<% end %>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</nav>
+
+		<% [:notice, :warning, :error].each do |level| %>
+		<% if flash[level] %>
+		<div>
+			<%= flash[level] %>
+		</div>
+		<% end %>
+		<% end %>
+		<%= yield  %>
+		<hr/>
+		</p>
+	</body>
+</html>
