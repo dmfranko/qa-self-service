@@ -1,6 +1,7 @@
 <div class="container">
+	<%= link_to "Back", runs_path, class: "btn btn-default" %>
 	<div class="page-header">
-		<h1>Run details</h1>
+		<h1>Run details for #{app name}</h1>
 	</div>
 	
 	<script>
@@ -41,12 +42,29 @@
     });
 });
 </script>
-	
-	
-	<div id="container" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
-
-	<%= link_to "Back", runs_path, class: "btn btn-default" %>
-	<br />
+	<div class="row">
+  		<div class="col-md-8">
+			<ul class="list-group">
+			  	<a class="list-group-item">
+			    	<h5 class="list-group-item-heading">Time</h5>
+			    	<p class="list-group-item-text">Date and duration</p>
+			  	</a>
+			    <a class="list-group-item">
+			    	<h5 class="list-group-item-heading">Platforms</h5>
+			    	<p class="list-group-item-text">Linux</p>
+			  	</a>
+			    <a class="list-group-item">
+			    	<h5 class="list-group-item-heading">Filter</h5>
+			    	<p class="list-group-item-text">*</p>
+			  	</a>
+			 	<a class="list-group-item">
+			    	<h5 class="list-group-item-heading">Sauce url</h5>
+			    	<p class="list-group-item-text">http://saucelabs.com</p>
+			  	</a>
+			</ul>
+  		</div>
+ 	 	<div class="col-md-4" id="container" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+	</div>
 	
 	<div class="alert alert-danger">
 		There are no results for some reason :(?

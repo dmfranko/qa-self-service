@@ -11,6 +11,9 @@ class RunDetailsController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { render csv: @results }
+      format.pdf do
+        render :pdf => "file_name",:template => 'layouts/application.html.erb'
+      end
     end
   end
   

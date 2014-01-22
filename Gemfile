@@ -25,6 +25,8 @@ gem 'fuubar'
 gem 'lazyman'
 gem 'rest-client' 
 gem 'sys-uname'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -43,6 +45,8 @@ gem 'rubycas-client'
 gem "rmagick"
 gem "carrierwave"
 gem "byebug"
+gem 'sauce_whisk'
+gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

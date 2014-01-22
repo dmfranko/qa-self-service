@@ -8,12 +8,14 @@
 			<th>Name</th>
 			<th>Netid</th>
 			<th>Admin</th>
+			<th>Token</th>
 		</tr>
 		<% @u.each do |r| %>
 		<tr>
 			<td><%= r.name %></td>
 			<td><%= r.netid %></td>
 			<td><%= r.admin %></td>
+			<td>Token?</td>
 		</tr>
 		<% end %>
 	</table>

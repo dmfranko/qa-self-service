@@ -1,0 +1,337 @@
+<div class="container">
+	<div class="page-header">
+		<h1>Run <small>Execute tests for the <span class="label label-primary"><%= @app.name %></span> application.</small></h1>
+	</div>
+
+	<%= form_tag("/search", method: "get",role: "form") do %>
+	<div class="form-group">
+		<div class="form-group">
+			<%= label_tag(:user, "Emails") %>
+			<%= email_field(:user, :address,:placeholder => "Who should the reports be sent to?",:class => "form-control") %>
+		</div>
+
+		<div class="form-group">
+			<%= label_tag(:environments, "Target environment") %>
+			<br />
+			<%= select_tag 'environments', options_for_select(@app.envs.map{|k,v| ["#{k.to_s} (#{v})",v]}),:class => "form-control" %>
+		</div>
+
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#platform_selection">Platform selection</a></h4>
+					<span class="help-block">If you select nothing the default is Firefox Windows 7</span>
+				</div>
+				<div id="platform_selection" class="panel-collapse collapse">
+					<div class="panel-body">
+
+						<table cellpadding="0" cellspacing="0" border="0" class="table" id="example" width="100%">
+							<thead>
+								<tr>
+									<th width="30%">Browser</th>
+									<th width="20%">Rendering engine</th>
+									<th width="18%">Platform(s)</th>
+									<th width="20%">Engine version</th>
+									<th width="12%">CSS grade</th>
+								</tr>
+							</thead>
+
+							<tbody aria-live="polite" aria-relevant="all">
+								<tr>
+									<td>Chrome</td>
+									<td>Other browsers</td>
+									<td>Mac</td>
+									<td>1</td>
+									<td>U</td>
+								</tr>
+								<tr>
+									<td>Firefox</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Safari</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>Windows</td>
+									<td>Other browsers</td>
+									<td>Windows</td>
+									<td>10</td>
+									<td>100</td>
+								</tr>
+							</tbody>
+
+							<tfoot>
+								<tr>
+									<th>Browser</th>
+									<th>Rendering engine</th>
+									<th>Platform(s)</th>
+									<th>Engine version</th>
+									<th>CSS grade</th>
+								</tr>
+							</tfoot>
+						</table>
+						<script>
+							$('#example').dataTable({
+								"sDom" : "<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
+								"iDisplayLength" : 5,
+								"sPaginationType" : "bootstrap",
+								"oTableTools" : {
+									"sRowSelect" : "multi",
+									"aButtons" : ["select_none"]
+								}
+							});
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<br />
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Configuration
+			</div>
+			<div class="panel-body">
+
+				<div class="row">
+					<div class="col-md-4">
+						<div class="checkbox">
+							<label> <%= check_box_tag(:parallel) %>Allow parallel runs </label>
+							<span id="parallel_info" class="glyphicon glyphicon-question-sign"></span>
+							<span class="help-block">This or the popover? What if there's a lot of text.How do you wrap.</span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="checkbox">
+							<label> <%= check_box_tag(:local) %>Local or sauce?</label>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="checkbox">
+							<label> <%= check_box_tag(:another) %>Something else</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Tags
+
+			</div>
+			<div class="panel-body" id="tag_panel">
+				<div class="btn-group">
+					<button type="button" id="all_tags" class="btn btn-success">
+						Check All
+					</button>
+					<button type="button" id="no_tags" class="btn btn-danger">
+						Clear All
+					</button>
+				</div>
+
+				<div class="row">
+					<% @app.tags.each do |t| %>
+					<div class = "col-md-4">
+						<div class="checkbox">
+							<label> <%= check_box_tag(t) %><%= t %></label>
+						</div>
+					</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+		<br/>
+
+		<%= label_tag(:message, "Note") %>
+		<span id="note_info" class="glyphicon glyphicon-question-sign"></span>
+		<br/>
+		<%= text_area_tag(:message,"",:placeholder => "Provide some notes about this run.",:class => "form-control",:rows => "3") %>
+		<br/>
+
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#schedule">Schedule</a></h4>
+					<span class="help-block">Set your test to execute to occur at a particular time.</span>
+				</div>
+				<div id="schedule" class="panel-collapse collapse">
+					<div class="panel-body">
+						<%= label_tag(:time_slice, "Time Slice") %>
+						<div class="row">
+							<div class="col-xs-2 .col-sm-2 col-md-2 col-lg-1">
+								<%= text_field_tag(:number,"",:placeholder => "",:class => "form-control",:maxlength => "2",:size =>"2") %>
+							</div>
+							<div class="col-xs-4 .col-sm-4 col-md-2">
+								<%= select_tag 'time_slice',options_for_select(["second","minute","hour","day"]),:class => "form-control" %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<br />
+
+			<%= submit_tag("Run") %>
+
+			<script>
+				$('#parallel_info').popover({
+					title : 'Threadsafe?',
+					content : 'Your app needs to be threadsafe for this option to be enabled.',
+					html : true
+				});
+
+				$('#note_info').popover({
+					title : 'Note',
+					content : "You can provide some additional notes about your test run if you'd like",
+					html : true
+				});
+
+				$(function() {
+					$('#all_tags').click(function() {
+						$('#tag_panel').find(':checkbox').prop("checked", true);
+					});
+				});
+
+				$(function() {
+					$('#no_tags').click(function() {
+						$('#tag_panel').find(':checkbox').prop("checked", false);
+					});
+				});
+			</script>
+			<% end %>
+		</div>

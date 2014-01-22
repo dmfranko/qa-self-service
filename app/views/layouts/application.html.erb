@@ -3,14 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<title><%= @page_title || "QA Self Service" %></title>
-		<script type="text/javascript" charset="utf-8" language="javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-		<%= stylesheet_link_tag    "application", :media => "all" %>
-		<%= javascript_include_tag "application" %>
+		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 		<%= javascript_include_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js" %>
 		<%= stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" %>
 		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/list.js/1.0.0/list.min.js" %>
-		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 		<%= csrf_meta_tags %>
 		<script src="http://code.highcharts.com/highcharts.js"></script>
 		<script src="http://code.highcharts.com/modules/exporting.js"></script>
@@ -110,9 +107,16 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<% if session[:cas_user] %>
-				<p class="navbar-text navbar-right">
-					You are <a href="#" class="navbar-link"><%= session[:cas_user] %></a>
-				</p>
+				
+				<form class="navbar-form navbar-right">
+				  <div>
+				  	You are <%= session[:cas_user] %>
+				  	<%= link_to "Logout",{:controller => "application", :action => 'logout'},:class => "btn btn-default btn-sm" %>
+				  </div>
+				</form>
+								
+
+
 				<% end %>
 				<ul class="nav navbar-nav">
 					<li class="active">
@@ -124,14 +128,17 @@
 					<li>
 						<%= link_to "Reports", runs_path %>
 					</li>
-					<% if session[:cas_user] && User.find_by(netid: session[:cas_user]).admin %>
-					<li>
-						<%= link_to "Users", users_path %>
-					</li>
 					
-					<li>
-						<%= link_to "Resque", resque_web_path,:target => "_blank" %>
-					</li>
+										<% if session[:cas_user] && User.find_by(netid: session[:cas_user]).admin %>
+
+					<li class="dropdown">
+			        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+			        <ul class="dropdown-menu">
+			          <li><%= link_to "Users", users_path %></li>
+			          <li><%= link_to "Resque", '/resque',:target => "_blank" %></li>
+			        </ul>
+			      </li>
+					
 					<% end %>
 				</ul>
 			</div><!-- /.navbar-collapse -->

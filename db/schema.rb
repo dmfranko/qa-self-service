@@ -11,14 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140116165354) do
+ActiveRecord::Schema.define(version: 20140122011126) do
 
   create_table "apps", force: true do |t|
     t.string   "name"
     t.integer  "owner"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.text     "tags"
+    t.text     "default_emails"
+    t.text     "envs"
   end
 
   create_table "images", force: true do |t|
@@ -26,6 +29,14 @@ ActiveRecord::Schema.define(version: 20140116165354) do
     t.string   "attachment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "platforms", force: true do |t|
+    t.string   "long_name"
+    t.string   "long_version"
+    t.string   "os"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "results", force: true do |t|

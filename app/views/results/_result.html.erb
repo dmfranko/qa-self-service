@@ -4,11 +4,17 @@
 		<div class="panel panel-primary">
 
 			<div class="panel-heading">
-				<h3 class="panel-title"> <%= result.description %>
+				<h3 class="panel-title"> 
+				<%= result.description %>
 				<% case result.status.downcase %>
-				<% when "passed" %> <span class="label label-success">Passed</span> <%   when "failed" %> <span class="label label-danger">Failed</span> <%   when "pending" %> <span class="label label-warning">Pending</span> <%   else %>
-				something else
-				<% end %> </h3>
+				<% when "passed" %>
+					<span class="label label-success">Passed</span> 
+				<%   when "failed" %> <span class="label label-danger">Failed</span> 
+				<%  when "pending" %> <span class="label label-warning">Pending</span>
+				<% else %>
+					something else
+				<% end %> 
+				</h3>
 			</div>
 		</div>
 

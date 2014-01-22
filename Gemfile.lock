@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/rweng/jquery-datatables-rails.git
+  revision: 44b0448193d4856847e47fb2a245bdd51a4bb2fa
+  specs:
+    jquery-datatables-rails (1.12.2)
+      jquery-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -156,6 +163,8 @@ GEM
       railties (>= 4.0.0, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
+    sauce_whisk (0.0.10)
+      rest-client
     selenium-webdriver (2.39.0)
       childprocess (>= 0.2.5)
       multi_json (~> 1.0)
@@ -198,6 +207,9 @@ GEM
     watir-webdriver (0.6.4)
       selenium-webdriver (>= 2.18.0)
     websocket (1.0.7)
+    wicked_pdf (0.9.10)
+      rails
+    wkhtmltopdf-binary (0.9.9.1)
     yml_reader (0.2)
 
 PLATFORMS
@@ -210,6 +222,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.1)
   fuubar
   gmail
+  jquery-datatables-rails!
   jquery-rails
   lazyman
   rails (= 4.0.2)
@@ -223,7 +236,10 @@ DEPENDENCIES
   rspec-rerun
   rubycas-client
   sass-rails (~> 4.0.1)
+  sauce_whisk
   sqlite3
   sys-uname
   uglifier (>= 1.0.3)
   watir-webdriver
+  wicked_pdf
+  wkhtmltopdf-binary

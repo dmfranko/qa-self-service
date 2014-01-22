@@ -2,6 +2,7 @@ Qaselfservice::Application.routes.draw do
   get "apps/index"
   get "reports/index"
   get "selfservice/index"
+  get 'application/logout'
   
   resources :apps
   resources :users
@@ -21,10 +22,17 @@ Qaselfservice::Application.routes.draw do
   
   resources :images, only: [:index, :new, :create, :destroy]
   
-  ResqueWeb::Engine.eager_load!
-  require "resque_web"
-  mount ResqueWeb::Engine => "/resque_web"
+  # Not using resque web at the moment
+  # ResqueWeb::Engine.eager_load!
+  # require "resque_web"
+  # mount ResqueWeb::Engine => "/resque_web"
 
+  # Should these requires be here?
+  require 'resque'
+  require 'resque_scheduler'
+  require 'resque_scheduler/server'
+  mount Resque::Server.new, :at => '/resque'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

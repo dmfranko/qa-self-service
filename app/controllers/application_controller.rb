@@ -5,4 +5,8 @@ class ApplicationController < ActionController::Base
   def logout
     CASClient::Frameworks::Rails::Filter.logout(self)
   end
+  
+  def skip_login? 
+    false 
+  end 
 end
