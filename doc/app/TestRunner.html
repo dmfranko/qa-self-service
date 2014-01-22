@@ -215,34 +215,13 @@
           
           <div class="method-source-code" id="perform-source">
             <pre><span class="ruby-comment"># File app/workers/test_runner.rb, line 3</span>
-  <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">perform</span>(<span class="ruby-identifier">params</span>)
-    <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;TestRunnerRunning&quot;</span>
-    <span class="ruby-identifier">puts</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">inspect</span>
-    
-    <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-string">&quot;/Users/admin/Documents/Development/trial2&quot;</span>)
-    <span class="ruby-value">%xrspec`</span>
-    
-    <span class="ruby-comment"># require &#39;watir-webdriver&#39;</span>
-    <span class="ruby-comment"># b = Watir::Browser.new :chrome</span>
-    <span class="ruby-comment"># b.goto(&quot;yale.edu&quot;)</span>
-<span class="ruby-comment">#     </span>
-    <span class="ruby-comment"># require &#39;gmail&#39;</span>
-    <span class="ruby-comment"># g = Gmail.new(&quot;yaleqa@gmail.com&quot;,&quot;qcrm2013&quot;)</span>
-<span class="ruby-comment">#     </span>
-    <span class="ruby-comment"># text = b.text</span>
-    <span class="ruby-comment"># g.deliver do</span>
-      <span class="ruby-comment"># to &quot;dan.franko@yale.edu&quot;</span>
-      <span class="ruby-comment"># subject &quot;Having fun in Puerto Rico!&quot;</span>
-      <span class="ruby-comment"># text_part do</span>
-        <span class="ruby-comment"># body @text</span>
-      <span class="ruby-comment"># end</span>
-      <span class="ruby-comment"># html_part do</span>
-        <span class="ruby-comment"># content_type &#39;text/html; charset=UTF-8&#39;</span>
-        <span class="ruby-comment"># body text</span>
-      <span class="ruby-comment"># end</span>
-      <span class="ruby-comment"># b.close</span>
-    <span class="ruby-comment"># end</span>
-  <span class="ruby-keyword">end</span></pre>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">perform</span>(<span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;TestRunnerRunning&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">inspect</span>
+  
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-string">&quot;/Users/admin/Documents/Development/trial2&quot;</span>)
+  <span class="ruby-value">%xrspec`</span>
+<span class="ruby-keyword">end</span></pre>
           </div><!-- perform-source -->
           
         </div>
