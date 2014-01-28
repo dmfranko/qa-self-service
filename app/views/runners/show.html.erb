@@ -3,7 +3,7 @@
 		<h1>Run <small>Execute tests for the <span class="label label-primary"><%= @app.name %></span> application.</small></h1>
 	</div>
 
-	<%= form_tag("/search", method: "get",role: "form") do %>
+	<%= form_tag("/runners", method: "post",role: "form",id: "runner") do |f|%>
 	<div class="form-group">
 		<div class="form-group">
 			<%= label_tag(:user, "Emails") %>
@@ -24,182 +24,31 @@
 				</div>
 				<div id="platform_selection" class="panel-collapse collapse">
 					<div class="panel-body">
-
+						<h4>Selected <span id="pnumber" class="badge">0</span></h4>
 						<table cellpadding="0" cellspacing="0" border="0" class="table" id="example" width="100%">
 							<thead>
 								<tr>
-									<th width="30%">Browser</th>
-									<th width="20%">Rendering engine</th>
-									<th width="18%">Platform(s)</th>
-									<th width="20%">Engine version</th>
-									<th width="12%">CSS grade</th>
+									<th width="40%">Browser</th>
+									<th width="20%">Version</th>
+									<th width="40%">OS</th>
 								</tr>
 							</thead>
 
 							<tbody aria-live="polite" aria-relevant="all">
+								<% @platforms.each do |p| %>
 								<tr>
-									<td>Chrome</td>
-									<td>Other browsers</td>
-									<td>Mac</td>
-									<td>1</td>
-									<td>U</td>
+									<td><%= p.long_name %></td>
+									<td><%= p.long_version %></td>
+									<td><%= p.os %></td>
 								</tr>
-								<tr>
-									<td>Firefox</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Safari</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>Windows</td>
-									<td>Other browsers</td>
-									<td>Windows</td>
-									<td>10</td>
-									<td>100</td>
-								</tr>
+								<% end %>
 							</tbody>
 
 							<tfoot>
 								<tr>
-									<th>Browser</th>
-									<th>Rendering engine</th>
-									<th>Platform(s)</th>
-									<th>Engine version</th>
-									<th>CSS grade</th>
+									<th width="40%">Browser</th>
+									<th width="20%">Version</th>
+									<th width="40%">OS</th>
 								</tr>
 							</tfoot>
 						</table>
@@ -212,13 +61,22 @@
 									"sRowSelect" : "multi",
 									"aButtons" : ["select_none"]
 								}
+							}
+							).bind('click',   function () {
+								//Display this somewhere on the page.
+								console.log(oTT.fnGetSelected().length)
+								$('#pnumber').text(oTT.fnGetSelected().length)
 							});
 						</script>
 					</div>
 				</div>
 			</div>
 		</div>
-
+		
+		<div class="form-group">
+			<%= hidden_field_tag 'platforms', '',:data => {name: 'Stephen', city_state: %w(Chicago IL)} %>
+        	<%= tag("div", id: "Trials",data: {name: 'Stephen', city_state: %w(Chicago IL)}) %>
+		</div>
 		<br />
 
 		<div class="panel panel-default">
@@ -263,18 +121,21 @@
 						Clear All
 					</button>
 				</div>
-
-				<div class="row">
-					<% @app.tags.each do |t| %>
-					<div class = "col-md-4">
-						<div class="checkbox">
-							<label> <%= check_box_tag(t) %><%= t %></label>
-						</div>
-					</div>
+				
+				<div class="row">		
+					<%= fields_for :tags do |tag_fields| %>
+						<% @app.tags.each do |t| %>
+							<div class = "col-md-4">
+								<div class="checkbox">
+									<%= t %><%= tag_fields.check_box t %>
+								</div>
+							</div>
+						<% end %>
 					<% end %>
 				</div>
 			</div>
 		</div>
+		
 		<br/>
 
 		<%= label_tag(:message, "Note") %>
@@ -303,35 +164,53 @@
 					</div>
 				</div>
 			</div>
-
-			<br />
-
-			<%= submit_tag("Run") %>
-
-			<script>
-				$('#parallel_info').popover({
-					title : 'Threadsafe?',
-					content : 'Your app needs to be threadsafe for this option to be enabled.',
-					html : true
-				});
-
-				$('#note_info').popover({
-					title : 'Note',
-					content : "You can provide some additional notes about your test run if you'd like",
-					html : true
-				});
-
-				$(function() {
-					$('#all_tags').click(function() {
-						$('#tag_panel').find(':checkbox').prop("checked", true);
-					});
-				});
-
-				$(function() {
-					$('#no_tags').click(function() {
-						$('#tag_panel').find(':checkbox').prop("checked", false);
-					});
-				});
-			</script>
-			<% end %>
 		</div>
+
+		<br />
+
+		<%= submit_tag("Run") %>
+
+		<script>
+			$('#parallel_info').popover({
+				title : 'Threadsafe?',
+				content : 'Your app needs to be threadsafe for this option to be enabled.',
+				html : true
+			});
+
+			$('#note_info').popover({
+				title : 'Note',
+				content : "You can provide some additional notes about your test run if you'd like",
+				html : true
+			});
+
+			$(function() {
+				$('#all_tags').click(function() {
+					$('#tag_panel').find(':checkbox').prop("checked", true);
+				});
+			});
+
+			$(function() {
+				$('#no_tags').click(function() {
+					$('#tag_panel').find(':checkbox').prop("checked", false);
+				});
+			});
+
+			var oTT = TableTools.fnGetInstance( 'example' );
+			$( "#runner" ).submit(function( event ) {
+			  console.log("Special handler")
+			  
+			  var aSelectedTrs = oTT.fnGetSelectedData();
+    		  console.log(aSelectedTrs);
+    		  //$('#platforms').val(aSelectedTrs);
+    		  //console.log( $('#platforms').val());
+    		  //$('#platforms').data("plats",aSelectedTrs);
+    		  //console.log($('#platforms').data("plats"))
+    		  //console.log("Next!")
+    		  //$('#platforms').data( "test", ["pizza!","food!"] );
+    		  //$( "#platforms" ).data( "test" );
+			  // Stop the submit from doing what it normall does?
+			  //event.preventDefault();
+			});
+		</script>
+		<% end %>
+	</div>

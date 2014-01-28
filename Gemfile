@@ -27,6 +27,7 @@ gem 'rest-client'
 gem 'sys-uname'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+gem "rails-erd"
 
 # Gems used only for assets and not required
 # in production environments by default.

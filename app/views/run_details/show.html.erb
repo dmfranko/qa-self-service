@@ -1,5 +1,5 @@
 <div class="container">
-	<%= link_to "Back", runs_path, class: "btn btn-default" %>
+	<%= link_to "Back", run_path(1), class: "btn btn-default" %>
 	<div class="page-header">
 		<h1>Run details for #{app name}</h1>
 	</div>
@@ -45,30 +45,54 @@
 	<div class="row">
   		<div class="col-md-8">
 			<ul class="list-group">
-			  	<a class="list-group-item">
-			    	<h5 class="list-group-item-heading">Time</h5>
-			    	<p class="list-group-item-text">Date and duration</p>
-			  	</a>
-			    <a class="list-group-item">
+			  	<li class="list-group-item">
+			    	<h5 class="list-group-item-heading">Start time</h5>
+			    	<p class="list-group-item-text"><%= @run.created_at.strftime("%m-%d-%y %r") %></p>
+			  	</li>
+			    <li class="list-group-item">
 			    	<h5 class="list-group-item-heading">Platforms</h5>
 			    	<p class="list-group-item-text">Linux</p>
-			  	</a>
-			    <a class="list-group-item">
+			  	</li>
+			    <li class="list-group-item">
 			    	<h5 class="list-group-item-heading">Filter</h5>
 			    	<p class="list-group-item-text">*</p>
-			  	</a>
-			 	<a class="list-group-item">
+			  	</li>
+			 	<li class="list-group-item">
 			    	<h5 class="list-group-item-heading">Sauce url</h5>
-			    	<p class="list-group-item-text">http://saucelabs.com</p>
-			  	</a>
+			    	<p class="list-group-item-text">
+			    		<%= link_to "Saucelabs details",
+			    	 "https://saucelabs.com/jobs/ef9138bbc29645f38cc5bb691fb34d9c?auth=2875d55393717b7b017698f99a8745e8",
+			    	  :target => '_blank' %>
+			    	  </p>
+			  </li>
+			  <li class="list-group-item">
+			    	<h5 class="list-group-item-heading">Sauce video</h5>
+			    	<p class="list-group-item-text">
+				  		<div class="panel-group" id="accordion">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#schedule">Job video(not html5 player yet?)</a></h4>
+								</div>
+								<div id="schedule" class="panel-collapse collapse">
+									<div class="panel-body">
+				  						<script src="https://saucelabs.com/video-embed/ef9138bbc29645f38cc5bb691fb34d9c.js?auth=2875d55393717b7b017698f99a8745e8"></script>
+									</div>
+								</div>
+							</div>
+						</div>
+			    	</p>
+			  </li>
 			</ul>
   		</div>
  	 	<div class="col-md-4" id="container" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
 	</div>
-	
+
+	<!--
+	Only show this if there's no records
 	<div class="alert alert-danger">
 		There are no results for some reason :(?
 	</div>
+	-->
 
 	<div id="users">
 		  <input class="search" placeholder="Search" />
@@ -91,5 +115,5 @@ var options = {
 var userList = new List('users', options);
 </script>
 	
-	<%= link_to "Back", runs_path, class: "btn btn-default" %>
+	<%= link_to "Back", run_path, class: "btn btn-default" %>
 </div>

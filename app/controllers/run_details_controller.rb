@@ -1,5 +1,6 @@
 class RunDetailsController < ApplicationController
   def show
+    @run = Run.find(params[:id])
     @results = Run.find(params[:id]).results
     @tree = Result.where(run_id: params[:id],ancestry: nil)
     

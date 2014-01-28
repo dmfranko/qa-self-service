@@ -29,11 +29,13 @@
 					<br />
 					<span class="badge"><%= result.created_at.strftime("%r") %></span></span>
 			</div>
+			<% if result.screenshot != "none" %>
 			<div class="col-md-4">
 				<span>Screenshot
 					<br />
-					<%= link_to image_tag(result.screenshot, :size => "50x50", :alt => "Failure Screenshot",:class => "img-circle"),asset_path(result.screenshot) %></span>
+					<%= link_to image_tag(result.screenshot, :size => "50x50", :alt => "Failure Screenshot",:class => "img-circle"),asset_path(result.screenshot),:target => "_blank" %></span>
 			</div>
+			<% end %>
 		</div>
 
 		<% if result.exception %>

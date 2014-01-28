@@ -7,21 +7,35 @@
 		<tr>
 			<th>ID</th>
 			<th>Name</th>
+			<th>Details</th>
+			<th>Run</th>
+			<th>Results</th>
 			<th>Last status</th>
 			<th>Description</th>
-			<th>Owner</th>
-			<th>Details</th>
 		</tr>
 		<% @a.each do |app| %>
 		<tr>
 			<td><%= app.id %></td>
 			<td><%= app.name %></td>
+			<td style="text-align:center">
+				<%= link_to app do %>
+    				<span class="glyphicon glyphicon-folder-open"></span>
+				<% end %>
+			</td>
+			<td style="text-align:center">			
+				<%= link_to runner_path(app), :class => 'button white' do %>
+    				<span class="glyphicon glyphicon-play"></span>
+				<% end %>
+			</td>
+			<td style="text-align:center">			
+				<%= link_to run_path(app), :class => 'button white' do %>
+    				<span class="glyphicon glyphicon-list-alt"></span>
+				<% end %>
+			</td>
 			<td>Pass</td>
 			<td><%= app.description %></td>
-			<td><%= app.owner %></td>
-			<td><%= link_to 'Show', app %></td>
 		</tr>
 		<% end %>
 	</table>
-	<%= link_to "Home", controller: "selfservice" %>
+	<%= link_to "Home", root_path,:class => "btn btn-default" %>
 </div>

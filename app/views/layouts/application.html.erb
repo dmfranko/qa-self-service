@@ -125,20 +125,16 @@
 					<li>
 						<%= link_to "Applications", apps_path %>
 					</li>
-					<li>
-						<%= link_to "Reports", runs_path %>
-					</li>
 					
-										<% if session[:cas_user] && User.find_by(netid: session[:cas_user]).admin %>
-
+					<% if session[:cas_user] && User.find_by(netid: session[:cas_user]).admin %>
 					<li class="dropdown">
-			        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
-			        <ul class="dropdown-menu">
-			          <li><%= link_to "Users", users_path %></li>
-			          <li><%= link_to "Resque", '/resque',:target => "_blank" %></li>
-			        </ul>
-			      </li>
-					
+			        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
+			        	<ul class="dropdown-menu">
+			          		<li><%= link_to "Users", users_path %></li>
+			          		<li><%= link_to "Resque", '/resque',:target => "_blank" %></li>
+			          		<li><%= link_to "Platform refresh", platforms_path %></li>
+			        	</ul>
+			      	</li>
 					<% end %>
 				</ul>
 			</div><!-- /.navbar-collapse -->

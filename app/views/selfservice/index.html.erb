@@ -1,5 +1,5 @@
 <div class="jumbotron">
-  <h1>Welcome to Automation Self Service!</h1>
+  <h1><%= User.find_by_netid(session[:cas_user]).name %>, welcome to automation self service!</h1>
   <p>This site provides the ability for you to self execute and view run results.</p>
-  <p><a class="btn btn-primary btn-lg" role="button">Learn more</a></p>
+  <p><a href="https://git.yale.edu/YaleQA/QA-Self-Service" target="_blank" class="btn btn-primary btn-lg" role="button">Learn more</a></p>
 </div>

@@ -12,6 +12,7 @@ Qaselfservice::Application.routes.draw do
   resources :runs
   resources :runners
   resources :run_details
+  resources :platforms
   
   resources :report_services do
     collection do

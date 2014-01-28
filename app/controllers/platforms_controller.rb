@@ -1,20 +1,14 @@
 class PlatformsController < ApplicationController
-get '/loadPlatforms' do
-  protected!
-  # Drop everthing in the table
-  SaucePlatform.destroy_all
-
-  platforms = SauceWhisk::Sauce.platforms 
-  platforms.each do |p|
-    r = SaucePlatform.new
-    r.name = p["long_name"]
-    r.version = p["long_version"]
-    r.os = p["os"]
-    r.save
+  def index
+    Platform.destroy_all
+    SauceWhisk::Sauce.platforms.each do |p|
+      r = Platform.new
+      r.long_name = p["long_name"]
+      r.long_version = p["long_version"]
+      r.os = p["os"]
+      r.save
+    end
+    
+    @platforms = Platform.all
   end
-
-  # Display the list back to the users
-  @p = SaucePlatform.all
-  erb :platforms
-end
 end
