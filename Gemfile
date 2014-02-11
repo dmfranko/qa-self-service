@@ -22,12 +22,14 @@ gem 'watir-webdriver'
 gem 'rspec-core'
 gem 'rspec-rerun' 
 gem 'fuubar'
-gem 'lazyman'
+gem 'magicspec'
 gem 'rest-client' 
 gem 'sys-uname'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem "rails-erd"
+gem "parallel_tests"
+gem 'watir-browser-factory'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -43,7 +45,9 @@ end
 
 gem 'jquery-rails'
 gem 'rubycas-client'
-gem "rmagick"
+
+# Don't think this is needed.
+#gem "rmagick"
 gem "carrierwave"
 gem "byebug"
 gem 'sauce_whisk'

@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122210918) do
+ActiveRecord::Schema.define(version: 20140205153807) do
 
   create_table "app_users", force: true do |t|
-    t.integer  "apps_id"
+    t.integer  "app_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 20140122210918) do
     t.text     "tags"
     t.text     "default_emails"
     t.text     "envs"
+    t.string   "github_url"
+    t.boolean  "mobile"
   end
 
   create_table "images", force: true do |t|
@@ -73,8 +75,11 @@ ActiveRecord::Schema.define(version: 20140122210918) do
     t.text     "description"
     t.text     "notes"
     t.text     "status"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.text     "browser"
+    t.text     "browser_version"
+    t.text     "os"
   end
 
   create_table "users", force: true do |t|

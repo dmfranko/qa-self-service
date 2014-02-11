@@ -3,8 +3,11 @@ require 'resque_scheduler'
 
 class RunnersController < ApplicationController
   def create
-    Resque.enqueue(TestRunner, params)
-
+    # Kick off a process for each platform
+    JSON.parse(params["platforms"]).each do |p|
+      Resque.enqueue(TestRunner, params.merge(:platform => p))
+    end
+    
     # We'll need to know app id, keys, browsers, etc...
     #Resque.enqueue_in(10.minutes, TestRunner,params)
     # This works, but the scheduling thing not so much?

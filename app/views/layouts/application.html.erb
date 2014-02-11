@@ -119,13 +119,15 @@
 
 				<% end %>
 				<ul class="nav navbar-nav">
-					<li class="active">
+					<li>
 						<%= link_to "Home", root_path %>
 					</li>
 					<li>
 						<%= link_to "Applications", apps_path %>
 					</li>
-					
+					<li>
+						<%= link_to "About", :controller => "static_pages",:action => "about" %>
+					</li>					
 					<% if session[:cas_user] && User.find_by(netid: session[:cas_user]).admin %>
 					<li class="dropdown">
 			        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
@@ -140,14 +142,11 @@
 			</div><!-- /.navbar-collapse -->
 		</nav>
 
-		<% [:notice, :warning, :error].each do |level| %>
-		<% if flash[level] %>
-		<div>
-			<%= flash[level] %>
+
+		<div class="container">
+      		<%= flash_messages %>
+			<%= yield  %>
 		</div>
-		<% end %>
-		<% end %>
-		<%= yield  %>
 		<hr/>
 		</p>
 	</body>

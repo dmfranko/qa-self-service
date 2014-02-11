@@ -1,34 +1,36 @@
-<div class="container">
-	<h1>Application Details</h1>
+<h1>Application Details</h1>
+<h3>Github location</h3>
+<p>
+	<%= @app.github_url %>
+</p>
 
-	<h3>Tags</h3>
-	<ul class="list-group">
-		<% @app.tags.each do |t|%>
-		<li class="list-group-item">
-			<%= t %>
-		</li>
-		<% end %>
-	</ul>
-
-	<h3>Environments</h3>
-	<ul class="list-group">
-		<% @app.envs.each do |name,value|%>
-		<li class="list-group-item">
-			<%= name %> : <%= value %>
-		</li>
-		<% end %>
-	</ul>
-
-	<% if @app.default_emails %>
-		<h3>Emails</h3>
-		<ul class="list-group">
-			<% @app.default_emails.each do |email|%>
-			<li class="list-group-item">
-				<%= email %>
-			</li>
-			<% end %>
-		</ul>
+<h3>Tags</h3>
+<ul class="list-group">
+	<% @app.tags.each do |t|%>
+	<li class="list-group-item">
+		<%= t %>
+	</li>
 	<% end %>
+</ul>
 
-	<%= link_to 'Back', apps_path,:class => "btn btn-default" %>
-</div>
+<h3>Environments</h3>
+<ul class="list-group">
+	<% @app.envs.each do |name,value|%>
+	<li class="list-group-item">
+		<%= name %> : <%= value %>
+	</li>
+	<% end %>
+</ul>
+
+<% if @app.default_emails %>
+<h3>Emails</h3>
+<ul class="list-group">
+	<% @app.default_emails.each do |email|%>
+	<li class="list-group-item">
+		<%= email %>
+	</li>
+	<% end %>
+</ul>
+<% end %>
+
+<%= link_to 'Back', apps_path,:class => "btn btn-default" %>

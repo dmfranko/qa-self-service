@@ -46,13 +46,33 @@
   		<div class="col-md-8">
 			<ul class="list-group">
 			  	<li class="list-group-item">
-			    	<h5 class="list-group-item-heading">Start time</h5>
-			    	<p class="list-group-item-text"><%= @run.created_at.strftime("%m-%d-%y %r") %></p>
+			  		<h3 class="list-group-item-heading">Time info</h3>
+			    	<div class="row">
+			    		<div class="col-md-6">
+			    			<h5 class="list-group-item-heading">Start time</h5>
+			    			<p class="list-group-item-text"><%= @run.created_at.strftime("%m-%d-%y %r") %></p>
+			  			</div>
+			  			<div class="col-md-6">
+			    			<h5 class="list-group-item-heading">Completion time</h5>
+			    			<p class="list-group-item-text"><%= @run.updated_at.strftime("%m-%d-%y %r") %></p>
+			  			</div>
+			  		</div>
 			  	</li>
 			    <li class="list-group-item">
-			    	<h5 class="list-group-item-heading">Platforms</h5>
-			    	<p class="list-group-item-text">Linux</p>
+			    	<h3 class="list-group-item-heading">Platform info</h3>
+			    	<div class="row">
+			    		<div class="col-md-6">
+			    			<h5 class="list-group-item-heading">OS</h5>
+			    			<!--<%= image_tag("#{@run.os.downcase}.png") %>-->
+			    			<p class="list-group-item-text"><%= @run.os %></p>
+			    		</div>
+			    		<div class="col-md-6">
+			    			<h5 class="list-group-item-heading">Browser</h5>
+			    			<p class="list-group-item-text"><%= @run.browser.capitalize %> <%= @run.browser_version%></p>
+			    		</div>
+			    	</div>
 			  	</li>
+			    
 			    <li class="list-group-item">
 			    	<h5 class="list-group-item-heading">Filter</h5>
 			    	<p class="list-group-item-text">*</p>

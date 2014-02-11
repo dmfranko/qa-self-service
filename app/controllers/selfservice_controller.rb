@@ -1,4 +1,4 @@
-class SelfserviceController < ApplicationController
+class SelfserviceController < ApplicationController  
   private
   def skip_login? 
     false 
