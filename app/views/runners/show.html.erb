@@ -42,25 +42,53 @@
 							</tr>
 							<% end %>
 						</tbody>
-
-						<!--<tfoot>
-						<tr>
-						<th width="40%">OS</th>
-						<th width="40%">Browser</th>
-						<th width="20%">Version</th>
-						</tr>
-						</tfoot>-->
+						<tfoot>
+							<th><input /></th>
+						</tfoot>
 					</table>
 					<script>
 						$('#example').dataTable({
-						"sDom":"<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>","iDisplayLength":5,"sPaginationType":"bootstrap","oTableTools": {
-						"sRowSelect":"multi","aButtons":["select_none"]
-						}
+							"sDom":"<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
+							"iDisplayLength":5,
+							"sPaginationType":"bootstrap",
+							"oTableTools": {
+								"sRowSelect":"multi","aButtons":["select_none"]
+								}
 						}).bind('click', function() {
 						//Display this somewhere on the page.
-						console.log(oTT.fnGetSelected().length)
-						$('#pnumber').text(oTT.fnGetSelected().length)
+							$('#pnumber').text(oTT.fnGetSelected().length)
 						});
+						
+						$("tfoot input").keyup( function () {
+		/* Filter on the column (the index) of this element */
+		oTable.fnFilter( this.value, $("tfoot input").index(this) );
+		} );
+			
+			
+			
+			/*
+			 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in 
+			 * the footer
+			 */
+			$("tfoot input").each( function (i) {
+				asInitVals[i] = this.value;
+			} );
+			
+			$("tfoot input").focus( function () {
+				if ( this.className == "search_init" )
+				{
+					this.className = "";
+					this.value = "";
+				}
+			} );
+			
+			$("tfoot input").blur( function (i) {
+				if ( this.value == "" )
+				{
+					this.className = "search_init";
+					this.value = asInitVals[$("tfoot input").index(this)];
+				}
+			} );
 					</script>
 				</div>
 			</div>

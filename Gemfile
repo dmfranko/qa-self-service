@@ -30,6 +30,7 @@ gem 'wicked_pdf'
 gem "rails-erd"
 gem "parallel_tests"
 gem 'watir-browser-factory'
+gem 'git'
 
 # Gems used only for assets and not required
 # in production environments by default.
