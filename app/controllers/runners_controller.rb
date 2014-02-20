@@ -15,7 +15,8 @@ class RunnersController < ApplicationController
         
     respond_to do |format|
       format.json {render :json => {:status => "Queued",:queue_info => Resque.info}.to_json}
-      format.html {render :start}
+      #format.html {render :start}
+      format.html {run_path(@app)}
     end
   end
 

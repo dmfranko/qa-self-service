@@ -43,52 +43,58 @@
 							<% end %>
 						</tbody>
 						<tfoot>
-							<th><input /></th>
+							<tr>
+								<th rowspan="1" colspan="1">
+								<input type="text" name="search_engine" value="Search engines" class="search_init">
+								</th><th rowspan="1" colspan="1">
+								<input type="text" name="search_browser" value="Search browsers" class="search_init">
+								</th><th rowspan="1" colspan="1">
+								<input type="text" name="search_platform" value="Search platforms" class="search_init">
+								</th>
+							</tr>
 						</tfoot>
 					</table>
 					<script>
-						$('#example').dataTable({
-							"sDom":"<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
-							"iDisplayLength":5,
-							"sPaginationType":"bootstrap",
-							"oTableTools": {
-								"sRowSelect":"multi","aButtons":["select_none"]
-								}
+						var asInitVals = new Array();
+						var oTable = $('#example').dataTable({
+							"sDom" : "<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
+							"iDisplayLength" : 5,
+							"sPaginationType" : "bootstrap",
+							"oTableTools" : {
+								"sRowSelect" : "multi",
+								"aButtons" : ["select_none"]
+							}
 						}).bind('click', function() {
-						//Display this somewhere on the page.
+							//Display this somewhere on the page.
 							$('#pnumber').text(oTT.fnGetSelected().length)
 						});
-						
-						$("tfoot input").keyup( function () {
-		/* Filter on the column (the index) of this element */
-		oTable.fnFilter( this.value, $("tfoot input").index(this) );
-		} );
-			
-			
-			
-			/*
-			 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in 
-			 * the footer
-			 */
-			$("tfoot input").each( function (i) {
-				asInitVals[i] = this.value;
-			} );
-			
-			$("tfoot input").focus( function () {
-				if ( this.className == "search_init" )
-				{
-					this.className = "";
-					this.value = "";
-				}
-			} );
-			
-			$("tfoot input").blur( function (i) {
-				if ( this.value == "" )
-				{
-					this.className = "search_init";
-					this.value = asInitVals[$("tfoot input").index(this)];
-				}
-			} );
+
+						$("tfoot input").keyup(function() {
+							/* Filter on the column (the index) of this element */
+							oTable.fnFilter(this.value, $("tfoot input").index(this));
+						});
+
+						/*
+						 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in
+						 * the footer
+						 */
+						$("tfoot input").each(function(i) {
+							asInitVals[i] = this.value;
+						});
+
+						$("tfoot input").focus(function() {
+							if (this.className == "search_init") {
+								this.className = "";
+								this.value = "";
+							}
+						});
+
+						$("tfoot input").blur(function(i) {
+							if (this.value == "") {
+								this.className = "search_init";
+								this.value = asInitVals[$("tfoot input").index(this)];
+							}
+						});
 					</script>
 				</div>
 			</div>
@@ -110,8 +116,7 @@
 				<div class="col-md-4">
 					<div class="checkbox">
 						<label> <%= check_box_tag(:parallel) %>Allow parallel runs </label>
-						<span id="parallel_info" class="glyphicon glyphicon-question-sign"></span>
-						<span class="help-block">This or the popover? What if there's a lot of text.How do you wrap.</span>
+						<span class="help-block">Your app needs to be threadsafe for this option to be enabled.</span>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -130,43 +135,57 @@
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			Tags
+			Filtering
+			<span class="help-block">Filtering allows you to control which tests are running by either
+				selecting by tags or filtering by test description.</span>
 		</div>
 		<div class="panel-body" id="tag_panel">
-			<div class="btn-group">
-				<button type="button" id="all_tags" class="btn btn-success">
-					Check All
-				</button>
-				<button type="button" id="no_tags" class="btn btn-danger">
-					Clear All
-				</button>
-			</div>
+			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+				<li>
+					<a href="#tags" data-toggle="tab">Tags</a>
+				</li>
+				<li>
+					<a href="#text" data-toggle="tab">Text</a>
+				</li>
+			</ul>
+			<div id="my-tab-content" class="tab-content">
+				<div class="tab-pane active" id="tags">
+					<h1>By tags</h1>
+					<p>
+						<div class="btn-group">
+							<button type="button" id="all_tags" class="btn btn-success">
+								Check All
+							</button>
+							<button type="button" id="no_tags" class="btn btn-danger">
+								Clear All
+							</button>
+						</div>
 
-			<div class="row">
-				<%= fields_for :tags do |tag_fields| %>
-				<% @app.tags.each do |t| %>
-				<div class = "col-md-4">
-					<div class="checkbox">
-						<%= t %><%= tag_fields.check_box t %>
-					</div>
+						<div class="row">
+							<%= fields_for :tags do |tag_fields| %>
+							<% @app.tags.each do |t| %>
+							<div class = "col-md-4">
+								<div class="checkbox">
+									<%= t %><%= tag_fields.check_box t %>
+								</div>
+							</div>
+							<% end %>
+							<% end %>
+						</div>
+					</p>
 				</div>
-				<% end %>
-				<% end %>
+				<div class="tab-pane" id="text">
+					<h1>By text</h1>
+					<%= label_tag(:filter, "Filter") %>
+					<br/>
+					<%= text_area_tag(:filter,"",:placeholder => "Filter by text.",:class => "form-control",:rows => "1") %>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<%= label_tag(:filter, "Filter") %>
-	<span id="note_info" class="glyphicon glyphicon-question-sign"></span>
-	<br/>
-	<%= text_area_tag(:filter,"",:placeholder => "Filter by text.",:class => "form-control",:rows => "1") %>
-	<br/>
-
-	<br/>
-
 	<%= label_tag(:message, "Note") %>
-	<span id="note_info" class="glyphicon glyphicon-question-sign"></span>
-	<br/>
+	<span class="help-block">Provide some additional details about why you're running this test if you'd like.</span>
 	<%= text_area_tag(:message,"",:placeholder => "Provide some notes about this run.",:class => "form-control",:rows => "3") %>
 	<br/>
 
@@ -197,39 +216,31 @@
 	<%= submit_tag("Run") %>
 
 	<script>
-		$('#parallel_info').popover({
-		title:'Threadsafe?',content:'Your app needs to be threadsafe for this option to be enabled.',html:true
-		});
-		$('#note_info').popover({
-		title:'Note',content:"You can provide some additional notes about your test run if you'd like",html:true
+		$(function() {
+			$('#all_tags').click(function() {
+				$('#tag_panel').find(':checkbox').prop("checked", true);
+			});
 		});
 		$(function() {
-		$('#all_tags').click(function() {
-		$('#tag_panel').find(':checkbox').prop("checked",true);
+			$('#no_tags').click(function() {
+				$('#tag_panel').find(':checkbox').prop("checked", false);
+			});
 		});
-		});
-		$(function() {
-		$('#no_tags').click(function() {
-		$('#tag_panel').find(':checkbox').prop("checked",false);
-		});
-		});
-		var oTT=TableTools.fnGetInstance('example');
+		var oTT = TableTools.fnGetInstance('example');
 		$("#runner").submit(function(event) {
-		console.log("Special handler")
-		var aSelectedTrs=oTT.fnGetSelectedData();
-		console.log(aSelectedTrs);
-		// Get our selected platforms and set them to a hidden field
-		var platforms=[]
-		$.each(aSelectedTrs, function(index,attr) {
-		var plat= {}
-		plat.browser=attr[1]
-		plat.os=attr[0]
-		plat.version=attr[2]
-		platforms.push(plat)
-		});
-		$('#platforms').val(JSON.stringify(platforms))
-		// Stop the submit from doing what it normall does?
-		//event.preventDefault();
+			var aSelectedTrs = oTT.fnGetSelectedData();
+			// Get our selected platforms and set them to a hidden field
+			var platforms = []
+			$.each(aSelectedTrs, function(index, attr) {
+				var plat = {}
+				plat.browser = attr[1]
+				plat.os = attr[0]
+				plat.version = attr[2]
+				platforms.push(plat)
+			});
+			$('#platforms').val(JSON.stringify(platforms))
+			// Stop the submit from doing what it normall does?
+			//event.preventDefault();
 		});
 	</script>
 

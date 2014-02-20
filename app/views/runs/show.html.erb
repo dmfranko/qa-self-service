@@ -4,6 +4,7 @@
 
 <%= link_to "Back", apps_path,class: "btn btn-default" %>
 <br />
-
+<br />
+<span class="badge"><%= @r.count %></span>Total runs
 <%= render partial: "runtable" %>
 
