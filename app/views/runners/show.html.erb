@@ -150,6 +150,7 @@
 			</ul>
 			<div id="my-tab-content" class="tab-content">
 				<div class="tab-pane active" id="tags">
+					<% if ! @app.tags.empty? %>
 					<h1>By tags</h1>
 					<p>
 						<div class="btn-group">
@@ -173,6 +174,7 @@
 							<% end %>
 						</div>
 					</p>
+					<% end %>
 				</div>
 				<div class="tab-pane" id="text">
 					<h1>By text</h1>

@@ -7,6 +7,8 @@
   <p><span class="label label-success"><%= Run.count%></span> Tests have been run using this service.</p>
   <p>There are <span class="label label-success"><%= Platform.count%></span> platforms available.</p>
   <p>There is an average of <span class="label label-success">5</span> test cases per run</p>
-  <p>On average it takes <span class="label label-success"><%= Run.average('duration').round(2).to_s %></span> seconds for a run.</p>
+  <% if Run.count > 0 %>
+  	<p>On average it takes <span class="label label-success"><%= Run.average('duration').round(2).to_s %></span> seconds for a run.</p>
+  <% end %>
   <p>Current system status is <span class="label label-success">Up</span></p>
 </div>

@@ -7,6 +7,17 @@ class AppsController < ApplicationController
     @app = App.find(params[:id])
   end
 
+  def new
+    @app = App.new
+  end
+  
+  def create
+    @app = App.new(app_params)
+    #params["app"]["envs"]
+    @app.save
+    redirect_to apps_path,notice: "App added."
+  end
+
   def edit
     @app = App.find(params[:id])
   end
@@ -24,7 +35,7 @@ class AppsController < ApplicationController
   private
   
   def app_params
-    params.require(:app).permit(:name,:description,:github_url)
+    params.require(:app).permit(:name,:description,:github_url,:envs)
   end
   
   def skip_login?
