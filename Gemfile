@@ -30,7 +30,7 @@ gem 'wicked_pdf'
 gem "rails-erd"
 gem "parallel_tests"
 gem 'watir-browser-factory'
-gem 'rspec-rest-formatter'
+gem 'rspec-rest-formatter', :git => 'https://git.yale.edu/YaleQA/rspec-rest-formatter'
 gem 'git'
 gem 'ruby-net-ldap'
 

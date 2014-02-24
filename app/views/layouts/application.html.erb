@@ -11,8 +11,7 @@
 		<%= csrf_meta_tags %>
 		<script src="http://code.highcharts.com/highcharts.js"></script>
 		<script src="http://code.highcharts.com/modules/exporting.js"></script>
-		 <%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.0/list.pagination.min.js" %>
-
+		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.0/list.pagination.min.js" %>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 		<style>
@@ -140,6 +139,9 @@
 					</li>
 					<li>
 						<%= link_to "Applications", apps_path %>
+					</li>
+					<li>
+						<%= link_to "Screenshots", screenshots_path %>
 					</li>
 					<li>
 						<%= link_to "About", :controller => "static_pages",:action => "about" %>

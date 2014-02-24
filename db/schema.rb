@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140205153807) do
+ActiveRecord::Schema.define(version: 20140221021822) do
 
   create_table "app_users", force: true do |t|
     t.integer  "app_id"
@@ -80,6 +80,23 @@ ActiveRecord::Schema.define(version: 20140205153807) do
     t.text     "browser"
     t.text     "browser_version"
     t.text     "os"
+  end
+
+  create_table "screen_images", force: true do |t|
+    t.integer  "screenshot_id"
+    t.text     "os"
+    t.text     "browser"
+    t.text     "version"
+    t.text     "image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "screenshots", force: true do |t|
+    t.text     "url"
+    t.text     "netid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

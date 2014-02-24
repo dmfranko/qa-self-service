@@ -1,0 +1,147 @@
+<div class="page-header">
+	<h1>Run <small>Execute tests for the <span class="label label-primary"></span></small></h1>
+</div>
+
+<%= form_tag("/screenshots", method: "post",role: "form",id: "screen") do |f|%>
+<div class="form-group">
+	<div class="form-group">
+		<%= label_tag(:url, "URL") %>
+		<%= text_field_tag :url,nil,:type => "url",:placeholder => "What page should we visit?",:class => "form-control" %>
+	</div>
+
+	<!--<div class="form-group">
+		<%= label_tag(:username, "URL") %>
+		<%= text_field_tag :username,nil,:placeholder => "netid",:class => "form-control" %>
+	</div>
+	
+	<div class="form-group">
+		<%= label_tag(:password, "URL") %>
+		<%= text_field_tag :password,nil,:type => "password",:placeholder => "password",:class => "form-control" %>
+	</div>
+	-->
+
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#platform_selection">Platform selection</a></h4>
+				<span class="help-block">If you select nothing the default is Firefox Windows 7</span>
+			</div>
+			<div id="platform_selection" class="panel-collapse">
+				<div class="panel-body">
+					<h4>Selected <span id="pnumber" class="badge">0</span></h4>
+					<table cellpadding="0" cellspacing="0" border="0" class="table" id="example" width="100%">
+						<thead>
+							<tr>
+								<th width="40%">OS</th>
+								<th width="40%">Browser</th>
+								<th width="20%">Version</th>
+							</tr>
+						</thead>
+
+						<tbody aria-live="polite" aria-relevant="all">
+							<% @platforms.each do |p| %>
+							<tr>
+								<td><%= p.os %></td>
+								<td><%= p.long_name %></td>
+								<td><%= p.long_version %></td>
+							</tr>
+							<% end %>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th rowspan="1" colspan="1">
+								<input type="text" name="search_engine" value="Search engines" class="search_init">
+								</th><th rowspan="1" colspan="1">
+								<input type="text" name="search_browser" value="Search browsers" class="search_init">
+								</th><th rowspan="1" colspan="1">
+								<input type="text" name="search_platform" value="Search platforms" class="search_init">
+								</th>
+							</tr>
+						</tfoot>
+					</table>
+					<script>
+						var asInitVals = new Array();
+						var oTable = $('#example').dataTable({
+							"sDom" : "<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
+							"iDisplayLength" : 5,
+							"sPaginationType" : "bootstrap",
+							"oTableTools" : {
+								"sRowSelect" : "multi",
+								"aButtons" : ["select_none"]
+							}
+						}).bind('click', function() {
+							//Display this somewhere on the page.
+							$('#pnumber').text(oTT.fnGetSelected().length)
+						});
+
+						$("tfoot input").keyup(function() {
+							/* Filter on the column (the index) of this element */
+							oTable.fnFilter(this.value, $("tfoot input").index(this));
+						});
+
+						/*
+						 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in
+						 * the footer
+						 */
+						$("tfoot input").each(function(i) {
+							asInitVals[i] = this.value;
+						});
+
+						$("tfoot input").focus(function() {
+							if (this.className == "search_init") {
+								this.className = "";
+								this.value = "";
+							}
+						});
+
+						$("tfoot input").blur(function(i) {
+							if (this.value == "") {
+								this.className = "search_init";
+								this.value = asInitVals[$("tfoot input").index(this)];
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<%= hidden_field_tag 'platforms' %>
+	</div>
+	<br />
+
+	<%= submit_tag("Run") %>
+
+	
+	<script>
+		$(function() {
+			$('#all_tags').click(function() {
+				$('#tag_panel').find(':checkbox').prop("checked", true);
+			});
+		});
+		$(function() {
+			$('#no_tags').click(function() {
+				$('#tag_panel').find(':checkbox').prop("checked", false);
+			});
+		});
+		var oTT = TableTools.fnGetInstance('example');
+		$("#screen").submit(function(event) {
+			var aSelectedTrs = oTT.fnGetSelectedData();
+			// Get our selected platforms and set them to a hidden field
+			var platforms = []
+			$.each(aSelectedTrs, function(index, attr) {
+				var plat = {}
+				plat.browser = attr[1]
+				plat.os = attr[0]
+				plat.version = attr[2]
+				platforms.push(plat)
+			});
+			$('#platforms').val(JSON.stringify(platforms))
+			// Stop the submit from doing what it normall does?
+			//event.preventDefault();
+		});
+	</script>
+
+	<% end %>
+</div>
