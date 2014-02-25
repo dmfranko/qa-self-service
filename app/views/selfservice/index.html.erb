@@ -1,14 +1,16 @@
 <div class="jumbotron">
-  <h1>Hello <%= User.find_by_netid(session[:cas_user]).name %>, welcome to automation self service!</h1>
+  <h1>Hello <%= user %>, welcome to automation self service!</h1>
   <p>This site provides the ability for you to self execute and view run results.</p>
   <p><a href="https://git.yale.edu/YaleQA/QA-Self-Service" target="_blank" class="btn btn-primary btn-lg" role="button">Learn more</a></p>
-  
+
+  <% if Run.table_exists? %>
   <h2>Some stats</h2>
   <p><span class="label label-success"><%= Run.count%></span> Tests have been run using this service.</p>
   <p>There are <span class="label label-success"><%= Platform.count%></span> platforms available.</p>
   <p>There is an average of <span class="label label-success">5</span> test cases per run</p>
   <% if Run.count > 0 %>
-  	<p>On average it takes <span class="label label-success"><%= Run.average('duration').round(2).to_s %></span> seconds for a run.</p>
+        <p>On average it takes <span class="label label-success"><%= Run.average('duration').round(2).to_s %></span> seconds for a run.</p>
+  <% end %>
   <% end %>
   <p>Current system status is <span class="label label-success">Up</span></p>
 </div>
