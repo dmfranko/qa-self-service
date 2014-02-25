@@ -6,6 +6,10 @@ class ScreenshotsController < ApplicationController
   def show
     @s = Screenshot.find(params[:id])
     @screens = Screenshot.find(params[:id]).screen_images
+    respond_to do |format|
+      format.html
+      format.json { render :json => {:status => @s.status}.to_json}
+    end
   end
   
   def new
@@ -14,6 +18,7 @@ class ScreenshotsController < ApplicationController
   end
   
   def create
+    # Probably want to create this somewhere else?
     Resque.enqueue(ScreenshotRunner,params.merge({:user => session[:cas_user]}))
     
     respond_to do |format|

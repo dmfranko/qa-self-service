@@ -1,33 +1,46 @@
 <%= link_to "Capture Screenshots", new_screenshot_path ,:class => "btn btn-success" %>
-<br />
-<br />
-<div class="">
-	<table class="table table-striped table-bordered">
-		<tr>
-			<th class="hidden-xs">Date</th>
-			<th>status</th>	
-			<th>url</th>			
-			<th>details</th>
-			<th class="hidden-xs">platform count</th>
-		</tr>
 
-		<% if @s.count == 0 %>
-			<div class="alert alert-info alert-dismissable">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-				You haven't used this yet, give it a shot!
-			</div>
-
-			<% end %>
-
-			<% @s.each do |s| %>
-			<tr>
-			<td class="hidden-xs"><%= s.created_at.localtime.strftime('%D %r') %></td>
-			<td>Running</td>
-			<td><%= link_to s.url,s.url,target: "_blank" %></td>
-			<td><%= link_to screenshot_path(s), :class => 'button white' do %> <span class="glyphicon glyphicon-list-alt"></span> <% end %> </td>
-			<td class="hidden-xs"><%= s.screen_images.count %></td>
-			</tr>
-			<% end %>
-	</table>
+<div class="page-header">
+	<h1>Screenshots <small>Here's a list of your runs</small></h1>
 </div>
+
+<% if @s.count == 0 %>
+<div class="alert alert-info alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+		&times;
+	</button>
+	You haven't used this yet, give it a shot!
+</div>
+
+<% end %>
+
+<div id="screens">
+	<input type="text" class="search form-control" id="search" placeholder="Filter by url"/>
+	<br />
+	<ul class="list-group list">
+		<% @s.each do |s| %>
+		<li class="list-group-item">
+			<h4 class="list-group-item-heading url"><%= link_to s.url,s.url,target: "_blank" %></h4>
+			<p class="list-group-item-text">
+				<%= link_to "Details",screenshot_path(s), :class => 'btn btn-primary'%>
+			</p>
+			<br/>
+			<span><span class="badge pull-left"><%= s.screen_images.count %></span><span> screenshots</span></span>
+			<%= s.status %>
+			<p class="list-group-item-text">
+				Created at : <%= s.created_at.localtime.strftime('%D %r') %>
+			</p>
+		</li>
+		<% end %>
+	</ul>
+	<ul class="pagination"></ul>
+</div>
+
+<script>
+	var monkeyList = new List('screens', {
+		valueNames : ['url'],
+		page : 10,
+		plugins : [ListPagination({})]
+	}); 
+</script>
 <%= link_to "Home", root_path,:class => "btn btn-default" %>

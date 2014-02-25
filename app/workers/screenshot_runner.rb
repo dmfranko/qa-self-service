@@ -1,8 +1,7 @@
 class ScreenshotRunner
   @queue = :screenshot_queue
   def self.perform(params)
-    puts params
-    s = Screenshot.new(url: params["url"],netid: params["user"])
+    s = Screenshot.new(url: params["url"],netid: params["user"],status: 'Running')
     s.save
     
     JSON.parse(params["platforms"]).each do |p|
@@ -24,17 +23,22 @@ class ScreenshotRunner
       #end
 
       @b.goto(params["url"])
+
+      directory = Rails.root.join('app/assets', 'images','screens',Time.now.strftime("%m%d%Y"))
+      Dir.mkdir(directory.to_s) if ! Dir.exists?(directory.to_s)
       
-      filename = "#{SecureRandom.urlsafe_base64 + Time.now.to_i.to_s}.png"
-      File.open(Rails.root.join('app/assets', 'images','screens', filename), 'wb') do|f|
+      imageName = "#{SecureRandom.urlsafe_base64 + Time.now.to_i.to_s}.png"
+      File.open("/#{directory.to_s}/#{imageName}", 'wb') do|f|
         f.write(Base64.decode64(@b.screenshot.base64))
       end
   
-      s.screen_images.create(browser: p["browser"],os: p["os"],version: p["version"],image: filename)
+      s.screen_images.create(browser: p["browser"],os: p["os"],version: p["version"],image: "#{Time.now.strftime("%m%d%Y")}/#{imageName}")
       s.save
       
       #Screenshot.find(6).screen_images.to_a
       @b.close
     end
+    s.status = 'Finished'
+    s.save
   end
 end
