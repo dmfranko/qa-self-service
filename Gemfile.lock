@@ -6,14 +6,6 @@ GIT
       jquery-rails
       sass-rails
 
-GIT
-  remote: https://git.yale.edu/YaleQA/rspec-rest-formatter
-  revision: 28267544c6699fbab95138eff68f6b0abddc13b4
-  specs:
-    rspec-rest-formatter (0.0.2)
-      rest-client
-      sauce_whisk
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -262,7 +254,6 @@ DEPENDENCIES
   rest-client
   rspec-core
   rspec-rerun
-  rspec-rest-formatter!
   ruby-net-ldap
   rubycas-client
   sass-rails (~> 4.0.1)

@@ -1,7 +1,11 @@
 class ScreenshotRunner
   @queue = :screenshot_queue
   def self.perform(params)
-    s = Screenshot.new(url: params["url"],netid: params["user"],status: 'Running')
+    #s = Screenshot.new(url: params["url"],netid: params["user"],status: 'Running')
+    #s.save
+    
+    s = Screenshot.find(params["id"])
+    s.status = "Running"
     s.save
     
     JSON.parse(params["platforms"]).each do |p|

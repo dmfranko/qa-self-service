@@ -1,6 +1,6 @@
 class ScreenshotsController < ApplicationController
   def index
-    @s = Screenshot.where({netid: session[:cas_user]})
+    @s = Screenshot.where({netid: session[:cas_user]}).order(created_at: :desc)
   end
 
   def show
@@ -8,7 +8,7 @@ class ScreenshotsController < ApplicationController
     @screens = Screenshot.find(params[:id]).screen_images
     respond_to do |format|
       format.html
-      format.json { render :json => {:status => @s.status}.to_json}
+      format.json { render :json => {:status => @s.status,:count => @screens.count}.to_json}
     end
   end
   
@@ -19,7 +19,9 @@ class ScreenshotsController < ApplicationController
   
   def create
     # Probably want to create this somewhere else?
-    Resque.enqueue(ScreenshotRunner,params.merge({:user => session[:cas_user]}))
+    s = Screenshot.new(url: params["url"],netid: session[:cas_user],status: 'Queued')
+    s.save
+    Resque.enqueue(ScreenshotRunner,params.merge({:id => s.id}))
     
     respond_to do |format|
       format.json {render :json => {:status => "Queued",:queue_info => Resque.info}.to_json}

@@ -29,8 +29,9 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem "rails-erd"
 gem "parallel_tests"
-gem 'watir-browser-factory', :path => "vendor/gems/watir-browser-factory-0.0.6"
-gem 'rspec-rest-formatter', :path => "vendor/gems/rspec-rest-formatter-0.0.2.gem"
+gem 'watir-browser-factory'
+#gem 'watir-browser-factory', :path => "vendor/gems/watir-browser-factory-0.0.6"
+#gem 'rspec-rest-formatter', :path => "vendor/gems/rspec-rest-formatter-0.0.2.gem"
 #gem 'rspec-rest-formatter', :git => 'https://git.yale.edu/YaleQA/rspec-rest-formatter'
 gem 'git'
 gem 'ruby-net-ldap'
