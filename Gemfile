@@ -35,6 +35,7 @@ gem 'rspec-rest-formatter', '0.0.2',:path => "vendor/assets/gems/rspec-rest-form
 #gem 'rspec-rest-formatter', :git => 'https://git.yale.edu/YaleQA/rspec-rest-formatter'
 gem 'git'
 gem 'ruby-net-ldap'
+gem 'net-ping'
 
 # Gems used only for assets and not required
 # in production environments by default.
