@@ -6,13 +6,13 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-users = User.create([{ name: 'Dan',netid: 'df336',admin:true },
-  { name: 'Brian Wolson',netid: 'bw52',admin:true },
-  { name: 'Jason Shuff',netid: 'jrs26',admin:true },
-  { name: 'Doug Vynalek',netid: 'dv223',admin:true },
-  { name: 'Naveen Kamtamaneni',netid: 'nk342',admin:true },
-  { name: 'Hari Adusumilli',netid: 'ha239',admin:true },
-  { name: 'Test User',netid: 'ti3',admin:true }
+users = User.create([{ name: 'Dan',netid: 'df336',admin:1 },
+  { name: 'Brian Wolson',netid: 'bw52',admin:1 },
+  { name: 'Jason Shuff',netid: 'jrs26',admin:1 },
+  { name: 'Doug Vynalek',netid: 'dv223',admin:1 },
+  { name: 'Naveen Kamtamaneni',netid: 'nk342',admin:1 },
+  { name: 'Hari Adusumilli',netid: 'ha239',admin:1 },
+  { name: 'Test User',netid: 'ti3',admin:0 }
   ])
   
 apps = App.create([name: "Demo app.",

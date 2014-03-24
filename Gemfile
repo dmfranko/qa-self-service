@@ -1,15 +1,17 @@
 source 'https://rubygems.org'
 
 #gem 'rails', '3.2.3'
-gem 'rails', '4.0.2'
+gem 'rails', '4.0.4'
 gem 'ancestry'
-
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
 gem 'render_csv'
+#gem 'jquery-rails'
+#gem 'client_side_validations'
+gem 'parsley-rails'
 
 # Resque stuff
 gem "resque"
@@ -17,7 +19,7 @@ gem 'resque-web', require: 'resque_web'
 gem 'resque-scheduler'
 
 #Other stuff
-gem 'gmail'
+gem 'mail'
 gem 'watir-webdriver'
 gem 'rspec-core'
 gem 'rspec-rerun' 
@@ -30,12 +32,13 @@ gem 'wicked_pdf'
 gem "rails-erd"
 gem "parallel_tests"
 gem 'watir-browser-factory','0.0.6', :path => "vendor/assets/gems/watir-browser-factory-0.0.6"
-gem 'rspec-rest-formatter', '0.0.2',:path => "vendor/assets/gems/rspec-rest-formatter-0.0.2"
+gem 'rspec-rest-formatter', '0.0.3',:path => "vendor/assets/gems/rspec-rest-formatter-0.0.3"
 #gem 'watir-browser-factory'
 #gem 'rspec-rest-formatter', :git => 'https://git.yale.edu/YaleQA/rspec-rest-formatter'
 gem 'git'
 gem 'ruby-net-ldap'
 gem 'net-ping'
+gem 'info_vault'
 
 # Gems used only for assets and not required
 # in production environments by default.

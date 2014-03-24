@@ -17,19 +17,37 @@ class RunsController < ApplicationController
       format.json { render :json => {:status => "This is a new run",:id => r.id}.to_json}
     end
   end
-  
+
   def update
     r = Run.find(params[:id])
-    r.status = "Finished"
+    if Run.find(params[:id]).results.where(status: "Failed").count > 0
+      status = "Failed"
+    else
+      status = "Passed"
+    end
+    r.status = status
     r.duration = params[:duration]
     r.save
+
     respond_to do |format|
+      ResultMailer.result_email(r).deliver
       format.json { render :json => {:status => "Run updated",:id => r.id}.to_json}
     end
   end
 
   def show
-    @r = Run.where(app_id: params[:id]).order(id: :desc)
+    @app_id = params[:id]
+    if params["queued"]
+      @r = Run.where(app_id: params[:id],status: "Queued/Running").order(id: :desc)
+    else
+      @r = Run.where(app_id: params[:id]).order(id: :desc)
+    end
+    respond_to do |format|
+      format.html
+      hash = { "data"=> @r}
+      format.json  {render :json => hash}
+      format.csv { send_data @r.to_csv }
+    end    
   end
 
   private

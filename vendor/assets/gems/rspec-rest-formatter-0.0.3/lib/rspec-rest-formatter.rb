@@ -1,6 +1,7 @@
 require 'rspec/core/formatters/base_text_formatter'
 require 'rspec/core/formatters/base_formatter'
 require 'rest-client'
+require 'json'
 
 class RestFormatter < RSpec::Core::Formatters::BaseTextFormatter
   def initialize(output)
@@ -10,14 +11,13 @@ class RestFormatter < RSpec::Core::Formatters::BaseTextFormatter
 
   def start(example_count)
     super
-    puts "#{HOST}/runs/"
     r = RestClient.post("#{HOST}/runs/",
     {:description =>  $metadata[:description],
       :notes => $metadata[:notes],
-      :app_id => $config[:app_id],
+      :app_id => $metadata[:app_id],
       :browser => $caps[:browserName],
       :browser_version => $caps[:browser_version],
-      :os => $caps[:os]
+      :os => $caps[:platform]
       }
     )
     @id = JSON.parse(r)["id"]
@@ -100,11 +100,9 @@ class RestFormatter < RSpec::Core::Formatters::BaseTextFormatter
 
   def dump_summary(duration, example_count, failure_count, pending_count)
     super(duration, example_count, failure_count, pending_count)
-
     # Update the mothership    
     RestClient.put("#{HOST}/runs/#{@id}",
-    {:status => "Complete!",
-    :duration => format_duration(duration)}
+    {:duration => format_duration(duration)}
     )
   end
 end

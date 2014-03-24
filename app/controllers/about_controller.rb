@@ -8,6 +8,13 @@ class AboutController < ApplicationController
       format.json { render :json => {:status => "up"}.to_json}
     end
   end
+  
+  def table_test
+    respond_to do |format|
+      format.html {render :layout => false}
+    end
+  end
+
 
   def detail
     @status = status

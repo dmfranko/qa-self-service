@@ -9,6 +9,7 @@
 		<%= stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" %>
 		<%= stylesheet_link_tag "http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" %>
 		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/list.js/1.0.0/list.min.js" %>
+		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js" %>
 		<%= csrf_meta_tags %>
 		<script src="http://code.highcharts.com/highcharts.js"></script>
 		<script src="http://code.highcharts.com/modules/exporting.js"></script>
@@ -149,7 +150,7 @@
 					<li>
 						<%= link_to "Sauce", "http://www.saucelabs.com", :target => '_blank' %>
 					</li>
-					<% if session[:cas_user] && User.find_by(netid: session[:cas_user]) && User.find_by(netid: session[:cas_user]).admin %>
+					<% if session[:cas_user] && User.where(:netid => "df336",:admin => 1)%>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <b class="caret"></b></a>
 						<ul class="dropdown-menu">

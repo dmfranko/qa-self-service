@@ -18,14 +18,6 @@ class ScreenshotRunner
       }
       
       @b = Watir::Browser.sauce_start(caps)
-
-      #if ! params["username"].empty?
-        #@b.goto("https://secure.its.yale.edu/cas/login")
-        #@b.text_field(:id => "username").set params["username"]
-        #@b.text_field(:id => "password").set params["password"]
-        #@b.button.click
-      #end
-
       @b.goto(params["url"])
 
       directory = Rails.root.join('app/assets', 'images','screens',Time.now.strftime("%m%d%Y"))
@@ -39,7 +31,6 @@ class ScreenshotRunner
       s.screen_images.create(browser: p["browser"],os: p["os"],version: p["version"],image: "#{Time.now.strftime("%m%d%Y")}/#{imageName}")
       s.save
       
-      #Screenshot.find(6).screen_images.to_a
       @b.close
     end
     s.status = 'Finished'

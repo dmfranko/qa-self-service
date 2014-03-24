@@ -41,7 +41,7 @@
 			<div class="col-md-4">
 				<div class="btn-group btn-group-justified">
 					<a class="btn btn-info disabled" role="button">Mobile?</a>
-					<a class="btn btn-default disabled" role="button"><%= app.mobile %></a>
+					<a class="btn btn-default disabled" role="button"><%= app.is_application_mobile == 1 ? "Yes" : "No" %></a>
 				</div>
 			</div>
 		</div>
@@ -59,6 +59,7 @@
 			<th>Run</th>
 			<th>Results</th>
 			<th>Edit</th>
+			<th>Delete</th>
 			<th>Last status</th>
 			<th>Description</th>
 		</tr>
@@ -66,12 +67,17 @@
 		<tr>
 			<td><%= app.id %></td>
 			<td><%= app.name %></td>
-			<td><%= app.mobile %></td>
+			<td><%= app.is_application_mobile == 1 ? "Yes" : "No" %></td>
 			<td style="text-align:center"> <%= link_to app do %> <span class="glyphicon glyphicon-folder-open"></span> <% end %> </td>
 			<td style="text-align:center"> <%= link_to runner_path(app), :class => 'button white' do %> <span class="glyphicon glyphicon-play"></span> <% end %> </td>
 			<td style="text-align:center"> <%= link_to run_path(app), :class => 'button white' do %> <span class="glyphicon glyphicon-list-alt"></span> <% end %> </td>
 			<td style="text-align:center"> <%= link_to edit_app_path(app), :class => 'button white' do %> <span class="glyphicon glyphicon-pencil"></span> <% end %> </td>
-			<td>Pass</td>
+			<td style="text-align:center">
+			<%= link_to app_path(app), :class => 'some_class', :method => :delete, :data => { :confirm => 'Are you sure you want to delete this user?' }  do %>
+  				<span class="glyphicon glyphicon-remove"></span>
+			<% end %>
+			</td>
+			<td><%= @s.status if (@s = Run.where(app_id: app.id).last) %></td>
 			<td><%= app.description %></td>
 		</tr>
 		<% end %>

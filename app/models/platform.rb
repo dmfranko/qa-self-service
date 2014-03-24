@@ -1,2 +1,2 @@
-class Platform < ActiveRecord::Base
+class AvailableTestPlatform < ActiveRecord::Base
 end

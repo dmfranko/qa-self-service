@@ -1,16 +1,16 @@
-<li class="list-group-item clearfix <%= result.status.downcase if result.status %>">
-	<% if ! result.status %> <h3><%= result.description %> at </h3> <% else %>
+<li class="list-group-item clearfix <%= "detail-record" if result.status %> <%= result.status.downcase if result.status %>">
+	<% if ! result.status %> <h3><%= result.description %></h3> <% else %>
 	<p class="list-group-item-text">
 		<div class="panel panel-primary">
 
 			<div class="panel-heading">
-				<h3 class="panel-title"> 
+				<h3 class="panel-title "> 
 				<%= result.description %>
 				<% case result.status.downcase %>
 				<% when "passed" %>
-					<span class="label label-success">Passed</span> 
-				<%   when "failed" %> <span class="label label-danger">Failed</span> 
-				<%  when "pending" %> <span class="label label-warning">Pending</span>
+					<span class="label label-success r">Passed</span> 
+				<%  when "failed" %> <span class="label label-danger r">Failed</span> 
+				<%  when "pending" %> <span class="label label-warning r">Pending</span>
 				<% else %>
 					something else
 				<% end %> 

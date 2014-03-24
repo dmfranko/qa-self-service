@@ -14,7 +14,7 @@ class ScreenshotsController < ApplicationController
   
   def new
     @user = session[:cas_user]
-    @platforms = Platform.all
+    @platforms = TestPlatform.includes([:test_operating_system,:test_browser]).where(is_available_in_cloud: 1)
   end
   
   def create

@@ -15,14 +15,14 @@ class RunnersController < ApplicationController
         
     respond_to do |format|
       format.json {render :json => {:status => "Queued",:queue_info => Resque.info}.to_json}
-      #format.html {render :start}
-      format.html {run_path(@app)}
+      format.html {redirect_to(run_path(:id => params["id"]))}
     end
   end
 
   def show
     @app = App.find(params[:id])
-    @platforms = Platform.all
+    @platforms = TestPlatform.includes([:test_operating_system,:test_browser]).where(is_available_in_cloud: 1)
+    #@platforms = AvailableTestPlatform.all
   end
 
   def skip_login?

@@ -1,9 +1,13 @@
 class AppsController < ApplicationController
   def index
-    @a = App.all
+    @a = User.where(netid: "df336").first.apps
   end
 
   def show
+    
+    @tags = App.find(params[:id]).application_tags
+    @environments = App.find(params[:id]).application_environments
+    @users = App.find(params[:id]).users
     @app = App.find(params[:id])
   end
 
@@ -13,7 +17,8 @@ class AppsController < ApplicationController
   
   def create
     @app = App.new(app_params)
-    #params["app"]["envs"]
+    @app.tags = params["app"]["tags"].split(",")
+    @app.default_emails = params["app"]["default_emails"].split(",")
     @app.save
     redirect_to apps_path,notice: "App added."
   end
@@ -32,10 +37,17 @@ class AppsController < ApplicationController
     end
   end
 
+  def destroy
+    App.find(params[:id]).destroy
+    redirect_to apps_path,notice: "App deleted."
+  end
+
+
   private
   
   def app_params
-    params.require(:app).permit(:name,:description,:github_url,:envs)
+    #params.require(:app).permit(:name,:description,:github_url,{:envs => {}})
+    params.require(:app).permit!
   end
   
   def skip_login?

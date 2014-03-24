@@ -1,10 +1,11 @@
 <div class="page-header">
-	<h1>Test Execution <small>Run history</small></h1>
+	<h1><span class="spinner" hidden> <i class="icon-spin icon-refresh"></i> </span> Test Execution <small>Run history</small></h1>
 </div>
 
 <%= link_to "Back", apps_path,class: "btn btn-default" %>
 <br />
 <br />
+<div id="app_id" style='display: none'><%= @app_id %></div>
 <span class="badge"><%= @r.count %></span>Total runs
 <%= render partial: "runtable" %>
 

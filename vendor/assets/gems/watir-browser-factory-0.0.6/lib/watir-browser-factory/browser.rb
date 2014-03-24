@@ -7,9 +7,16 @@ module Watir
 
         # Need to work args back in.
         if ! caps[:local] # && SauceWhisk::Sauce.service_status[:service_operational]
-          b = Watir::Browser.new(:remote,
-          :url => "http://#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}@ondemand.saucelabs.com:80/wd/hub",
-          :desired_capabilities => caps)
+          driver = Selenium::WebDriver.for(
+            :remote,
+            :url => "http://#{ENV['SAUCE_USERNAME']}:#{ENV['SAUCE_ACCESS_KEY']}@ondemand.saucelabs.com:80/wd/hub",
+            :desired_capabilities => caps)
+          driver.file_detector = lambda do |args|
+            str = args.first.to_s
+            str if File.exist?(str)
+          end
+          
+          b = Watir::Browser.new driver
         else
           puts "Running locally"
           b = Watir::Browser.new(caps[:browserName])

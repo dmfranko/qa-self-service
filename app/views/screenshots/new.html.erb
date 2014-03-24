@@ -41,9 +41,9 @@
 						<tbody aria-live="polite" aria-relevant="all">
 							<% @platforms.each do |p| %>
 							<tr>
-								<td><%= p.os %></td>
-								<td><%= p.long_name %></td>
-								<td><%= p.long_version %></td>
+								<td><%= p.test_operating_system.operating_system_name %></td>
+								<td><%= p.test_browser.browser_name %></td>
+								<td><%= p.test_browser.browser_version %></td>
 							</tr>
 							<% end %>
 						</tbody>

@@ -6,18 +6,18 @@
 
 <h3>Tags</h3>
 <ul class="list-group">
-	<% @app.tags.each do |t|%>
+	<% @tags.each do |t|%>
 	<li class="list-group-item">
-		<%= t %>
+		<%= t.tag %>
 	</li>
 	<% end %>
 </ul>
 
 <h3>Environments</h3>
 <ul class="list-group">
-	<% @app.envs.each do |name,value|%>
+	<% @environments.each do |environment|%>
 	<li class="list-group-item">
-		<%= name %> : <%= value %>
+		<%= environment.environment_name %> : <%= environment.environment_url %>
 	</li>
 	<% end %>
 </ul>
@@ -28,6 +28,17 @@
 	<% @app.default_emails.each do |email|%>
 	<li class="list-group-item">
 		<%= email %>
+	</li>
+	<% end %>
+</ul>
+<% end %>
+
+<% if @users %>
+<h3>Users</h3>
+<ul class="list-group">
+	<% @users.each do |user|%>
+	<li class="list-group-item">
+		<%= user.netid %>
 	</li>
 	<% end %>
 </ul>

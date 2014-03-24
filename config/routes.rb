@@ -5,6 +5,7 @@ Qaselfservice::Application.routes.draw do
   get "selfservice/index"
   get 'application/logout'
   get 'static_pages/about'
+  get 'about/table_test'
   get 'about/summary'
   
   resources :apps

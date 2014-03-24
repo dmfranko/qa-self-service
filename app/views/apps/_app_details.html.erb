@@ -2,25 +2,44 @@
 	<div class="span6 offset3">
 		<%= form_for(@app) do |f| %>
 		<%= f.label :name %>
-		<%= f.text_field :name,:class => "form-control" %>
+		<span class="help-block">Give your app a name</span>
+		<%= f.text_field :name,:class => "form-control",:placeholder => "Application name" %>
 		<br />
 		<%= f.label :description %>
-		<%= f.text_field :description,:class => "form-control" %>
+		<span class="help-block">Provide a short descrption of what your test does.</span>
+		<%= f.text_field :description,:class => "form-control",:placeholder => "Description" %>
 		<br />
 		<%= f.label :github_url %>
-		<%= f.text_field :github_url,:class => "form-control"  %>
-		<br />
-		<%= f.label :envs %>
-		<%= f.text_field :envs,:class => "form-control" %>
+		<span class="help-block">The URL of your github project.  The project will be pulled from here
+			at runtime.</span>
+		<%= f.text_field :github_url,:type => "url",:class => "form-control",:placeholder => "URL"  %>
 		<br />
 		<%= f.label :default_emails %>
-		<%= f.text_field :default_emails,:class => "form-control" %>
+		<span class="help-block">Enter a comma separated list of default emails.</span>
+		<%= f.text_field :default_emails,:class => "form-control",:placeholder => "Emails"%>
 		<br />
-		<%= f.fields_for :tags do |o| %>
-			<%= o.text_field :dev, :size => 10 %>
-			<%= o.text_field :test, :size => 10 %>
-		<% end %>
-
+		<%= f.label :tags %>
+		<span class="help-block">Enter a comma separated list of available tags.
+			Providing this info will allow users to select which set of tests they want to run.</span>
+		<%= f.text_field :tags,:class => "form-control",:placeholder => "Tags" %>
+		<br />
+		<div id="envs">
+		<%= f.label :environments %>
+		<span class="help-block">Specify your default environments.  You'll be able to 
+			specify additional ones at runtime.</span>
+		  <%= f.fields_for :envs do |env_fields| %>
+			<%= f.label :dev %>
+			<%= env_fields.text_field :dev,:class => "form-control" %>
+			<br/>
+			<%= f.label :test %>
+			<%= env_fields.text_field :test,:class => "form-control" %>
+			<br/>
+			<%= f.label :prod %>
+			<%= env_fields.text_field :prod,:class => "form-control" %>
+			<br />
+		  <% end %>
+		</div>
+		
 		<%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
 		<% end %>
 		<br />

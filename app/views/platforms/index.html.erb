@@ -3,8 +3,9 @@
 </div>
 
 <div class="alert alert-success">
-	Platforms loaded!
+	<%= @platforms.count %> Platforms loaded!
 </div>
+
 
 <table class="table table-striped table-bordered" id="example">
 	<tr>
@@ -14,9 +15,9 @@
 	</tr>
 	<% @platforms.each do |p| %>
 	<tr>
-		<td><%= p["long_name"] %></td>
-		<td><%= p["long_version"] %></td>
-		<td><%= p["os"] %></td>
+		<td><%= p.test_browser.browser_name %></td>
+		<td><%= p.test_browser.browser_version %></td>
+		<td><%= p.test_operating_system.operating_system_name %></td>
 	</tr>
 	<% end %>
 </table>

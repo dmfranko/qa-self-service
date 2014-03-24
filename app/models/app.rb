@@ -3,6 +3,11 @@ class App < ActiveRecord::Base
   serialize :tags
   serialize :apps
   serialize :default_emails
+
+  has_many :application_tags
+  has_many :application_environments
+  has_many :application_default_emails
   
-  has_many :app_users, dependent: :destroy
+  has_many :app_user_permissions
+  has_many :users, through: :app_user_permissions  
 end
