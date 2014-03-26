@@ -6,7 +6,7 @@
   <% if Run.table_exists? %>
   <h2>Some stats</h2>
   <p><span class="label label-success"><%= Run.count%></span> Tests have been run using this service.</p>
-  <p>There are <span class="label label-success"><%= AvailableTestPlatform.count %></span> platforms available.</p>
+  <p>There are <span class="label label-success"><%= TestPlatform.where(:is_available_in_cloud => true).count %></span> platforms available.</p>
   <p>There is an average of <span class="label label-success">5</span> test cases per run</p>
   <% if Run.count > 0 %>
         <p>On average it takes <span class="label label-success"><%= Run.average('duration').round(2).to_s %></span> seconds for a run.</p>

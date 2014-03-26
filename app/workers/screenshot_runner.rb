@@ -1,11 +1,8 @@
 class ScreenshotRunner
   @queue = :screenshot_queue
   def self.perform(params)
-    #s = Screenshot.new(url: params["url"],netid: params["user"],status: 'Running')
-    #s.save
-    
     s = Screenshot.find(params["id"])
-    s.status = "Running"
+    s.execution_state = "Running"
     s.save
     
     JSON.parse(params["platforms"]).each do |p|
@@ -28,12 +25,12 @@ class ScreenshotRunner
         f.write(Base64.decode64(@b.screenshot.base64))
       end
   
-      s.screen_images.create(browser: p["browser"],os: p["os"],version: p["version"],image: "#{Time.now.strftime("%m%d%Y")}/#{imageName}")
+      s.captured_screen_images.create(browser: p["browser"],os: p["os"],version: p["version"],image: "#{Time.now.strftime("%m%d%Y")}/#{imageName}")
       s.save
       
       @b.close
     end
-    s.status = 'Finished'
+    s.execution_state = 'Finished'
     s.save
   end
 end

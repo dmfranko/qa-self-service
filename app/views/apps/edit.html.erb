@@ -13,12 +13,15 @@
 				<%= f.label :github_url %>
 				<%= f.text_field :github_url,:class => "form-control"  %>
 				<br />
-				<%= f.label :envs %>
-				<%= f.text_field :envs,:class => "form-control" %>
-				<br />
-				<%= f.label :default_emails %>
-				<%= f.text_field :default_emails,:class => "form-control" %>
-				<br />
+				
+				
+				<%= f.fields_for :application_environments, @app.application_environments do |project_fields| %>
+				    Environment Name: <%= project_fields.text_field :environment_name %>
+				  	<br />
+				  	Environment URL <%= project_fields.text_field :environment_url %>
+				  	<br />
+				<% end %>
+				
 				<%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
 			<% end %>
 			<br />

@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:name,:netid,:admin)
+    params.require(:user).permit(:user_name,:netid,:is_administrator)
   end
 
   def skip_login?

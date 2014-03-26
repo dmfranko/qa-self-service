@@ -21,8 +21,12 @@ class RunnersController < ApplicationController
 
   def show
     @app = App.find(params[:id])
+
+    @tags = App.find(params[:id]).application_tags
+    @target_environments = App.find(params[:id]).application_environments
+    @emails = App.find(params[:id]).application_default_emails    
+
     @platforms = TestPlatform.includes([:test_operating_system,:test_browser]).where(is_available_in_cloud: 1)
-    #@platforms = AvailableTestPlatform.all
   end
 
   def skip_login?

@@ -4,6 +4,6 @@ class ResultMailer < ActionMailer::Base
   def result_email(user)
     @user = user
     @url  = 'http://example.com/login'
-    mail(to: ["dan.franko@yale.edu","yaleqa@gmail.com"], subject: 'Welcome to My Awesome Site')
+    mail(to: ["dan.franko@yale.edu","yaleqa@gmail.com"], subject: 'Test is complete.')
   end
 end

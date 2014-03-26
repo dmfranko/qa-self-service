@@ -31,7 +31,7 @@ class TestRunner
       :emails => ['dan.franko@yale.edu','jason.shuff@yale.edu'],
       :environment => params["environments"],
       :platform => params["platform"],
-      :tags =>  Hash[params["tags"].map{|(k,v)| [k.to_sym,v.to_i.to_bool]}],
+      :tags =>  Hash[params["run_tags"].map{|(k,v)| [k.to_sym,v.to_i.to_bool]}],
       :filter => params["filter"],
       :notes => params["message"]
     }.to_s

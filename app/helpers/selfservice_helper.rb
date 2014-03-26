@@ -6,7 +6,7 @@ module SelfserviceHelper
   def user
     if user?
       if  u = User.find_by_netid(session[:cas_user])
-        u.name
+        u.user_name
       else
         session[:cas_user]
       end

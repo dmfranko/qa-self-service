@@ -4,11 +4,21 @@ class RunsController < ApplicationController
   end
 
   def create
+    p = TestPlatform
+    .includes([:test_operating_system,:test_browser])
+    .where("test_browsers.browser_name" => "chrome",
+    "test_browsers.browser_version" => "30",
+    "test_operating_systems.operating_system_name" => "Linux")
+    .first.id
+    
+    byebug
+    
     r = Run.new
     r.app_id = params[:app_id]
     r.description = params[:description]
     r.notes = params[:notes]
     r.status = "Queued/Running"
+    # Add platform instead
     r.browser = params[:browser]
     r.browser_version = params[:browser_version]
     r.os = params[:os]

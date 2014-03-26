@@ -1,3 +1,3 @@
 class Screenshot < ActiveRecord::Base
-  has_many :screen_images
+  has_many :captured_screen_images
 end

@@ -5,10 +5,10 @@ class ScreenshotsController < ApplicationController
 
   def show
     @s = Screenshot.find(params[:id])
-    @screens = Screenshot.find(params[:id]).screen_images
+    @screens = Screenshot.find(params[:id]).captured_screen_images
     respond_to do |format|
       format.html
-      format.json { render :json => {:status => @s.status,:count => @screens.count}.to_json}
+      format.json { render :json => {:status => @s.execution_state,:count => @screens.count}.to_json}
     end
   end
   
@@ -19,7 +19,7 @@ class ScreenshotsController < ApplicationController
   
   def create
     # Probably want to create this somewhere else?
-    s = Screenshot.new(url: params["url"],netid: session[:cas_user],status: 'Queued')
+    s = Screenshot.new(url: params["url"],netid: session[:cas_user],execution_state: 'Queued')
     s.save
     Resque.enqueue(ScreenshotRunner,params.merge({:id => s.id}))
     

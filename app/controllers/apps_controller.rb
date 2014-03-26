@@ -4,11 +4,12 @@ class AppsController < ApplicationController
   end
 
   def show
-    
-    @tags = App.find(params[:id]).application_tags
-    @environments = App.find(params[:id]).application_environments
-    @users = App.find(params[:id]).users
     @app = App.find(params[:id])
+    
+    @run_tags = App.find(params[:id]).application_tags
+    @environments = App.find(params[:id]).application_environments
+    @emails = App.find(params[:id]).application_default_emails
+    @users = App.find(params[:id]).users
   end
 
   def new

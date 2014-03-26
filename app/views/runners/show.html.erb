@@ -18,7 +18,7 @@
 		Add the ability to provide address
 		<%= label_tag(:environments, "Target environment") %>
 		<br />
-		<%= select_tag 'environments', options_for_select(@app.envs.map{|k,v| ["#{k.to_s} (#{v})",v]}),:class => "form-control" %>
+		<%= select_tag 'environments', options_for_select(@target_environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.environment_url]}),:class => "form-control" %>
 	</div>
 
 	<div class="form-group">
@@ -161,7 +161,7 @@
 			</ul>
 			<div id="my-tab-content" class="tab-content">
 				<div class="tab-pane active" id="tags">
-					<% if ! @app.tags.empty? %>
+					<% if ! @tags.empty? %>
 					<h1>By tags</h1>
 					<p>
 						<div class="btn-group">
@@ -174,14 +174,14 @@
 						</div>
 
 						<div class="row">
-							<%= fields_for :tags do |tag_fields| %>
-							<% @app.tags.each do |t| %>
-							<div class = "col-md-4">
-								<div class="checkbox">
-									<%= t %><%= tag_fields.check_box t %>
-								</div>
-							</div>
-							<% end %>
+							<%= fields_for :run_tags do |tag_fields| %>
+								<% @tags.each do |tag|%>
+									<div class = "col-md-4">
+										<div class="checkbox">
+											<%= tag.tag %><%= tag_fields.check_box tag.tag %>
+										</div>
+									</div>
+								<% end %>
 							<% end %>
 						</div>
 					</p>

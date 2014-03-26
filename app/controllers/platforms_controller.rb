@@ -1,17 +1,10 @@
 class PlatformsController < ApplicationController
   def index
-    AvailableTestPlatform.destroy_all
-    
     # Set all of them to unavailable for the moment
     TestPlatform.update_all({:is_available_in_cloud => 0})
-    
+
+    # Go out to saucelabs to get the current list of platforms.
     SauceWhisk::Sauce.platforms.each do |p|
-      r = AvailableTestPlatform.new
-      r.long_name = p["api_name"]
-      r.long_version = p["short_version"]
-      r.os = p["os"]
-      r.save
-      
       # Add os if it doesn't exist
       os = TestOperatingSystem.find_or_create_by(operating_system_name: p["os"]).id
       

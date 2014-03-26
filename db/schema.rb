@@ -11,19 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140324140627) do
+ActiveRecord::Schema.define(version: 20140325210626) do
 
   create_table "app_user_permissions", force: true do |t|
     t.integer  "user_id"
     t.integer  "app_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "app_users", force: true do |t|
-    t.integer  "apps_id"
-    t.integer  "app_id"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -57,31 +49,16 @@ ActiveRecord::Schema.define(version: 20140324140627) do
     t.text     "description"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.text     "tags"
-    t.text     "default_emails"
-    t.text     "envs"
     t.string   "github_url"
     t.integer  "is_application_mobile", default: 0
   end
 
-  create_table "available_test_platforms", force: true do |t|
-    t.string   "long_name"
-    t.string   "long_version"
-    t.string   "os"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "images", force: true do |t|
-    t.string   "name"
-    t.string   "attachment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "map_user_application_permissions", force: true do |t|
-    t.integer  "app_id"
-    t.integer  "user_id"
+  create_table "captured_screen_images", force: true do |t|
+    t.integer  "screenshot_id"
+    t.text     "os"
+    t.text     "browser"
+    t.text     "version"
+    t.text     "image"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -89,7 +66,6 @@ ActiveRecord::Schema.define(version: 20140324140627) do
   create_table "results", force: true do |t|
     t.integer  "run_id"
     t.integer  "app_id"
-    t.integer  "test_id"
     t.float    "duration"
     t.text     "description"
     t.text     "status"
@@ -106,7 +82,6 @@ ActiveRecord::Schema.define(version: 20140324140627) do
 
   create_table "runs", force: true do |t|
     t.integer  "app_id"
-    t.integer  "test_id"
     t.float    "duration"
     t.text     "description"
     t.text     "notes"
@@ -118,23 +93,12 @@ ActiveRecord::Schema.define(version: 20140324140627) do
     t.text     "os"
   end
 
-  create_table "screen_images", force: true do |t|
-    t.integer  "screenshot_id"
-    t.text     "os"
-    t.text     "browser"
-    t.text     "version"
-    t.text     "image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "status"
-  end
-
   create_table "screenshots", force: true do |t|
-    t.text     "url"
-    t.text     "netid"
+    t.string   "url"
+    t.string   "netid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "status"
+    t.string   "execution_state"
   end
 
   create_table "test_browsers", force: true do |t|
@@ -150,12 +114,6 @@ ActiveRecord::Schema.define(version: 20140324140627) do
     t.datetime "updated_at"
   end
 
-  create_table "test_os", force: true do |t|
-    t.string   "os_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "test_platforms", force: true do |t|
     t.integer  "test_browser_id"
     t.integer  "test_operating_system_id"
@@ -165,9 +123,9 @@ ActiveRecord::Schema.define(version: 20140324140627) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "name"
+    t.string   "user_name"
     t.string   "netid"
-    t.integer  "admin",      default: 0
+    t.integer  "is_administrator", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

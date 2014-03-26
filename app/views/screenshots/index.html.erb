@@ -42,19 +42,19 @@
 		<li class="list-group-item">
 			<h4 class="list-group-item-heading url"><%= link_to s.url,s.url,target: "_blank" %></h4>
 			<br/>
-			<%= content_tag(:span,s.status,:class => "#{s.status}",:id => "#{screenshot_path(s)}") do %>
+			<%= content_tag(:span,s.execution_state,:class => "#{s.execution_state}",:id => "#{screenshot_path(s)}") do %>
 				<p class="list-group-item-text details">
-					<%= link_to "Details",screenshot_path(s), :class => "btn btn-primary detail_button",:disabled =>  s.status != 'Finished' %>
+					<%= link_to "Details",screenshot_path(s), :class => "btn btn-primary detail_button",:disabled =>  s.execution_state != 'Finished' %>
 				</p>
 				<span>Status : 
-					<span class="current_status"><%= s.status %></span>
+					<span class="current_status"><%= s.execution_state %></span>
 				</span>
-				<% if s.status != "Finished" %>
+				<% if s.execution_state != "Finished" %>
 					<span class="spinner"> <i class="icon-spin icon-refresh"></i> </span>
 				<% end %>
 				<br />
 				<span>
-					<span class="badge pull-left count"><%= s.screen_images.count %></span>
+					<span class="badge pull-left count"><%= s.captured_screen_images.count %></span>
 					<span>screenshots taken</span>
 				</span>
 			<% end %>
