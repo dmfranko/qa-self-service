@@ -10,8 +10,7 @@ gem 'ancestry'
 gem 'sqlite3'
 gem 'render_csv'
 #gem 'jquery-rails'
-#gem 'client_side_validations'
-gem 'parsley-rails'
+#gem 'parsley-rails'
 
 # Resque stuff
 gem "resque"
@@ -33,8 +32,6 @@ gem "rails-erd"
 gem "parallel_tests"
 gem 'watir-browser-factory','0.0.6', :path => "vendor/assets/gems/watir-browser-factory-0.0.6"
 gem 'rspec-rest-formatter', '0.0.3',:path => "vendor/assets/gems/rspec-rest-formatter-0.0.3"
-#gem 'watir-browser-factory'
-#gem 'rspec-rest-formatter', :git => 'https://git.yale.edu/YaleQA/rspec-rest-formatter'
 gem 'git'
 gem 'ruby-net-ldap'
 gem 'net-ping'

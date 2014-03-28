@@ -2,8 +2,31 @@
 	<h1>Run <small>Execute tests for the <span class="label label-primary"><%= @app.name %></span> application.</small></h1>
 </div>
 
+<script>
+	// Client side validations here.
+	// Probably should implement some server side ones as well.
+	$(function() {
+		$('#runner').parsley({
+			successClass : 'has-success',
+			errorClass : 'has-error',
+			errors : {
+				classHandler : function(el) {
+					return $(el).closest('.form-group');
+				},
+				errorsWrapper : '<span class=\"help-inline\"></span>',
+				errorElem : '<span></span>'
+			}
+		});
 
-<%= form_tag("/runners", method: "post",role: "form",id: "runner") do |f| %>
+		// Validate the form before submitting
+		$("#runner").submit(function(event) {
+			$("#runner").parsley("validate");
+		});
+	});
+
+</script>
+
+<%= form_tag("/runners", method: "post",role: "form",id: "runner","novalidate" => "") do |f| %>
 <div class="form-group">
 	<%= hidden_field_tag(:name, @app.name) %>
 	<%= hidden_field_tag(:id, @app.id) %>
@@ -11,19 +34,19 @@
 
 	<div class="form-group">
 		<%= label_tag(:user, "Emails") %>
-		<%= email_field(:user, :address,:placeholder => "Who should the reports be sent to?",:class => "form-control") %>
+		<%= email_field(:user, :address,:placeholder => "Who should the reports be sent to?",:class => "form-control",:required => true) %>
 	</div>
 
 	<div class="form-group">
 		Add the ability to provide address
 		<%= label_tag(:environments, "Target environment") %>
 		<br />
-		<%= select_tag 'environments', options_for_select(@target_environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.environment_url]}),:class => "form-control" %>
+		<%= select_tag 'environments', options_for_select(@target_environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.environment_url]}),:class => "form-control",:required => true %>
 	</div>
 
 	<div class="form-group">
-			<%= label_tag(:passphrase, "Protected info password") %>
-			<%= password_field_tag(:passphrase,"",:placeholder => "secret",:class => "form-control",:required => true) %>
+		<%= label_tag(:passphrase, "Protected info password") %>
+		<%= password_field_tag(:passphrase,"",:placeholder => "secret",:class => "form-control",:required => true) %>
 	</div>
 
 	<div class="panel-group" id="accordion">
@@ -175,13 +198,13 @@
 
 						<div class="row">
 							<%= fields_for :run_tags do |tag_fields| %>
-								<% @tags.each do |tag|%>
-									<div class = "col-md-4">
-										<div class="checkbox">
-											<%= tag.tag %><%= tag_fields.check_box tag.tag %>
-										</div>
-									</div>
-								<% end %>
+							<% @tags.each do |tag|%>
+							<div class = "col-md-4">
+								<div class="checkbox">
+									<%= tag.tag %><%= tag_fields.check_box tag.tag %>
+								</div>
+							</div>
+							<% end %>
 							<% end %>
 						</div>
 					</p>
@@ -233,13 +256,13 @@
 			$('#all_tags').click(function() {
 				$('#tag_panel').find(':checkbox').prop("checked", true);
 			});
-		
+
 			$('#no_tags').click(function() {
 				$('#tag_panel').find(':checkbox').prop("checked", false);
 			});
-			
+
 		});
-		
+
 		var oTT = TableTools.fnGetInstance('example');
 		$("#runner").submit(function(event) {
 			var aSelectedTrs = oTT.fnGetSelectedData();

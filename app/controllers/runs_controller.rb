@@ -11,17 +11,17 @@ class RunsController < ApplicationController
     "test_operating_systems.operating_system_name" => "Linux")
     .first.id
     
-    byebug
-    
     r = Run.new
     r.app_id = params[:app_id]
     r.description = params[:description]
     r.notes = params[:notes]
     r.status = "Queued/Running"
+    
     # Add platform instead
     r.browser = params[:browser]
     r.browser_version = params[:browser_version]
     r.os = params[:os]
+    
     r.save
     respond_to do |format|
       format.json { render :json => {:status => "This is a new run",:id => r.id}.to_json}

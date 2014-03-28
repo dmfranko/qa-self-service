@@ -7,9 +7,14 @@
 		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 		<%= javascript_include_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js" %>
 		<%= stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" %>
-		<%= stylesheet_link_tag "http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" %>
+		<%= stylesheet_link_tag "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" %>
 		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/list.js/1.0.0/list.min.js" %>
 		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js" %>
+		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.8.1/js/bootstrap-tour.min.js" %>
+		<%= stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.8.1/css/bootstrap-tour.min.css" %>
+		<%= javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/parsley.js/1.2.3/parsley.min.js" %>
+
+
 		<%= csrf_meta_tags %>
 		<script src="http://code.highcharts.com/highcharts.js"></script>
 		<script src="http://code.highcharts.com/modules/exporting.js"></script>
@@ -106,11 +111,13 @@
 			})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
 			ga('create', 'UA-46405163-2', {
-  				'cookieDomain': 'none'
+				'cookieDomain' : 'none'
 			});
-			
+
 			ga('send', 'pageview');
 		</script>
+
+		
 	</head>
 	<body>
 		<nav class="navbar navbar-default" role="navigation">
@@ -132,23 +139,23 @@
 				<form class="navbar-form navbar-right">
 					<div>
 						You are <%= session[:cas_user] %>
-						<%= link_to "Logout",{:controller => "application", :action => 'logout'},:class => "btn btn-default btn-sm" %>
+						<%= link_to '<i class="fa fa-sign-out"></i>Logout'.html_safe,{:controller => "application", :action => 'logout'},:class => "btn btn-default btn-sm" %>
 					</div>
 				</form>
 
 				<% end %>
 				<ul class="nav navbar-nav">
 					<li>
-						<%= link_to "Applications", apps_path %>
+						<%= link_to '<i class="fa fa-tasks"></i> Applications'.html_safe, apps_path %>
 					</li>
 					<li>
-						<%= link_to "Screenshots", screenshots_path %>
+						<%= link_to '<i class="fa fa-camera-retro"></i> Screenshots'.html_safe, screenshots_path %>
 					</li>
 					<li>
-						<%= link_to "About", :controller => "static_pages",:action => "about" %>
+						<%= link_to '<i class="fa fa-info-circle"></i> About'.html_safe, :controller => "static_pages",:action => "about" %>
 					</li>
 					<li>
-						<%= link_to "Sauce", "http://www.saucelabs.com", :target => '_blank' %>
+						<%= link_to '<i class="fa fa-cloud"></i> Saucelabs'.html_safe,"https://www.saucelabs.com", :target => '_blank' %>
 					</li>
 					<% if session[:cas_user] && User.where(:netid => "df336",:admin => 1)%>
 					<li class="dropdown">
