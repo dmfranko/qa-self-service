@@ -10,7 +10,7 @@ gem 'ancestry'
 gem 'sqlite3'
 gem 'render_csv'
 #gem 'jquery-rails'
-#gem 'parsley-rails'
+gem 'parsley-rails'
 
 # Resque stuff
 gem "resque"

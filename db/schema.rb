@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140325210626) do
+ActiveRecord::Schema.define(version: 20140331203814) do
 
   create_table "app_user_permissions", force: true do |t|
     t.integer  "user_id"
@@ -108,6 +108,14 @@ ActiveRecord::Schema.define(version: 20140325210626) do
     t.datetime "updated_at"
   end
 
+  create_table "test_hierarchies", force: true do |t|
+    t.integer  "test_run_platforms_id"
+    t.string   "ancestry"
+    t.string   "test_hierarchy_description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "test_operating_systems", force: true do |t|
     t.string   "operating_system_name"
     t.datetime "created_at"
@@ -118,6 +126,40 @@ ActiveRecord::Schema.define(version: 20140325210626) do
     t.integer  "test_browser_id"
     t.integer  "test_operating_system_id"
     t.integer  "is_available_in_cloud"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "test_result_details", force: true do |t|
+    t.integer  "test_hierarchies_id"
+    t.float    "test_execution_duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "example_result"
+  end
+
+  create_table "test_result_exceptions", force: true do |t|
+    t.integer  "test_result_details_id"
+    t.text     "exception_text"
+    t.text     "exception_debug_details"
+    t.string   "exception_screenshot"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "test_run_platforms", force: true do |t|
+    t.integer  "test_runs_id"
+    t.integer  "test_platforms_id"
+    t.datetime "test_run_platform_start_time"
+    t.datetime "test_run_platform_end_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "test_runs", force: true do |t|
+    t.string   "test_run_description"
+    t.string   "test_run_note"
+    t.integer  "app_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

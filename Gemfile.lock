@@ -114,6 +114,8 @@ GEM
     parallel (1.0.0)
     parallel_tests (0.16.10)
       parallel
+    parsley-rails (1.2.4.0)
+      railties (>= 3.0.0)
     polyglot (0.3.4)
     rack (1.5.2)
     rack-protection (1.5.2)
@@ -253,6 +255,7 @@ DEPENDENCIES
   mail
   net-ping
   parallel_tests
+  parsley-rails
   rails (= 4.0.4)
   rails-erd
   render_csv
