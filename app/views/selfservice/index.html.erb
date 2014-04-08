@@ -82,7 +82,7 @@
 		<span class="label label-success"><%= Run.count%></span> Tests have been run using this service.
 	</p>
 	<p>
-		There are <span class="label label-success"><%= TestPlatform.where(:is_available_in_cloud => true).count %></span> platforms available.
+		There are <span class="label label-success"><%= Platform.where(:is_available_in_cloud => true).count %></span> platforms available.
 	</p>
 	<p>
 		There is an average of <span class="label label-success">5</span> test cases per run

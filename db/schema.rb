@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140331203814) do
+ActiveRecord::Schema.define(version: 20140401153246) do
 
   create_table "app_user_permissions", force: true do |t|
     t.integer  "user_id"
@@ -59,6 +59,14 @@ ActiveRecord::Schema.define(version: 20140331203814) do
     t.text     "browser"
     t.text     "version"
     t.text     "image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "platforms", force: true do |t|
+    t.integer  "test_browser_id"
+    t.integer  "test_operating_system_id"
+    t.integer  "is_available_in_cloud"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -123,9 +131,10 @@ ActiveRecord::Schema.define(version: 20140331203814) do
   end
 
   create_table "test_platforms", force: true do |t|
-    t.integer  "test_browser_id"
-    t.integer  "test_operating_system_id"
-    t.integer  "is_available_in_cloud"
+    t.integer  "test_run_id"
+    t.integer  "platforms_id"
+    t.datetime "test_run_platform_start_time"
+    t.datetime "test_run_platform_end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -143,15 +152,6 @@ ActiveRecord::Schema.define(version: 20140331203814) do
     t.text     "exception_text"
     t.text     "exception_debug_details"
     t.string   "exception_screenshot"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "test_run_platforms", force: true do |t|
-    t.integer  "test_runs_id"
-    t.integer  "test_platforms_id"
-    t.datetime "test_run_platform_start_time"
-    t.datetime "test_run_platform_end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -4,7 +4,7 @@ class RunsController < ApplicationController
   end
 
   def create
-    p = TestPlatform
+    p = Platform
     .includes([:test_operating_system,:test_browser])
     .where("test_browsers.browser_name" => "chrome",
     "test_browsers.browser_version" => "30",

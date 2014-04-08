@@ -26,7 +26,7 @@ class RunnersController < ApplicationController
     @target_environments = App.find(params[:id]).application_environments
     @emails = App.find(params[:id]).application_default_emails    
 
-    @platforms = TestPlatform.includes([:test_operating_system,:test_browser]).where(is_available_in_cloud: 1)
+    @platforms = Platform.includes([:test_operating_system,:test_browser]).where(is_available_in_cloud: 1)
   end
 
   def skip_login?
