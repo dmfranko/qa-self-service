@@ -1,0 +1,11 @@
+<div class="page-header">
+	<h1>Test Platform Execution <small>Executed platforms</small></h1>
+	<div class="list-group">
+		<% @h.each do |h| %>
+		<%= link_to test_hierarchy_index_path, :class => 'list-group-item' do %>
+		<h2> <%= h.id %> </h2> 
+			<%= h.test_hierarchy_description %>
+		<% end %>
+		<% end %>
+	</div>
+</div>

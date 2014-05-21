@@ -31,11 +31,11 @@ class TestRunner
       :emails => ['dan.franko@yale.edu','jason.shuff@yale.edu'],
       :environment => params["environments"],
       :platform => params["platform"],
-      :tags =>  Hash[params["run_tags"].map{|(k,v)| [k.to_sym,v.to_i.to_bool]}],
+      :tags =>  Hash[params["tag_fields"].map{|(k,v)| [k.to_sym,v.to_i.to_bool]}],
       :filter => params["filter"],
       :notes => params["message"]
     }.to_s
-   
+    
     # We're on ec2.  This is temporary
     if Dir.exists?("/home/ec2-user/")
       Dir.chdir("/home/ec2-user/scripts/#{name}")
@@ -43,13 +43,8 @@ class TestRunner
       Dir.chdir("/Users/admin/Documents/Development/#{name}")
     end
     
-    # Maybe
-    #`RUNTIME='#{rtime}' parallel_rspec app/spec/`
-    #puts "Doing a bundle install"
-    #puts system("bash", "-c", '/bin/bash --login;/Users/admin/.rvm/bin/rvm gemset use autotest')
-    #puts `bash -c $(/bin/bash --login;/Users/admin/.rvm/bin/rvm 2.0.0 ; ruby -v; /Users/admin/.rvm/bin/rvm gemset use autotest)`
-    #puts `bundle install`
     
-    `PASSPHRASE='#{params["passphrase"]}' RUNTIME='#{rtime}' rspec`
+    `PASSPHRASE='#{params["passphrase"]}' RUNTIME='#{rtime}' rspec --tag {"navigation"=>"1"}`
+    puts "PASSPHRASE='#{params["passphrase"]}' RUNTIME='#{rtime}' rspec"
   end
 end

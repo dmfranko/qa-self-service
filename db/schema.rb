@@ -11,39 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140401153246) do
-
-  create_table "app_user_permissions", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "app_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20140518155015) do
 
   create_table "application_default_emails", force: true do |t|
+    t.integer  "application_id"
     t.string   "email_address"
-    t.integer  "app_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "application_environments", force: true do |t|
+    t.integer  "application_id"
     t.string   "environment_name"
     t.string   "environment_url"
-    t.integer  "is_environment_available"
-    t.integer  "app_id"
+    t.integer  "is_available"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "application_tags", force: true do |t|
+    t.integer  "application_id"
     t.string   "tag"
-    t.integer  "app_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "apps", force: true do |t|
+  create_table "application_user_permissions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "application_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "applications", force: true do |t|
     t.string   "name"
     t.integer  "owner"
     t.text     "description"
@@ -53,12 +53,26 @@ ActiveRecord::Schema.define(version: 20140401153246) do
     t.integer  "is_application_mobile", default: 0
   end
 
-  create_table "captured_screen_images", force: true do |t|
-    t.integer  "screenshot_id"
-    t.text     "os"
-    t.text     "browser"
-    t.text     "version"
+  create_table "captured_page_images", force: true do |t|
+    t.integer  "page_test_id"
     t.text     "image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "platform_id"
+  end
+
+  create_table "page_tests", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "page_id"
+    t.float    "run_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
+  end
+
+  create_table "pages", force: true do |t|
+    t.string   "url"
+    t.string   "netid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -101,14 +115,6 @@ ActiveRecord::Schema.define(version: 20140401153246) do
     t.text     "os"
   end
 
-  create_table "screenshots", force: true do |t|
-    t.string   "url"
-    t.string   "netid"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "execution_state"
-  end
-
   create_table "test_browsers", force: true do |t|
     t.string   "browser_name"
     t.string   "browser_version"
@@ -116,8 +122,15 @@ ActiveRecord::Schema.define(version: 20140401153246) do
     t.datetime "updated_at"
   end
 
+  create_table "test_environments", force: true do |t|
+    t.integer  "test_id"
+    t.integer  "application_environment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "test_hierarchies", force: true do |t|
-    t.integer  "test_run_platforms_id"
+    t.integer  "test_platform_id"
     t.string   "ancestry"
     t.string   "test_hierarchy_description"
     t.datetime "created_at"
@@ -131,8 +144,8 @@ ActiveRecord::Schema.define(version: 20140401153246) do
   end
 
   create_table "test_platforms", force: true do |t|
-    t.integer  "test_run_id"
-    t.integer  "platforms_id"
+    t.integer  "test_environment_id"
+    t.integer  "platform_id"
     t.datetime "test_run_platform_start_time"
     t.datetime "test_run_platform_end_time"
     t.datetime "created_at"
@@ -140,15 +153,15 @@ ActiveRecord::Schema.define(version: 20140401153246) do
   end
 
   create_table "test_result_details", force: true do |t|
-    t.integer  "test_hierarchies_id"
+    t.integer  "test_hierarchy_id"
+    t.integer  "is_pass"
     t.float    "test_execution_duration"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "example_result"
   end
 
   create_table "test_result_exceptions", force: true do |t|
-    t.integer  "test_result_details_id"
+    t.integer  "test_result_detail_id"
     t.text     "exception_text"
     t.text     "exception_debug_details"
     t.string   "exception_screenshot"
@@ -156,10 +169,10 @@ ActiveRecord::Schema.define(version: 20140401153246) do
     t.datetime "updated_at"
   end
 
-  create_table "test_runs", force: true do |t|
+  create_table "tests", force: true do |t|
     t.string   "test_run_description"
     t.string   "test_run_note"
-    t.integer  "app_id"
+    t.integer  "application_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

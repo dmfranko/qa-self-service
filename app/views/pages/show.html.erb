@@ -1,0 +1,64 @@
+<script>
+	var autorefresh = setInterval(function() {
+		$(".Running,.Queued").each(function(index) {
+			var element = $(this)
+			$.getJSON('/page_tests/' + $(this).attr('id') + '.json', function(data) {
+				var items = [];
+				element.find('.current_status').text(data.status);
+				element.find('.count').text(data.count);
+
+				if (data.status === "Finished") {
+					element.removeClass();
+					element.find('.current_status').text("Finished");
+					element.find('.spinner').hide();
+					element.find('.detail_button').removeAttr('disabled');
+				}
+			});
+		});
+	}, 3000)
+</script>
+
+<div id="screens">
+	<input type="text" class="search form-control" id="search" placeholder="Filter" style="display: none"/>
+	<br />
+	<div class="page-header">
+		<h1>Screenshot runs <small>Runs for <%= @s.first.page.url %></small></h1>
+	</div>
+	<ul class="list-group list">
+		<% @s.each do |s| %>
+		<li class="list-group-item">
+			<br/>
+			<%= content_tag(:span,:class => determine_phase(s),:id => s.id) do %>
+				<p class="list-group-item-text details">
+					<%= link_to "Details",page_test_path(s), :class => "btn btn-primary detail_button",:disabled =>  determine_phase(s) != "Finished"  %>
+				</p>
+				<span>Status : 
+					<span class="current_status"><%= determine_phase(s) %></span>
+				</span>
+				<% if determine_phase(s) != "Finished" %>
+					<span class="spinner"><i class="fa fa-refresh fa-spin"></i></span>
+				<% end %>
+				<br />
+				<span>
+					<span class="badge pull-left count"><%= s.captured_page_images.count %></span>
+					<span>screenshots taken</span>
+				</span>
+			<% end %>
+			<p class="list-group-item-text">
+				Start Time : <%= s.start_time.localtime.strftime('%D %r') %><br/>
+				End Time : <%= s.end_time.localtime.strftime('%D %r') if s.end_time %><br/>
+				Run Time : <%= "#{s.run_time.round(2)} seconds" if s.run_time %>
+			</p>
+		</li>
+		<% end %>
+	</ul>
+	<ul class="pagination"></ul>
+</div>
+
+<script>
+	var monkeyList = new List('screens', {
+		valueNames : ['url'],
+		page : 10,
+		plugins : [ListPagination({})]
+	}); 
+</script>

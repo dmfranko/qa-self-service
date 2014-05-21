@@ -41,7 +41,7 @@
 		Add the ability to provide address
 		<%= label_tag(:environments, "Target environment") %>
 		<br />
-		<%= select_tag 'environments', options_for_select(@target_environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.environment_url]}),:class => "form-control",:required => true %>
+		<%= select_tag 'environments', options_for_select(@environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.environment_url]}),:class => "form-control",:required => true %>
 	</div>
 
 	<div class="form-group">
@@ -184,7 +184,7 @@
 			</ul>
 			<div id="my-tab-content" class="tab-content">
 				<div class="tab-pane active" id="tags">
-					<% if ! @tags.empty? %>
+					<% if ! @run_tags.empty? %>
 					<h1>By tags</h1>
 					<p>
 						<div class="btn-group">

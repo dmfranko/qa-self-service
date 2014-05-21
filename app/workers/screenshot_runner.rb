@@ -1,36 +1,37 @@
 class ScreenshotRunner
   @queue = :screenshot_queue
   def self.perform(params)
-    s = Screenshot.find(params["id"])
-    s.execution_state = "Running"
+    s = PageTest.find(params["id"])
+    s.start_time = Time.now
     s.save
     
-    JSON.parse(params["platforms"]).each do |p|
-      caps = { 
-        :browserName => p["browser"],
-        :browser_version => p["version"],
-        :os => p["os"],
-        :name => "Screenshots for #{params["url"]}",
-        :tags => ['screenshots']
-      }
-      
-      @b = Watir::Browser.sauce_start(caps)
-      @b.goto(params["url"])
+    platform = params["platform"]
+    
+    caps = { 
+      :browserName => platform["browser"],
+      :version => platform["version"],
+      :platform => platform["os"],
+      :name => "Screenshots for #{params["url"]}",
+      :tags => ['screenshots']
+    }
+    
+    @b = Watir::Browser.sauce_start(caps)
+    @b.goto(params["url"])
 
-      directory = Rails.root.join('app/assets', 'images','screens',Time.now.strftime("%m%d%Y"))
-      Dir.mkdir(directory.to_s) if ! Dir.exists?(directory.to_s)
-      
-      imageName = "#{SecureRandom.urlsafe_base64 + Time.now.to_i.to_s}.png"
-      File.open("/#{directory.to_s}/#{imageName}", 'wb') do|f|
-        f.write(Base64.decode64(@b.screenshot.base64))
-      end
-  
-      s.captured_screen_images.create(browser: p["browser"],os: p["os"],version: p["version"],image: "#{Time.now.strftime("%m%d%Y")}/#{imageName}")
-      s.save
-      
-      @b.close
+    directory = Rails.root.join('app/assets', 'images','screens',Time.now.strftime("%m%d%Y"))
+    Dir.mkdir(directory.to_s) if ! Dir.exists?(directory.to_s)
+    
+    imageName = "#{SecureRandom.urlsafe_base64 + Time.now.to_i.to_s}.png"
+    File.open("/#{directory.to_s}/#{imageName}", 'wb') do|f|
+      f.write(Base64.decode64(@b.screenshot.base64))
     end
-    s.execution_state = 'Finished'
+    
+    s.captured_page_images.create(image: "#{Time.now.strftime("%m%d%Y")}/#{imageName}",platform_id: platform["id"])
+    s.save
+    
+    @b.close
+    s.end_time = Time.now
+    s.run_time = s.end_time - s.start_time
     s.save
   end
 end

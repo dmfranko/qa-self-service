@@ -4,14 +4,21 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Test is complete : <%= @user.inspect %></h1>
+    <h1>Test is complete for the '<%= @details.test_environment.test.application.name %>' application.</h1>
     <p>
-      You have successfully signed up to example.com,
-      your username is: <br/>
+    	Environment Name:<%= @details.test_environment.application_environment.environment_name %><br />
+    	Environment URL: <%= @details.test_environment.application_environment.environment_url %><br />
     </p>
     <p>
-      To login to the site, just follow this link:.
+		The ID is <%= @details.test_environment.test.id %>
     </p>
-    <p>Thanks for joining and have a great day!</p>
+    <p>
+		 The test has
+		 <% if @details.test_result_details.where(:is_pass => 0).count > 0%>
+		 	Failed :(
+		 <% else %>
+		 	Passed :)
+		 <% end %>
+    </p>
   </body>
 </html>

@@ -38,30 +38,21 @@ class ReportServicesController < ApplicationController
     run_id = p.id
     values = params[:path].split(":")
     
-    # There's probably a better way to do this
-    # This is the root
+    t = Test.new
+    t.test_run_description = "This is a run"
+    t.save
     
-    @a = Result.find_or_create_by(description: values.first,run_id: run_id)
-    #@a.save
+    plat = t.test_platform.create(platforms_id: 500)
+    @a = plat.test_hierarchies.find_or_create_by(test_hierarchy_description: values.first)
+    @a.save
+    
     # These are the children/headers
     values[1..-2].each do |x|
-      @a = @a.children.find_or_create_by(description: x,run_id: run_id)
+      @a.children.create(test_hierarchy_description: x)
+      byebug
     end
 
-    # The last record contains that actual test details
-    @a.children.find_or_create_by(
-    run_id: run_id,
-    description: values.last,
-    duration: 100,
-    app_id: 12,
-    status: params[:status],
-    location: params[:path],
-    duration: params[:duration],
-    exception: params[:exception],
-    exception_details: params[:exception_details],
-    screenshot: newName
-    )
-    
+    @a.test_result_details.create(is_pass: 0)
     @a.save
     
     respond_to do |format|

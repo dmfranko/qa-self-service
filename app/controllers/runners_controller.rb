@@ -20,11 +20,19 @@ class RunnersController < ApplicationController
   end
 
   def show
-    @app = App.find(params[:id])
+    # @app = Application.find(params[:id])
+# 
+    # @tags = Application.find(params[:id]).application_tags
+    # @target_environments = Application.find(params[:id]).application_environments
+    # @emails = Application.find(params[:id]).application_default_emails    
 
-    @tags = App.find(params[:id]).application_tags
-    @target_environments = App.find(params[:id]).application_environments
-    @emails = App.find(params[:id]).application_default_emails    
+
+    @app = Application.find(params[:id])
+    
+    @run_tags = Application.find(params[:id]).application_tags
+    @environments = Application.find(params[:id]).application_environments
+    @emails = Application.find(params[:id]).application_default_emails
+    @users = Application.find(params[:id]).users
 
     @platforms = Platform.includes([:test_operating_system,:test_browser]).where(is_available_in_cloud: 1)
   end

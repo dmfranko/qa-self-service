@@ -31,11 +31,13 @@ gem 'wicked_pdf'
 gem "rails-erd"
 gem "parallel_tests"
 gem 'watir-browser-factory','0.0.6', :path => "vendor/assets/gems/watir-browser-factory-0.0.6"
-gem 'rspec-rest-formatter', '0.0.3',:path => "vendor/assets/gems/rspec-rest-formatter-0.0.3"
+gem 'rspec-rest-formatter', '0.0.4',:path => "vendor/assets/gems/rspec-rest-formatter-0.0.4"
 gem 'git'
 gem 'ruby-net-ldap'
 gem 'net-ping'
 gem 'info_vault'
+gem 'gmail'
+gem 'newrelic_rpm'
 
 # Gems used only for assets and not required
 # in production environments by default.

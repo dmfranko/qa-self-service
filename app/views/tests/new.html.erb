@@ -1,0 +1,286 @@
+<div class="page-header">
+	<h1>Run <small>Execute tests for the <span class="label label-primary"><%= @app.name %></span> application.</small></h1>
+</div>
+
+<script>
+	// Client side validations here.
+	// Probably should implement some server side ones as well.
+	$(function() {
+		$('#runner').parsley({
+			successClass : 'has-success',
+			errorClass : 'has-error',
+			errors : {
+				classHandler : function(el) {
+					return $(el).closest('.form-group');
+				},
+				errorsWrapper : '<span class=\"help-inline\"></span>',
+				errorElem : '<span></span>'
+			}
+		});
+
+		// Validate the form before submitting
+		$("#runner").submit(function(event) {
+			$("#runner").parsley("validate");
+		});
+	});
+
+</script>
+
+<%= form_tag("/tests", method: "post",role: "form",id: "runner","novalidate" => "") do |f| %>
+<div class="form-group">
+	<%= hidden_field_tag(:name, @app.name) %>
+	<%= hidden_field_tag(:id, @app.id) %>
+	<%= hidden_field_tag(:github_url, @app.github_url) %>
+
+	<div class="form-group">
+		<%= label_tag(:user, "Emails") %>
+		<%= email_field(:user, :address,:placeholder => "Who should the reports be sent to?",:class => "form-control",:required => true) %>
+	</div>
+
+	<div class="form-group">
+		Add the ability to provide address
+		<%= label_tag(:environments, "Target environment") %>
+		<br />
+		<%= select_tag 'environments', options_for_select(@environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.environment_url]}),:class => "form-control",:required => true %>
+	</div>
+
+	<div class="form-group">
+		<%= label_tag(:passphrase, "Protected info password") %>
+		<%= password_field_tag(:passphrase,"",:placeholder => "secret",:class => "form-control",:required => true) %>
+	</div>
+
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#platform_selection">Platform selection</a></h4>
+				<span class="help-block">If you select nothing the default is Firefox Windows 7</span>
+			</div>
+			<div id="platform_selection" class="panel-collapse collapse">
+				<div class="panel-body">
+					<h4>Selected <span id="pnumber" class="badge">0</span></h4>
+					<table cellpadding="0" cellspacing="0" border="0" class="table" id="example" width="100%">
+						<thead>
+							<tr>
+								<th width="40%">OS</th>
+								<th width="40%">Browser</th>
+								<th width="20%">Version</th>
+							</tr>
+						</thead>
+
+						<tbody aria-live="polite" aria-relevant="all">
+							<% @platforms.each do |p| %>
+							<tr>
+								<td><%= p.test_operating_system.operating_system_name %></td>
+								<td><%= p.test_browser.browser_name %></td>
+								<td><%= p.test_browser.browser_version %></td>
+							</tr>
+							<% end %>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th rowspan="1" colspan="1">
+								<input type="text" name="search_engine" value="Search engines" class="search_init">
+								</th><th rowspan="1" colspan="1">
+								<input type="text" name="search_browser" value="Search browsers" class="search_init">
+								</th><th rowspan="1" colspan="1">
+								<input type="text" name="search_platform" value="Search platforms" class="search_init">
+								</th>
+							</tr>
+						</tfoot>
+					</table>
+					<script>
+						var asInitVals = new Array();
+						var oTable = $('#example').dataTable({
+							"sDom" : "<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
+							"iDisplayLength" : 5,
+							"sPaginationType" : "bootstrap",
+							"oTableTools" : {
+								"sRowSelect" : "multi",
+								"aButtons" : ["select_none"]
+							}
+						}).bind('click', function() {
+							//Display this somewhere on the page.
+							$('#pnumber').text(oTT.fnGetSelected().length)
+						});
+
+						$("tfoot input").keyup(function() {
+							/* Filter on the column (the index) of this element */
+							oTable.fnFilter(this.value, $("tfoot input").index(this));
+						});
+
+						/*
+						 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in
+						 * the footer
+						 */
+						$("tfoot input").each(function(i) {
+							asInitVals[i] = this.value;
+						});
+
+						$("tfoot input").focus(function() {
+							if (this.className == "search_init") {
+								this.className = "";
+								this.value = "";
+							}
+						});
+
+						$("tfoot input").blur(function(i) {
+							if (this.value == "") {
+								this.className = "search_init";
+								this.value = asInitVals[$("tfoot input").index(this)];
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<%= hidden_field_tag 'platforms' %>
+	</div>
+	<br />
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Configuration
+		</div>
+		<div class="panel-body">
+
+			<div class="row">
+				<div class="col-md-4">
+					<div class="checkbox">
+						<label> <%= check_box_tag(:parallel) %>Allow parallel runs </label>
+						<span class="help-block">Your app needs to be threadsafe for this option to be enabled.</span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="checkbox">
+						<label> <%= check_box_tag(:local) %>Local or sauce?</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="checkbox">
+						<label> <%= check_box_tag(:another) %>Something else</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Filtering
+			<span class="help-block">Filtering allows you to control which tests are running by either
+				selecting by tags or filtering by test description.</span>
+		</div>
+		<div class="panel-body" id="tag_panel">
+			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+				<li>
+					<a href="#tags" data-toggle="tab">Tags</a>
+				</li>
+				<li>
+					<a href="#text" data-toggle="tab">Text</a>
+				</li>
+			</ul>
+			<div id="my-tab-content" class="tab-content">
+				<div class="tab-pane active" id="tags">
+					<% if ! @run_tags.empty? %>
+					<h1>By tags</h1>
+					<p>
+						<div class="btn-group">
+							<button type="button" id="all_tags" class="btn btn-success">
+								Check All
+							</button>
+							<button type="button" id="no_tags" class="btn btn-danger">
+								Clear All
+							</button>
+						</div>
+
+						<div class="row">
+							<%= fields_for :run_tags do |tag_fields| %>
+							<% @run_tags.each do |tag|%>
+							<div class = "col-md-4">
+								<div class="checkbox">
+									<%= tag.tag %>
+									<%= check_box("tag_fields",tag.tag) %>
+								</div>
+							</div>
+							<% end %>
+							<% end %>
+						</div>
+					</p>
+					<% end %>
+				</div>
+				<div class="tab-pane" id="text">
+					<h1>By text</h1>
+					<%= label_tag(:filter, "Filter") %>
+					<br/>
+					<%= text_area_tag(:filter,"",:placeholder => "Filter by text.",:class => "form-control",:rows => "1") %>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%= label_tag(:message, "Note") %>
+	<span class="help-block">Provide some additional details about why you're running this test if you'd like.</span>
+	<%= text_area_tag(:message,"",:placeholder => "Provide some notes about this run.",:class => "form-control",:rows => "3") %>
+	<br/>
+
+	<div class="panel-group" id="accordion">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#schedule">Schedule</a></h4>
+				<span class="help-block">Set your test to execute to occur at a particular time.</span>
+			</div>
+			<div id="schedule" class="panel-collapse collapse">
+				<div class="panel-body">
+					<%= label_tag(:time_slice, "Time Slice") %>
+					<div class="row">
+						<div class="col-xs-2 .col-sm-2 col-md-2 col-lg-1">
+							<%= text_field_tag(:number,"",:placeholder => "",:class => "form-control",:maxlength => "2",:size =>"2") %>
+						</div>
+						<div class="col-xs-4 .col-sm-4 col-md-2">
+							<%= select_tag 'time_slice',options_for_select(["second","minute","hour","day"]),:class => "form-control" %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br />
+
+	<%= submit_tag("Run") %>
+
+	<script>
+		$(function() {
+			$('#all_tags').click(function() {
+				$('#tag_panel').find(':checkbox').prop("checked", true);
+			});
+
+			$('#no_tags').click(function() {
+				$('#tag_panel').find(':checkbox').prop("checked", false);
+			});
+
+		});
+
+		var oTT = TableTools.fnGetInstance('example');
+		$("#runner").submit(function(event) {
+			var aSelectedTrs = oTT.fnGetSelectedData();
+			// Get our selected platforms and set them to a hidden field
+			var platforms = []
+			$.each(aSelectedTrs, function(index, attr) {
+				var plat = {}
+				plat.browser = attr[1]
+				plat.platform = attr[0]
+				plat.version = attr[2]
+				platforms.push(plat)
+			});
+			$('#platforms').val(JSON.stringify(platforms))
+			// Stop the submit from doing what it normall does?
+			//event.preventDefault();
+		});
+	</script>
+
+	<% end %>
+</div>

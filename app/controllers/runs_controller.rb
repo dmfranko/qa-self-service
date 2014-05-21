@@ -12,10 +12,13 @@ class RunsController < ApplicationController
     .first.id
     
     r = Run.new
+    byebug
     r.app_id = params[:app_id]
     r.description = params[:description]
     r.notes = params[:notes]
     r.status = "Queued/Running"
+    
+    byebug
     
     # Add platform instead
     r.browser = params[:browser]
@@ -23,6 +26,7 @@ class RunsController < ApplicationController
     r.os = params[:os]
     
     r.save
+    byebug
     respond_to do |format|
       format.json { render :json => {:status => "This is a new run",:id => r.id}.to_json}
     end

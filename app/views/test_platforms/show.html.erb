@@ -1,0 +1,28 @@
+<div class="page-header">
+	<h1>Test Platform Execution <small>Executed platforms</small></h1>
+
+	<div class="list-group">
+		<% @platforms.each do |p| %>
+		<%= link_to test_result_detail_path(p), :class => 'list-group-item' do %>
+			<span class="pull-right">ID <span class="badge"><%= p.id %></span></span>
+			Execution Status : 
+			<% if p.test_run_platform_end_time %>
+				Completed <i class="fa fa-thumbs-o-up"></i>
+			<% else %>
+				Running <i class="fa fa-refresh fa-spin"></i>
+			<% end %>
+			<br />
+			OS : <%= p.platform.test_operating_system.operating_system_name %>
+			<br />
+			Browser : <%= p.platform.test_browser.browser_name %> v.<%= p.platform.test_browser.browser_version %>
+			<br />
+			<br />
+			Start Time: <%= p.test_run_platform_start_time.localtime.strftime("%r") %>
+			<% if p.test_run_platform_end_time %>
+				<br />
+				End Time : <%= p.test_run_platform_end_time.localtime.strftime("%r") %>
+			<% end %>
+		<% end %>
+		<% end %>
+	</div>
+</div>

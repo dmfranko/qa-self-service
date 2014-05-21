@@ -146,10 +146,10 @@
 				<% end %>
 				<ul class="nav navbar-nav">
 					<li>
-						<%= link_to '<i class="fa fa-tasks"></i> Applications'.html_safe, apps_path %>
+						<%= link_to '<i class="fa fa-tasks"></i> Applications'.html_safe, applications_path %>
 					</li>
 					<li>
-						<%= link_to '<i class="fa fa-camera-retro"></i> Screenshots'.html_safe, screenshots_path %>
+						<%= link_to '<i class="fa fa-camera-retro"></i> Screenshots'.html_safe, pages_path %>
 					</li>
 					<li>
 						<%= link_to '<i class="fa fa-info-circle"></i> About'.html_safe, :controller => "static_pages",:action => "about" %>
@@ -165,7 +165,7 @@
 								<%= link_to "Users", users_path %>
 							</li>
 							<li>
-								<%= link_to "New App", new_app_path %>
+								<%= link_to "New App", new_application_path %>
 							</li>
 							<li>
 								<%= link_to "Resque", '/resque',:target => "_blank" %>

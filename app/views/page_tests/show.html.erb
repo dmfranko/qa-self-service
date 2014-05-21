@@ -1,0 +1,42 @@
+<div class="page-header">
+	<h1>Screenshot images <small><span class="label label-primary"><%= @s.captured_page_images.count %></span> platforms captured at <%= @s.page.url %></small></h1>
+</div>
+
+<script>
+	$(document).ready(function() {
+		$(".fancy").fancybox({
+			helpers : {
+				title : {
+					type : 'float'
+				}
+			},
+			afterClose : function() {
+				// Maybe there's a less heavy handed way
+				$(".fancy").show();
+			}
+		});
+	}); 
+</script>
+
+<div class="row">
+	<% @s.captured_page_images.each do |s| %>
+	<div class="col-xs-6 col-sm-4 col-md-2">
+
+		<div class="panel panel-default">
+			<ul class="list-group">
+				<li class="list-group-item">
+					<%= s.platform.test_operating_system.operating_system_name %>
+				</li>
+				<li class="list-group-item">
+					<%= s.platform.test_browser.browser_name %> v.<%= s.platform.test_browser.browser_version %>
+				</li>
+			</ul>
+
+			<div class="panel-body">
+				<%= image_tag("screens/#{s[:image]}",:class => "img-responsive fancy") %>
+			</div>
+		</div>
+
+	</div>
+	<% end %>
+</div>

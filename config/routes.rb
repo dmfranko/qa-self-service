@@ -8,7 +8,7 @@ Qaselfservice::Application.routes.draw do
   get 'about/table_test'
   get 'about/summary'
   
-  resources :apps
+  resources :applications
   resources :users
   resources :selfservice
   resources :uploads
@@ -17,7 +17,22 @@ Qaselfservice::Application.routes.draw do
   resources :runners
   resources :run_details
   resources :platforms
-  resources :screenshots
+  
+  resources :pages
+  resources :page_tests
+  resources :captured_page_images
+  
+  resources :tests do
+    collection do
+      get 'pending_test'
+      post 'new_test_run'
+      post 'end_test_run'
+    end
+  end
+
+  resources :test_platforms
+  resources :test_result_details
+  resources :test_hierarchy
   
   resources :report_services do
     collection do

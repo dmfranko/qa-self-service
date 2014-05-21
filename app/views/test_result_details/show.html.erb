@@ -1,0 +1,23 @@
+<div class="container">
+	<%= link_to "Back", run_path(1), class: "btn btn-default" %>
+	<div class="page-header">
+		<h1>Run details for <%= @p.test_environment.test.application.name %></h1>
+	</div>
+
+	<!--
+	Only show this if there's no records
+	<div class="alert alert-danger">
+	There are no results for some reason :(?
+	</div>
+	-->
+
+	<div id="res">
+		<ul class="list-group list r">
+			<% @tree.roots.each do |t| %>
+			<%= nested_messages t.subtree.arrange %>
+			<% end %>
+		</ul>
+	</div>
+
+	<%= link_to "Back", run_path, class: "btn btn-default" %>
+</div>

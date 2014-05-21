@@ -1,0 +1,85 @@
+<li class="list-group-item clearfix <%= "detail-record" if test_hierarchy.test_result_details.empty? %> <%= "Pass".downcase if test_hierarchy.test_result_details %>">
+	<% if test_hierarchy.test_result_details.empty? %> <h3><%= test_hierarchy.test_hierarchy_description %></h3>
+	<% else %>
+
+	<p class="list-group-item-text">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title "> 
+				<%= test_hierarchy.test_hierarchy_description %>
+				<% case test_hierarchy.test_result_details.first.is_pass %>
+				<% when 1 %> 
+					<span class="label label-success r">Passed</span> 
+				<% when 0 %> 
+					<span class="label label-danger r">Failed</span> 
+				<%  when nil %> 
+					<span class="label label-warning r">Pending</span>
+				<% else %>
+				<% end %> 
+				</h3>
+			</div>
+		
+		
+		<div class="row">
+			<div class="col-md-4">
+				<span>Duration
+					<br />
+					<span class="badge">30</span></span>
+			</div>
+			<div class="col-md-4">
+				<span>Time
+					<br />
+					<span class="badge"><%= test_hierarchy.created_at.localtime.strftime("%r") %></span></span>
+			</div>
+
+			<% if ! test_hierarchy.test_result_details.first.test_result_exceptions.empty? %>
+			<div class="col-md-4">
+				<span>Screenshot
+					<br />
+					<%= link_to image_tag(test_hierarchy.test_result_details.first.test_result_exceptions.first.exception_screenshot, :size => "50x50", :alt => "Failure Screenshot",:class => "img-circle"),asset_path(test_hierarchy.test_result_details.first.test_result_exceptions.first.exception_screenshot),:target => "_blank" %></span>
+			</div>
+			<% end %>
+		</div>
+
+
+		<% if ! test_hierarchy.test_result_details.first.test_result_exceptions.empty? %>
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<a data-toggle="collapse" data-parent="#accordion" href="#<%= test_hierarchy.test_result_details.first.test_result_exceptions.first.id %>"><h4 class="panel-title">Exception details</h4> </a>
+				</div>
+				<div id="<%= test_hierarchy.test_result_details.first.test_result_exceptions.first.id %>" class="panel-collapse collapse">
+					<div class="panel-body">
+
+						<div class="panel panel-danger">
+							<div class="panel-heading">
+								<h3 class="panel-title">Exception</h3>
+							</div>
+							<div class="panel-body">
+								<%= simple_format(test_hierarchy.test_result_details.first.test_result_exceptions.first.exception_text) %>
+							</div>
+						</div>
+
+						<div class="panel panel-danger">
+							<div class="panel-heading">
+								<h3 class="panel-title">Exception Details</h3>
+							</div>
+
+							<div class="panel-body">
+								<%= test_hierarchy.test_result_details.first.test_result_exceptions.first.exception_debug_details.html_safe %>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</p>
+	<% end %>
+		
+		</div>
+	</p>
+
+	
+	<% end %>
+</li>
