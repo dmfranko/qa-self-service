@@ -11,12 +11,10 @@
 			<span class="label label-success">Pass <%= t.test_result_details.where(:is_pass => 1).count %></span>
 			<span class="label label-warning">Pending <%= t.test_result_details.where(:is_pass => nil).count %></span>
 			<h3>Details</h3>
-			Description : <%= t.test_run_description %>
 			<br />
 			Note : <%= t.test_run_note %>
 			<br />
 			Request Time : <%= t.created_at.localtime.strftime("%r") %>
-
 
 			<h3>Environments</h3>
 			<div class="list-group">
