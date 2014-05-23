@@ -10,12 +10,14 @@ class TestResultDetailsController < ApplicationController
     # Push the counts on to the hash
     @counts = old_hash.merge(Result.where(run_id: params[:id]).count(:group=>"status"))
     
+    
     respond_to do |format|
       format.html
       format.csv { render csv: @results }
-      # format.pdf do
-        # render :pdf => "file_name",:template => 'layouts/application.html.erb'
-      # end
+      
+      format.pdf do
+        render :pdf => "report"
+      end
     end
   end
 end

@@ -18,6 +18,7 @@ gem 'resque-web', require: 'resque_web'
 gem 'resque-scheduler'
 
 #Other stuff
+gem 'rspec-retry'
 gem 'mail'
 gem 'watir-webdriver'
 gem 'rspec-core'

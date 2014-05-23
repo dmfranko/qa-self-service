@@ -4,6 +4,12 @@
 		<% @tests.each do |t| %>
 		<li class="list-group-item">
 			<span class="pull-right">ID <span class="badge"><%= t.id %></span></span>
+			<h3>Status</h3>
+			<% if t.test_platforms.where(:test_run_platform_end_time => nil).count == 0 %>
+				Completed <i class="fa fa-thumbs-o-up"></i>
+			<% else %>
+				Running <i class="fa fa-refresh fa-spin"></i>
+			<% end %>
 			<h3>Stats</h3>
 			<span class="label label-info">Total <%= t.test_result_details.count %></span>
 			<br />
