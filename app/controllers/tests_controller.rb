@@ -95,16 +95,16 @@ class TestsController < ApplicationController
     t.test_run_description = params[:description]
     t.save
     
-    # Find or create by
+    # Save the environment
     e = t.test_environments.find_or_create_by(application_environment_id: params[:environment_id])
     e.save
     
+    # Save the platform
     p = e.test_platforms.find_or_create_by(platform_id: params[:platform_id])
     p.test_run_platform_start_time = Time.now
     p.save
 
     # Return platform id
-
     respond_to do |format|
       format.json {render :json => {:id => p.id}.to_json}
     end
