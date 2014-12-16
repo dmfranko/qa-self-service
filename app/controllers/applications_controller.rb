@@ -13,42 +13,39 @@ class ApplicationsController < ApplicationController
   end
 
   def new
-    @app = App.new
+    @app = Application.new
   end
   
   def create
-    @app = App.new(app_params)
-    @app.tags = params["app"]["tags"].split(",")
-    @app.default_emails = params["app"]["default_emails"].split(",")
+    @app = Application.new(app_params)
     @app.save
-    redirect_to apps_path,notice: "App added."
+    redirect_to applications_path,notice: "Application added."
   end
 
   def edit
-    @app = App.find(params[:id])
+    @app = Application.find(params[:id])
   end
 
   def update
-    @app = App.find(params[:id])
+    @app = Application.find(params[:id])
     if @app.update(app_params)
       # Handle a successful update.
-      redirect_to apps_path,notice: "Application attributes updated."
+      redirect_to applications_path,notice: "Application attributes updated."
       else
       render 'edit'
     end
   end
 
   def destroy
-    App.find(params[:id]).destroy
-    redirect_to apps_path,notice: "App deleted."
+    Application.find(params[:id]).destroy
+    redirect_to applications_path,notice: "App deleted."
   end
 
 
   private
   
   def app_params
-    #params.require(:app).permit(:name,:description,:github_url,{:envs => {}})
-    params.require(:app).permit!
+    params.require(:application).permit!
   end
   
   def skip_login?

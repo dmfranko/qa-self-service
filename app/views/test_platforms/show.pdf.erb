@@ -1,9 +1,8 @@
-<div class="page-header">
-	<h1>Test Platform Execution <small>Executed platforms</small></h1>
+<%= wicked_pdf_stylesheet_link_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" %>
 
-	<%= link_to "Download (PDF)", test_platform_path(:format => "pdf"),:target => "_blank" %>
-
-	<div class="list-group">
+<h1>Test platforms</h1>
+<div id="res">
+<div class="list-group">
 		<% @platforms.each do |p| %>
 		<%= link_to test_result_detail_path(p), :class => 'list-group-item' do %>
 		<span class="pull-right">ID <span class="badge"><%= p.id %></span></span>
@@ -65,5 +64,4 @@
 		<% end %>
 		<% end %>
 	</div>
-	<%= link_to "Back", test_path(@platforms.first.test_environment.test.application_id), class: "btn btn-default" %>
 </div>

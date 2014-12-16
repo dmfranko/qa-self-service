@@ -1,9 +1,7 @@
 class TestResultDetailsController < ApplicationController
   def show
-    #@run = Run.find(params[:id])
     @p = TestPlatform.find(params[:id])
     @tree = TestPlatform.find(params[:id]).test_hierarchies
-
     
     # Prepopulate
     old_hash = {"Failed" => 0,"Passed" =>0,"Pending" => 0}

@@ -12,9 +12,12 @@ class ScreenshotRunner
       :version => platform["version"],
       :platform => platform["os"],
       :name => "Screenshots for #{params["url"]}",
+      "device-orientation" =>  'landscape',
       :tags => ['screenshots']
     }
     
+    
+    puts "Capabilities #{caps}"
     @b = Watir::Browser.sauce_start(caps)
     @b.goto(params["url"])
 

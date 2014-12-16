@@ -1,30 +1,4 @@
-	<div class="page-header">
-		<h1>App update<small>Manage your app attributes</small></h1>
-	</div>
-	<div class="form-group">
-		<div class="span6 offset3">
-			<%= form_for(@app) do |f| %>
-				<%= f.label :name %>
-				<%= f.text_field :name,:class => "form-control" %>
-				<br />
-				<%= f.label :description %>
-				<%= f.text_field :description,:class => "form-control" %>
-				<br />
-				<%= f.label :github_url %>
-				<%= f.text_field :github_url,:class => "form-control"  %>
-				<br />
-				
-				
-				<%= f.fields_for :application_environments, @app.application_environments do |project_fields| %>
-				    Environment Name: <%= project_fields.text_field :environment_name %>
-				  	<br />
-				  	Environment URL <%= project_fields.text_field :environment_url %>
-				  	<br />
-				<% end %>
-				
-				<%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
-			<% end %>
-			<br />
-			<%= link_to "Cancel", apps_path,:class => "btn btn-warning" %>
-		</div>
-	</div>
+<div class="page-header">
+	<h1>Application update<small>Manage your app attributes</small></h1>
+</div>
+<%= render partial: "app_details" %>

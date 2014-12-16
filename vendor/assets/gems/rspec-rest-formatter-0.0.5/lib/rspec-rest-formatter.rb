@@ -14,10 +14,10 @@ class RestFormatter < RSpec::Core::Formatters::BaseTextFormatter
     r = RestClient.post("#{HOST}/tests/new_test_run/",
     {:description =>  $metadata[:description],
       :notes => $metadata[:notes],
+      :test_id => $metadata[:test_id],
       :app_id => $metadata[:app_id],
-      :browser => $caps[:browserName],
-      :browser_version => $caps[:browser_version],
-      :os => $caps[:platform]
+      :environment_id => $metadata[:environment_id],
+      :platform_id => $metadata[:platform_id]
       }
     )
     @id = JSON.parse(r)["id"]

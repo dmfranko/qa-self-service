@@ -1,9 +1,64 @@
-<%= wicked_pdf_stylesheet_link_tag "application" %>
-<h1> Report </h1>
-<div id="res">
-	<ul class="list-group list r">
-		<% @tree.roots.each do |t| %>
-		<%= nested_messages t.subtree.arrange %>
-		<% end %>
-	</ul>
+<%= wicked_pdf_stylesheet_link_tag "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" %>
+<div class="container">
+	<div class="page-header">
+		<h1>Run details for <%= @p.test_environment.test.application.name %></h1>
+	</div>
+	<table class="table table-condensed table-striped">
+		<tr>
+			<td><span class="label label-success">Pass</span></td>
+			<td><%= @p.test_result_details.where(:is_pass => 1).count %></td>
+		</tr>
+		<tr>
+			<td><span class="label label-danger">Fail</span></td>
+			<td><%= @p.test_result_details.where(:is_pass => 0).count %></td>
+		</tr>
+		<tr>
+			<td><span class="label label-warning">Pending</span></td>
+			<td><%= @p.test_result_details.where(:is_pass => nil).count %></td>
+		</tr>
+	</table>
+	<div class="row">
+		<div class="col-md-6">
+			<h6>Test Configuration Details</h6>
+			<table class="table table-condensed table-striped">
+				<tr>
+					<td>OS</td>
+					<td><%= @p.platform.test_operating_system.operating_system_name %></td>
+				</tr>
+				<tr>
+
+					<td>Browser</td>
+					<td><%= @p.platform.test_browser.browser_name %></td>
+				</tr>
+				<tr>
+
+					<td>Browser Version</td>
+					<td><%= @p.platform.test_browser.browser_version %></td>
+				</tr>
+				<tr>
+					<td>Environment Name</td>
+					<td><%= @p.test_environment.application_environment.environment_name %></td>
+				</tr>
+				<tr>
+					<td>Environment Endpoint</td>
+					<td><%= @p.test_environment.application_environment.environment_url %></td>
+				</tr>
+				<tr>
+					<td>Note</td>
+					<td><%= @p.test_environment.test.test_run_note %></td>
+				</tr>
+				<tr>
+					<td>Email Recipients</td>
+					<td><%= @p.test_environment.test.result_emails %></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="res">
+		<ul class="list-group list r">
+			<% @tree.roots.each do |t| %>
+			<%= nested_messages t.subtree.arrange %>
+			<% end %>
+		</ul>
+	</div>
 </div>

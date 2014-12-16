@@ -29,10 +29,11 @@ class TestRunner
     # Loop through each platform and queue it separately.
     rtime = {
       :emails => ['dan.franko@yale.edu','jason.shuff@yale.edu'],
-      :environment => params["environments"],
+      :environment => JSON.parse(params["execution_environment"]),
       :platform => params["platform"],
       :tags =>  Hash[params["tag_fields"].map{|(k,v)| [k.to_sym,v.to_i.to_bool]}],
       :filter => params["filter"],
+      :test_id => params["test_id"],
       :notes => params["message"]
     }.to_s
     

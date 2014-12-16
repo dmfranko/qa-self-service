@@ -1,8 +1,103 @@
 <div class="container">
-	<%= link_to "Back", run_path(1), class: "btn btn-default" %>
 	<div class="page-header">
 		<h1>Run details for <%= @p.test_environment.test.application.name %></h1>
 	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<div id="container" style="min-width: 310px; height: 300px; margin: 0 auto"></div>
+		</div>
+		<div class="col-md-6">
+			<h6>Test Configuration Details</h6>
+			<table class="table table-condensed table-striped">
+				<tr>
+					<td>OS</td>
+					<td><%= @p.platform.test_operating_system.operating_system_name %></td>
+				</tr>
+				<tr>
+
+					<td>Browser</td>
+					<td><%= @p.platform.test_browser.browser_name %></td>
+				</tr>
+				<tr>
+
+					<td>Browser Version</td>
+					<td><%= @p.platform.test_browser.browser_version %></td>
+				</tr>
+				<tr>
+					<td>Environment Name</td>
+					<td><%= @p.test_environment.application_environment.environment_name %></td>
+				</tr>
+				<tr>
+					<td>Environment Endpoint</td>
+					<td><%= @p.test_environment.application_environment.environment_url %></td>
+				</tr>
+				<tr>
+					<td>Note</td>
+					<td><%= @p.test_environment.test.test_run_note %></td>
+				</tr>
+				<tr>
+					<td>Email Recipients</td>
+					<td><%= @p.test_environment.test.result_emails %></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="btn-group">
+		<button id="toggle_pass_fail" type="button" class="btn btn-info">
+			Toggle Pass/Fail
+		</button>
+		<%= link_to "Download (PDF)", test_result_detail_path(:format => "pdf"),:target => "_blank",:class => "btn btn-primary" %>
+	</div>
+
+	<br />
+	<br />
+	
+	<script>
+		$('#toggle_pass_fail').click(function() {
+			$('.detail-record.pass').toggle(this.checked);
+		});
+	</script>
+
+	<script>
+		$(function() {
+		    $('#container').highcharts({
+		        chart: {
+		            plotBackgroundColor: null,
+		            plotBorderWidth: null,
+		            plotShadow: false
+		        },
+		        title: {
+		            text: 'Test results'
+		        },
+		        tooltip: {
+		            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		        },
+		        plotOptions: {
+		            pie: {
+		                allowPointSelect: true,
+		                cursor: 'pointer',
+		                dataLabels: {
+		                    enabled: true,
+		                    color: '#000000',
+		                    connectorColor: '#000000',
+		                    format: '<b>{point.name}</b>: {point.y}'
+		                }
+		            }
+		        },
+		        series: [{
+		            type: 'pie',
+		            name: 'Percentage',
+		            data: [
+		                ['Passed', <%= @p.test_result_details.where(:is_pass => 1).count %> ],
+		                ['Failed', <%= @p.test_result_details.where(:is_pass => 0).count %> ],
+		                ['Pending', <%= @p.test_result_details.where(:is_pass => nil).count %> ]
+		            ]
+		        }]
+		    });
+		});
+	</script>
 
 	<!--
 	Only show this if there's no records
@@ -18,6 +113,5 @@
 			<% end %>
 		</ul>
 	</div>
-
-	<%= link_to "Back", run_path, class: "btn btn-default" %>
+	<%= link_to "Back", test_platform_path(@p.test_environment_id), class: "btn btn-default" %>
 </div>

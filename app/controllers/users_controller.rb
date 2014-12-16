@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   
   def create
     @u = User.new(user_params)
-    @u.name = view_context.directory_info("df336")
+    #@u.name = view_context.directory_info("df336")
     @u.save
     redirect_to users_path,notice: "User added."
   end

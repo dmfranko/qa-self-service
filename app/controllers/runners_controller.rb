@@ -1,5 +1,5 @@
 # I guess this needs to be required?
-require 'resque_scheduler'
+#require 'resque_scheduler'
 
 class RunnersController < ApplicationController
   def create

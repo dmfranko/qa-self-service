@@ -27,6 +27,7 @@
 </script>
 
 <%= form_tag("/tests", method: "post",role: "form",id: "runner","novalidate" => "") do |f| %>
+<%#= form_for(@test, method: "post",role: "form",id: "runner","novalidate" => "") do |f| %>
 <div class="form-group">
 	<%= hidden_field_tag(:name, @app.name) %>
 	<%= hidden_field_tag(:id, @app.id) %>
@@ -34,21 +35,24 @@
 
 	<div class="form-group">
 		<%= label_tag(:user, "Emails") %>
-		<%= email_field(:user, :address,:placeholder => "Who should the reports be sent to?",:class => "form-control",:required => true) %>
+		<%#= email_field(:user,:address,:value => @app.application_default_emails.collect{|e|e.email_address}.join(","),:placeholder => "Who should the reports be sent to?",:class => "form-control",:required => false,:multiple => true) %>
+		<%= text_field(:user,:address,:value => @app.application_default_emails.collect{|e|e.email_address}.join(","),:placeholder => "Who should the reports be sent to?",:class => "form-control",:required => true,:multiple => true) %>
 	</div>
 
 	<div class="form-group">
 		Add the ability to provide address
 		<%= label_tag(:environments, "Target environment") %>
 		<br />
-		<%= select_tag 'environments', options_for_select(@environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.environment_url]}),:class => "form-control",:required => true %>
+		<%= select_tag 'environments', options_for_select(@environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.id]}),:class => "form-control",:required => true,:multiple => true %>
 	</div>
-
+	
+	<!--
 	<div class="form-group">
 		<%= label_tag(:passphrase, "Protected info password") %>
 		<%= password_field_tag(:passphrase,"",:placeholder => "secret",:class => "form-control",:required => true) %>
 	</div>
-
+	-->
+	
 	<div class="panel-group" id="accordion">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -64,6 +68,7 @@
 								<th width="40%">OS</th>
 								<th width="40%">Browser</th>
 								<th width="20%">Version</th>
+								<th>id</th>
 							</tr>
 						</thead>
 
@@ -73,18 +78,20 @@
 								<td><%= p.test_operating_system.operating_system_name %></td>
 								<td><%= p.test_browser.browser_name %></td>
 								<td><%= p.test_browser.browser_version %></td>
+								<td><%=p.id%></td>
 							</tr>
 							<% end %>
 						</tbody>
 						<tfoot>
 							<tr>
 								<th rowspan="1" colspan="1">
-								<input type="text" name="search_engine" value="Search engines" class="search_init">
+								<input type="text" name="search_engine" value="Search OS" class="search_init">
 								</th><th rowspan="1" colspan="1">
 								<input type="text" name="search_browser" value="Search browsers" class="search_init">
 								</th><th rowspan="1" colspan="1">
-								<input type="text" name="search_platform" value="Search platforms" class="search_init">
+								<input type="text" name="search_platform" value="Search version" class="search_init">
 								</th>
+								<th></th>
 							</tr>
 						</tfoot>
 					</table>
@@ -139,6 +146,8 @@
 		<%= hidden_field_tag 'platforms' %>
 	</div>
 	<br />
+
+	PHANTOMJS?
 
 	<!--
 	<div class="panel panel-default">
@@ -271,11 +280,12 @@
 			var aSelectedTrs = oTT.fnGetSelectedData();
 			// Get our selected platforms and set them to a hidden field
 			var platforms = []
-			$.each(aSelectedTrs, function(index, attr) {
+			$.each(aSelectedTrs, function(index,attr) {
 				var plat = {}
 				plat.browser = attr[1]
 				plat.platform = attr[0]
 				plat.version = attr[2]
+				plat.id = attr[3]
 				platforms.push(plat)
 			});
 			$('#platforms').val(JSON.stringify(platforms))

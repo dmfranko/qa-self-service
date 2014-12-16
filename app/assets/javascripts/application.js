@@ -12,8 +12,12 @@
 //
 //= require jquery
 //= require parsley
-//= require parsley.extend
-//= require_tree .
 //= require dataTables/jquery.dataTables
-//= require dataTables/jquery.dataTables.bootstrap3
-//= require dataTables/extras/TableTools
+//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+//= require dataTables/extras/dataTables.tableTools
+
+//= require_tree .
+
+$(document).ready(function(e) {
+  $('#application_enironments,#application_tags,#emails').nestedFields();
+});

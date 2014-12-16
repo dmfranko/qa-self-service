@@ -2,10 +2,8 @@ source 'https://rubygems.org'
 
 #gem 'rails', '3.2.3'
 gem 'rails', '4.0.4'
+gem 'rails-dev-tweaks', '~> 1.1'
 gem 'ancestry'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
 gem 'render_csv'
@@ -13,15 +11,19 @@ gem 'render_csv'
 gem 'parsley-rails'
 
 # Resque stuff
+gem 'redis'
 gem "resque"
 gem 'resque-web', require: 'resque_web'
-gem 'resque-scheduler'
+gem 'resque-scheduler','2.5.5'
 
 #Other stuff
+
+gem 'awesome_nested_fields'
+gem 'will_paginate-bootstrap'
 gem 'rspec-retry'
 gem 'mail'
 gem 'watir-webdriver'
-gem 'rspec-core'
+gem 'rspec-core','2.14.8'
 gem 'rspec-rerun' 
 gem 'fuubar'
 gem 'magicspec'
@@ -32,7 +34,7 @@ gem 'wicked_pdf'
 gem "rails-erd"
 gem "parallel_tests"
 gem 'watir-browser-factory','0.0.6', :path => "vendor/assets/gems/watir-browser-factory-0.0.6"
-gem 'rspec-rest-formatter', '0.0.4',:path => "vendor/assets/gems/rspec-rest-formatter-0.0.4"
+gem 'rspec-rest-formatter', '0.0.4',:path => "vendor/assets/gems/rspec-rest-formatter-0.0.5"
 gem 'git'
 gem 'ruby-net-ldap'
 gem 'net-ping'
@@ -55,12 +57,10 @@ end
 gem 'jquery-rails'
 gem 'rubycas-client'
 
-# Don't think this is needed.
-#gem "rmagick"
 gem "carrierwave"
 gem "byebug"
 gem 'sauce_whisk'
-gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
+gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -17,7 +17,7 @@ class TestHierarchyController < ApplicationController
     if params[:status] == "Failed"
       exception = @details
       .children.create(test_hierarchy_description: values.last,:test_platform_id => params[:id])
-      .test_result_details.create(:is_pass => 0)
+      .test_result_details.create(:is_pass => 0,:test_execution_duration => params[:duration])
       .test_result_exceptions.new
       
       exception.exception_text = params[:exception]

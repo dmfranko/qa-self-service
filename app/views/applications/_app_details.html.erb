@@ -1,48 +1,113 @@
 <div class="form-group">
 	<div class="span6 offset3">
 		<%= form_for(@app) do |f| %>
-		<%= f.label :name %>
-		<span class="help-block">Give your app a name</span>
-		<%= f.text_field :name,:class => "form-control",:placeholder => "Application name" %>
-		<br />
-		<%= f.label :description %>
-		<span class="help-block">Provide a short descrption of what your test does.</span>
-		<%= f.text_field :description,:class => "form-control",:placeholder => "Description" %>
-		<br />
-		<%= f.label :github_url %>
-		<span class="help-block">The URL of your github project.  The project will be pulled from here
-			at runtime.</span>
-		<%= f.text_field :github_url,:type => "url",:class => "form-control",:placeholder => "URL"  %>
-		<br />
-		<%= f.label :default_emails %>
-		<span class="help-block">Enter a comma separated list of default emails.</span>
-		<%= f.text_field :default_emails,:class => "form-control",:placeholder => "Emails"%>
-		<br />
-		<%= f.label :tags %>
-		<span class="help-block">Enter a comma separated list of available tags.
-			Providing this info will allow users to select which set of tests they want to run.</span>
-		<%= f.text_field :tags,:class => "form-control",:placeholder => "Tags" %>
-		<br />
-		<div id="envs">
-		<%= f.label :environments %>
-		<span class="help-block">Specify your default environments.  You'll be able to 
-			specify additional ones at runtime.</span>
-		  <%= f.fields_for :envs do |env_fields| %>
-			<%= f.label :dev %>
-			<%= env_fields.text_field :dev,:class => "form-control" %>
-			<br/>
-			<%= f.label :test %>
-			<%= env_fields.text_field :test,:class => "form-control" %>
-			<br/>
-			<%= f.label :prod %>
-			<%= env_fields.text_field :prod,:class => "form-control" %>
-			<br />
-		  <% end %>
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="#general" data-toggle="tab">General</a>
+			</li>
+			<li>
+				<a href="#environments" data-toggle="tab">Environments</a>
+			</li>
+			<li>
+				<a href="#tags" data-toggle="tab">Tags</a>
+			</li>
+			<li>
+				<a href="#emails" data-toggle="tab">Emails</a>
+			</li>
+		</ul>
+
+		<div class="tab-content">
+			<div class="tab-pane active" id="general">
+				<h2>General Options</h2>
+				<%= f.label :name %>
+				<%= f.text_field :name,:class => "form-control" %>
+				<br />
+				<%= f.label :description %>
+				<%= f.text_field :description,:class => "form-control" %>
+				<br />
+				<%= f.label :github_url %>
+				<%= f.text_field :github_url,:class => "form-control"  %>
+				<br />
+			</div>
+
+			<div class="tab-pane" id="environments">
+				<h2>Application Environments</h2>
+				<div id="application_enironments">
+					<div class="items">
+						<%= f.nested_fields_for :application_environments do |f| %>
+						<fieldset class="item">
+							<%= f.label :environment_name %>
+							<%= f.text_field :environment_name,:class => "form-control input-sm" %>
+
+							<%= f.label :environment_url %>
+							<%= f.text_field :environment_url,:class => "form-control input-sm" %>
+
+							<br />
+							<button class="remove btn btn-sm btn-danger">
+								remove</a>
+								<%= f.hidden_field :id %>
+								<%= f.hidden_field :_destroy %>
+						</fieldset>
+						<br />
+						<% end %>
+						<button class="add btn btn-large btn-success">
+							Add Environment</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="tab-pane" id="tags">
+				<h2>Application Tags</h2>
+				<div id="application_tags">
+					<div class="items">
+						<%= f.nested_fields_for :application_tags do |f| %>
+						<fieldset class="item">
+							<%= f.label :tag %>
+							<%= f.text_field :tag,:class => "form-control input-sm" %>
+
+							<br />
+							<button class="remove btn btn-xs btn-danger">
+								remove</a>
+								<%= f.hidden_field :id %>
+								<%= f.hidden_field :_destroy %>
+						</fieldset>
+						<br />
+						<% end %>
+
+						<button class="add btn btn-large btn-success">
+							Add Tag</a>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane" id="emails">
+				<h2>Application Emails</h2>
+				<div id="application_emails">
+					<div class="items">
+						<%= f.nested_fields_for :application_default_emails do |f| %>
+						<fieldset class="item">
+							<%= f.label :email_address %>
+							<%= f.text_field :email_address,:class => "form-control input-sm" %>
+
+							<br />
+							<button class="remove btn btn-xs btn-danger">
+								remove</a>
+								<%= f.hidden_field :id %>
+								<%= f.hidden_field :_destroy %>
+						</fieldset>
+						<br />
+						<% end %>
+
+						<button class="add btn btn-large btn-success">
+							Add Email</a>
+					</div>
+				</div>
+			</div>
 		</div>
-		
+
 		<%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
 		<% end %>
 		<br />
-		<%= link_to "Cancel", apps_path,:class => "btn btn-warning" %>
+		<%= link_to "Cancel", applications_path,:class => "btn btn-warning" %>
 	</div>
 </div>

@@ -5,9 +5,6 @@
 	<% @a.each do |app| %>
 	<li class="list-group-item">
 		<div class="row">
-			<div class="col-md-1">
-				ID <span class="badge"><%= app.id %></span>
-			</div>
 			<div class="col-md-2">
 				<h2><%= app.name %></h2>
 			</div>
@@ -19,11 +16,11 @@
 					<%= link_to app,:class=>"btn btn-primary" do %>
 					<span class="glyphicon glyphicon-folder-open"></span>
 					<% end %>
-					<%= link_to runner_path(app),:class=>"btn btn-primary" do %>
-					<span class="glyphicon glyphicon-play"></span>
+					<%= link_to new_test_path(id: app.id),:class=>"btn btn-primary" do %>
+						<span class="glyphicon glyphicon-play"></span>
 					<% end %>
-					<%= link_to run_path(app),:class=>"btn btn-primary" do %>
-					<span class="glyphicon glyphicon-list-alt"></span>
+					<%= link_to test_path(app),:class=>"btn btn-primary",:disabled => (last_status(app) == "No run") do %>
+						<span class="glyphicon glyphicon-list-alt"></span>
 					<% end %>
 					<%= link_to edit_application_path(app),:class=>"btn btn-primary" do %>
 					<span class="glyphicon glyphicon-pencil"></span>
@@ -34,7 +31,7 @@
 			<div class="col-md-4">
 				<div class="btn-group btn-group-justified">
 					<a class="btn btn-info disabled" role="button">Last status</a>
-					<a class="btn btn-default disabled" role="button">Pass</a>
+					<a class="btn btn-default disabled" role="button"><%= last_status(app) %></a>
 				</div>
 			</div>
 
@@ -52,7 +49,6 @@
 <div class="hidden-xs">
 	<table class="table table-striped table-bordered" id="example">
 		<tr>
-			<th>ID</th>
 			<th>Name</th>
 			<th>Mobile</th>
 			<th>Details</th>
@@ -65,19 +61,20 @@
 		</tr>
 		<% @a.each do |app| %>
 		<tr>
-			<td><%= app.id %></td>
 			<td><%= app.name %></td>
 			<td><%= app.is_application_mobile == 1 ? "Yes" : "No" %></td>
 			<td style="text-align:center"> <%= link_to app do %> <span class="glyphicon glyphicon-folder-open"></span> <% end %> </td>
 			<td style="text-align:center"> <%= link_to new_test_path(id: app.id), :class => 'button white' do %> <span class="glyphicon glyphicon-play"></span> <% end %> </td>
-			<td style="text-align:center"> <%= link_to test_path(app), :class => 'button white' do %> <span class="glyphicon glyphicon-list-alt"></span> <% end %> </td>
+			<td style="text-align:center"> <%= button_to test_path(app),:method => :get,:class => 'button white',:disabled => (last_status(app) == "No run")  do %> <span class="glyphicon glyphicon-list-alt"></span> <% end %> </td>
 			<td style="text-align:center"> <%= link_to edit_application_path(app), :class => 'button white' do %> <span class="glyphicon glyphicon-pencil"></span> <% end %> </td>
 			<td style="text-align:center">
-			<%= link_to application_path(app), :class => 'some_class', :method => :delete, :data => { :confirm => 'Are you sure you want to delete this user?' }  do %>
+				
+			<%= button_to application_path(app),:method => :delete, :data => { :confirm => 'Are you sure you want to delete this user?' }  do %>
   				<span class="glyphicon glyphicon-remove"></span>
 			<% end %>
+			
 			</td>
-			<td><%= @s.status if (@s = Run.where(app_id: app.id).last) %></td>
+			<td><%= last_status(app) %></td>
 			<td><%= app.description %></td>
 		</tr>
 		<% end %>

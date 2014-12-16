@@ -1,7 +1,11 @@
-<li class="list-group-item clearfix <%= "detail-record" if test_hierarchy.test_result_details.empty? %> <%= "Pass".downcase if test_hierarchy.test_result_details %>">
-	<% if test_hierarchy.test_result_details.empty? %> <h3><%= test_hierarchy.test_hierarchy_description %></h3>
-	<% else %>
-
+<% if test_hierarchy.test_result_details.empty? %> 
+	<li class="list-group-item clearfix">
+	<b><%= test_hierarchy.test_hierarchy_description %></b>
+<% else %>
+	<li class="list-group-item clearfix detail-record 
+		<%= test_hierarchy.test_result_details.first.is_pass == 0 ? "fail" : "pass" %>"
+		style="<%= 'display:none' if test_hierarchy.test_result_details.first.is_pass == 1 %>"
+	>
 	<p class="list-group-item-text">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
@@ -18,13 +22,11 @@
 				<% end %> 
 				</h3>
 			</div>
-		
-		
 		<div class="row">
 			<div class="col-md-4">
 				<span>Duration
 					<br />
-					<span class="badge">30</span></span>
+					<span class="badge"><%= test_hierarchy.test_result_details.first.test_execution_duration %></span></span>
 			</div>
 			<div class="col-md-4">
 				<span>Time

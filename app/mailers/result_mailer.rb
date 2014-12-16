@@ -3,6 +3,6 @@ class ResultMailer < ActionMailer::Base
   
   def result_email(test_details)
     @details = test_details
-    mail(to: ["dan.franko@yale.edu","yaleqa@gmail.com"], subject: "Test is complete for #{@details.test_environment.test.application.name}.")
+    mail(to: test_details.test_environment.test.result_emails, subject: "Test is complete for #{@details.test_environment.test.application.name}.")
   end
 end

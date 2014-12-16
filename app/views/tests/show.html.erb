@@ -1,37 +1,32 @@
-<div class="page-header">
-	<h1>Test Execution <small>Executed tests for the <span class="label label-primary"><%= @tests.first.application.name %></span> application.</small></h1>
+<div>
+	<h1>Test Execution <small>Test results for the <span class="label label-primary"><%= @tests.first.application.name %></span> application.</small></h1>
+	<%= will_paginate @tests, renderer: BootstrapPagination::Rails %>
 	<ul class="list-group">
 		<% @tests.each do |t| %>
 		<li class="list-group-item">
 			<span class="pull-right">ID <span class="badge"><%= t.id %></span></span>
-			<h3>Status</h3>
-			<% if t.test_platforms.where(:test_run_platform_end_time => nil).count == 0 %>
-				Completed <i class="fa fa-thumbs-o-up"></i>
-			<% else %>
-				Running <i class="fa fa-refresh fa-spin"></i>
-			<% end %>
-			<h3>Stats</h3>
 			<span class="label label-info">Total <%= t.test_result_details.count %></span>
 			<br />
 			<span class="label label-danger">Fail <%= t.test_result_details.where(:is_pass => 0).count %></span>
 			<span class="label label-success">Pass <%= t.test_result_details.where(:is_pass => 1).count %></span>
 			<span class="label label-warning">Pending <%= t.test_result_details.where(:is_pass => nil).count %></span>
-			<h3>Details</h3>
+			<br />
 			<br />
 			Note : <%= t.test_run_note %>
 			<br />
-			Request Time : <%= t.created_at.localtime.strftime("%r") %>
+			Request Time : <%= t.created_at.localtime.strftime("%D %r") %>
 
-			<h3>Environments</h3>
+			<h4>Executed Environments</h4>
 			<div class="list-group">
 				<% t.test_environments.each do |env| %>
-					<%= link_to test_platform_path(env), :class => 'list-group-item' do %>
-						<b><%= env.application_environment.environment_name %></b>
-						<%= env.application_environment.environment_url %>
-					<% end %>
+				<%= link_to test_platform_path(env), :class => 'list-group-item' do %>
+				<b><%= env.application_environment.environment_name %></b>
+				<%= env.application_environment.environment_url %>
+				<% end %>
 				<% end %>
 			</div>
 		</li>
 		<% end %>
+		<%= will_paginate @tests, renderer: BootstrapPagination::Rails %>
 	</ul>
 </div>
