@@ -1,0 +1,23 @@
+<div class="page-header">
+	<h1>Application User Permission <small>Add a new record</small></h1>
+</div>
+
+<div class="form-group">
+	<div class="span6 offset3">
+		<%= form_for(@permission) do |f| %>
+		<%= f.label :application_id %>
+		<%= select_tag :application_id, options_for_select(Application.all.map{|k,v| ["#{k.name}",k.id]}),:class => "form-control",:required => true %>
+
+
+		<%= f.label :user_id %>
+		<%= select_tag :user_id, options_for_select(User.all.map{|k,v| ["#{k.user_name}",k.id]}),:class => "form-control",:required => true %>
+
+		
+		<br />
+
+		<%= f.submit "Save", class: "btn btn-large btn-primary" %>
+		<% end %>
+		<br />
+		<%= link_to "Cancel", application_user_permissions_path,:class => "btn btn-warning" %>
+	</div>
+</div>

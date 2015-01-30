@@ -38,7 +38,9 @@
 				</tr>
 				<tr>
 					<td>Email Recipients</td>
-					<td><%= @p.test_environment.test.result_emails %></td>
+					<td>
+						<%= @p.test_environment.test.result_emails.first %>
+					</td>
 				</tr>
 			</table>
 		</div>

@@ -9,6 +9,7 @@ Qaselfservice::Application.routes.draw do
   get 'about/summary'
   
   resources :applications
+  resources :application_user_permissions
   resources :users
   resources :selfservice
   resources :uploads
