@@ -31,7 +31,11 @@ Qaselfservice::Application.routes.draw do
     end
   end
 
-  resources :test_platforms
+  resources :test_platforms do
+    collection do
+      get 'pending_platform'
+    end
+  end
   resources :test_result_details
   resources :test_hierarchy
   

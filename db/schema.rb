@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140717163824) do
+ActiveRecord::Schema.define(version: 20150203164128) do
 
   create_table "application_default_emails", force: true do |t|
     t.integer  "application_id"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 20140717163824) do
     t.datetime "test_run_platform_end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "resque_key"
   end
 
   create_table "test_result_details", force: true do |t|

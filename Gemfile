@@ -15,9 +15,11 @@ gem 'redis'
 gem "resque"
 gem 'resque-web', require: 'resque_web'
 gem 'resque-scheduler','2.5.5'
+gem 'resque-status'
 
 #Other stuff
 
+gem 'chartkick'
 gem 'awesome_nested_fields'
 gem 'will_paginate-bootstrap'
 gem 'rspec-retry'
@@ -60,7 +62,7 @@ gem 'rubycas-client'
 gem "carrierwave"
 gem "byebug"
 gem 'sauce_whisk'
-gem 'jquery-datatables-rails', '~> 2.1.10.0.3'
+gem 'jquery-datatables-rails', '~> 3.1.1'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

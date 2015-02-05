@@ -134,6 +134,8 @@
 			// });
 
 			var table = $('#example').DataTable({
+				
+				//"ajax" : "http://localhost:3000/tests/1.json",
 				"ajax" : $('#app_id').text() + ".json",
 				"order" : [[0, "desc"]],
 				"columns" : [{

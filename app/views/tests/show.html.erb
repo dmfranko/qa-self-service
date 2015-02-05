@@ -1,32 +1,119 @@
+<%= javascript_include_tag "chartkick" %>
+
 <div>
 	<h1>Test Execution <small>Test results for the <span class="label label-primary"><%= @tests.first.application.name %></span> application.</small></h1>
-	<%= will_paginate @tests, renderer: BootstrapPagination::Rails %>
-	<ul class="list-group">
-		<% @tests.each do |t| %>
-		<li class="list-group-item">
-			<span class="pull-right">ID <span class="badge"><%= t.id %></span></span>
-			<span class="label label-info">Total <%= t.test_result_details.count %></span>
-			<br />
-			<span class="label label-danger">Fail <%= t.test_result_details.where(:is_pass => 0).count %></span>
-			<span class="label label-success">Pass <%= t.test_result_details.where(:is_pass => 1).count %></span>
-			<span class="label label-warning">Pending <%= t.test_result_details.where(:is_pass => nil).count %></span>
-			<br />
-			<br />
-			Note : <%= t.test_run_note %>
-			<br />
-			Request Time : <%= t.created_at.localtime.strftime("%D %r") %>
 
-			<h4>Executed Environments</h4>
+	<%= link_to "New Test Run",new_test_path(id: @tests.first.application.id), :class => 'btn btn-large btn-primary' %>
+	<p></p>
+
+	<%= will_paginate @tests, renderer: BootstrapPagination::Rails %>
+	<table id="test_results" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+				<th class="all">ID</th>
+				<th>Total</th>
+				<th>Pass</th>
+				<th class="all">Fail</th>
+				<th>Pending</th>
+				<th>Note</th>
+				<th>Start Time</th>
+				<th class="all">Execution State</th>
+				<th>Environments</th>
+			</tr>
+		</thead>
+		
+		<% @tests.each do |t| %>
+		<tr id="<%= t.id %>" class="<%= tests_running(t) %>">
+			<td><%= t.id %></td>
+			<td class="total"><%= t.test_result_details.count %></td>
+			<td class="pass"><%= t.test_result_details.where(:is_pass => 1).count %></td>
+			<td class="fail"><%= t.test_result_details.where(:is_pass => 0).count %></td>
+			<td class="pending"><%= t.test_result_details.where(:is_pass => nil).count %></td>
+			<td><%= t.test_run_note %></td>
+			<td><%= t.created_at.localtime.strftime("%D %r") %></td>
+			<td class="state"><%= tests_running(t) %></td>
+			<td>
 			<div class="list-group">
 				<% t.test_environments.each do |env| %>
-				<%= link_to test_platform_path(env), :class => 'list-group-item' do %>
-				<b><%= env.application_environment.environment_name %></b>
-				<%= env.application_environment.environment_url %>
+					<%= link_to test_platform_path(env), :class => 'list-group-item' do %>
+						<b><%= env.application_environment.environment_name %></b>
+					<% end %>
 				<% end %>
-				<% end %>
+			</div></td>
+		</tr>
+		<% end %>
+	</table>
+	<%= will_paginate @tests, renderer: BootstrapPagination::Rails %>
+
+	<script>
+		$(document).ready(function() {
+			$('#test_results').DataTable({
+				responsive : true,
+				"order": [[ 0, "desc" ]],
+				"bPaginate" : false
+			});
+		});
+	</script>
+
+	<!-- <ul class="list-group">
+		<% @tests.each do |t| %>
+		<li class="list-group-item">
+			<div class="row">
+				<div class="col-md-8">
+					<span class="pull-right">ID <span class="badge"><%= t.id %></span></span>
+					<span class="label label-info">Total <%= t.test_result_details.count %></span>
+					<span> <%= pie_chart ({"Fail" => t.test_result_details.where(:is_pass => 0).count,
+						"Pass" => t.test_result_details.where(:is_pass => 1).count,
+						"Pending" => t.test_result_details.where(:is_pass => nil).count}
+            ) %> </span>
+					<br />
+					Note : <%= t.test_run_note %>
+					<br />
+					Request Time : <%= t.created_at.localtime.strftime("%D %r") %>
+				</div>
+				<div class="col-md-4">
+					<h4>Executed Environments</h4>
+					<div class="list-group">
+						<% t.test_environments.each do |env| %>
+						<%= link_to test_platform_path(env), :class => 'list-group-item' do %>
+						<b><%= env.application_environment.environment_name %></b>
+						<%= env.application_environment.environment_url %>
+						<% end %>
+						<% end %>
+					</div>
+				</div>
 			</div>
 		</li>
 		<% end %>
-		<%= will_paginate @tests, renderer: BootstrapPagination::Rails %>
-	</ul>
+	</ul> -->
 </div>
+
+<script>
+	// Get the status for the tests that are in flight
+	function updateStatus(){
+		$('tr.Incomplete').each(function(index,value){
+			$.getJSON( "pending_test.json?test_id=" + value.id, function( data ) {
+			  var row = $("#" + value.id.toString())
+
+			  row.find(".total").text(data.total);
+			  row.find(".pass").text(data.pass);
+			  row.find(".fail").text(data.fail);
+			  row.find(".pending").text(data.pending);
+			  row.find(".state").text(data.run_status);
+			  
+			  //If the status is not incomplete, remove the class
+			  if (data.run_status === "Completed"){
+				  $("#" + value.id.toString()).removeClass("Incomplete");
+			  }
+			  
+			  // $.each( data, function( key, val ) {
+			  	// console.log(val)
+			  // });
+			});
+		});
+	};
+	
+	setInterval(function() {
+		updateStatus();
+	}, 5000);
+</script>

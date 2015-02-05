@@ -13,6 +13,7 @@
 //= require jquery
 //= require parsley
 //= require dataTables/jquery.dataTables
+//= require dataTables/extras/dataTables.responsive
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require dataTables/extras/dataTables.tableTools
 

@@ -35,23 +35,19 @@
 
 	<div class="form-group">
 		<%= label_tag(:user, "Emails") %>
-		<%#= email_field(:user,:address,:value => @app.application_default_emails.collect{|e|e.email_address}.join(","),:placeholder => "Who should the reports be sent to?",:class => "form-control",:required => false,:multiple => true) %>
 		<%= text_field(:user,:address,:value => @app.application_default_emails.collect{|e|e.email_address}.join(","),:placeholder => "Who should the reports be sent to?",:class => "form-control",:required => true,:multiple => true) %>
 	</div>
 
 	<div class="form-group">
-		Add the ability to provide address
 		<%= label_tag(:environments, "Target environment") %>
 		<br />
-		<%= select_tag 'environments', options_for_select(@environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.id]}),:class => "form-control",:required => true,:multiple => true %>
+		<%= select_tag 'environments', options_for_select(@app.application_environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.id]}),:class => "form-control",:required => true,:multiple => true %>
 	</div>
 	
-	<!--
 	<div class="form-group">
 		<%= label_tag(:passphrase, "Protected info password") %>
 		<%= password_field_tag(:passphrase,"",:placeholder => "secret",:class => "form-control",:required => true) %>
 	</div>
-	-->
 	
 	<div class="panel-group" id="accordion">
 		<div class="panel panel-default">
@@ -100,8 +96,7 @@
 						var oTable = $('#example').dataTable({
 							"sDom" : "<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
 							"iDisplayLength" : 5,
-							"sPaginationType" : "bootstrap",
-							"oTableTools" : {
+								"oTableTools" : {
 								"sRowSelect" : "multi",
 								"aButtons" : ["select_none"]
 							}
@@ -195,7 +190,7 @@
 			</ul>
 			<div id="my-tab-content" class="tab-content">
 				<div class="tab-pane active" id="tags">
-					<% if ! @run_tags.empty? %>
+					<% if ! @app.application_tags.empty? %>
 					<h1>By tags</h1>
 					<p>
 						<div class="btn-group">
@@ -209,7 +204,7 @@
 
 						<div class="row">
 							<%= fields_for :run_tags do |tag_fields| %>
-							<% @run_tags.each do |tag|%>
+							<% @app.application_tags.each do |tag|%>
 							<div class = "col-md-4">
 								<div class="checkbox">
 									<%= tag.tag %>
