@@ -60,6 +60,10 @@ Qaselfservice::Application.routes.draw do
   require 'resque_scheduler/server'
   mount Resque::Server.new, :at => '/resque'
   
+  require 'sidekiq/web'
+  require 'sidekiq-status/web'
+  mount Sidekiq::Web => '/sidekiq'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -43,12 +43,12 @@
 		<br />
 		<%= select_tag 'environments', options_for_select(@app.application_environments.map{|k,v| ["#{k.environment_name} (#{k.environment_url})",k.id]}),:class => "form-control",:required => true,:multiple => true %>
 	</div>
-	
+
 	<div class="form-group">
 		<%= label_tag(:passphrase, "Protected info password") %>
 		<%= password_field_tag(:passphrase,"",:placeholder => "secret",:class => "form-control",:required => true) %>
 	</div>
-	
+
 	<div class="panel-group" id="accordion">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -74,7 +74,7 @@
 								<td><%= p.test_operating_system.operating_system_name %></td>
 								<td><%= p.test_browser.browser_name %></td>
 								<td><%= p.test_browser.browser_version %></td>
-								<td><%=p.id%></td>
+								<td><%= p.id%></td>
 							</tr>
 							<% end %>
 						</tbody>
@@ -96,7 +96,7 @@
 						var oTable = $('#example').dataTable({
 							"sDom" : "<'row'<'col-xs-6'T><'col-xs-6'f>r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
 							"iDisplayLength" : 5,
-								"oTableTools" : {
+							"oTableTools" : {
 								"sRowSelect" : "multi",
 								"aButtons" : ["select_none"]
 							}
@@ -142,34 +142,33 @@
 	</div>
 	<br />
 
-	PHANTOMJS?
-
 	<!--
+	PHANTOMJS?
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			Configuration
-		</div>
-		<div class="panel-body">
+	<div class="panel-heading">
+	Configuration
+	</div>
+	<div class="panel-body">
 
-			<div class="row">
-				<div class="col-md-4">
-					<div class="checkbox">
-						<label> <%= check_box_tag(:parallel) %>Allow parallel runs </label>
-						<span class="help-block">Your app needs to be threadsafe for this option to be enabled.</span>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="checkbox">
-						<label> <%= check_box_tag(:local) %>Local or sauce?</label>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="checkbox">
-						<label> <%= check_box_tag(:another) %>Something else</label>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class="row">
+	<div class="col-md-4">
+	<div class="checkbox">
+	<label> <%= check_box_tag(:parallel) %>Allow parallel runs </label>
+	<span class="help-block">Your app needs to be threadsafe for this option to be enabled.</span>
+	</div>
+	</div>
+	<div class="col-md-4">
+	<div class="checkbox">
+	<label> <%= check_box_tag(:local) %>Local or sauce?</label>
+	</div>
+	</div>
+	<div class="col-md-4">
+	<div class="checkbox">
+	<label> <%= check_box_tag(:another) %>Something else</label>
+	</div>
+	</div>
+	</div>
+	</div>
 	</div>
 	-->
 
@@ -181,7 +180,7 @@
 		</div>
 		<div class="panel-body" id="tag_panel">
 			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-				<li>
+				<li class="active">
 					<a href="#tags" data-toggle="tab">Tags</a>
 				</li>
 				<li>
@@ -231,63 +230,103 @@
 	<span class="help-block">Provide some additional details about why you're running this test if you'd like.</span>
 	<%= text_area_tag(:message,"",:placeholder => "Provide some notes about this run.",:class => "form-control",:rows => "3") %>
 	<br/>
-<!--
+
 	<div class="panel-group" id="accordion">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#schedule">Schedule</a></h4>
 				<span class="help-block">Set your test to execute to occur at a particular time.</span>
 			</div>
+
 			<div id="schedule" class="panel-collapse collapse">
 				<div class="panel-body">
-					<%= label_tag(:time_slice, "Time Slice") %>
-					<div class="row">
-						<div class="col-xs-2 .col-sm-2 col-md-2 col-lg-1">
-							<%= text_field_tag(:number,"",:placeholder => "",:class => "form-control",:maxlength => "2",:size =>"2") %>
+
+					<ul id="schedule_tabs" class="nav nav-tabs" data-tabs="tabs">
+						<li class="active">
+							<a href="#by_slice" data-toggle="tab">Delayed</a>
+						</li>
+						<li>
+							<a href="#by_date" data-toggle="tab">At Date and Time</a>
+						</li>
+					</ul>
+					<div id="my-tab-content" class="tab-content">
+						<div class="tab-pane active" id="by_slice">
+							<br />
+							<%= label_tag(:time_slice, "Time Slice") %>
+							<div class="row">
+								<div class="col-xs-2 .col-sm-2 col-md-2 col-lg-1">
+									<%= text_field_tag(:number,"",:placeholder => "",:class => "form-control",:maxlength => "2",:size =>"2") %>
+								</div>
+								<div class="col-xs-4 .col-sm-4 col-md-2">
+									<%= select_tag 'time_slice',options_for_select(["second","minute","hour","day"]),:class => "form-control" %>
+								</div>
+							</div>
 						</div>
-						<div class="col-xs-4 .col-sm-4 col-md-2">
-							<%= select_tag 'time_slice',options_for_select(["second","minute","hour","day"]),:class => "form-control" %>
+						<div class="tab-pane" id="by_date">
+							<div class="row">
+								<div class='col-sm-6'>
+									<div class="form-group">
+										<br />
+										<%= label_tag(:datetimepicker, "Specific time") %>
+										<div class='input-group date' id='datetimepicker'>
+											<input type='text' class="form-control" />
+											<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+										</div>
+									</div>
+									<script type="text/javascript">
+										$(function() {
+											$('#datetimepicker').datetimepicker({
+												sideBySide : false
+											});
+										});
+									</script>
+									<style type="text/css">
+										.panel-group .panel {
+											overflow: inherit;
+										}
+									</style>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
--->
-	<br />
+</div>
+<br />
 
-	<%= submit_tag("Run") %>
+<%= submit_tag("Run") %>
 
-	<script>
-		$(function() {
-			$('#all_tags').click(function() {
-				$('#tag_panel').find(':checkbox').prop("checked", true);
-			});
-
-			$('#no_tags').click(function() {
-				$('#tag_panel').find(':checkbox').prop("checked", false);
-			});
-
+<script>
+	$(function() {
+		$('#all_tags').click(function() {
+			$('#tag_panel').find(':checkbox').prop("checked", true);
 		});
 
-		var oTT = TableTools.fnGetInstance('example');
-		$("#runner").submit(function(event) {
-			var aSelectedTrs = oTT.fnGetSelectedData();
-			// Get our selected platforms and set them to a hidden field
-			var platforms = []
-			$.each(aSelectedTrs, function(index,attr) {
-				var plat = {}
-				plat.browser = attr[1]
-				plat.platform = attr[0]
-				plat.version = attr[2]
-				plat.id = attr[3]
-				platforms.push(plat)
-			});
-			$('#platforms').val(JSON.stringify(platforms))
-			// Stop the submit from doing what it normall does?
-			//event.preventDefault();
+		$('#no_tags').click(function() {
+			$('#tag_panel').find(':checkbox').prop("checked", false);
 		});
-	</script>
 
-	<% end %>
+	});
+
+	var oTT = TableTools.fnGetInstance('example');
+	$("#runner").submit(function(event) {
+		var aSelectedTrs = oTT.fnGetSelectedData();
+		// Get our selected platforms and set them to a hidden field
+		var platforms = []
+		$.each(aSelectedTrs, function(index, attr) {
+			var plat = {}
+			plat.browser = attr[1]
+			plat.platform = attr[0]
+			plat.version = attr[2]
+			plat.id = attr[3]
+			platforms.push(plat)
+		});
+		$('#platforms').val(JSON.stringify(platforms))
+		// Stop the submit from doing what it normall does?
+		//event.preventDefault();
+	}); 
+</script>
+<% end %>
 </div>

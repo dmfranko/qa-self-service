@@ -24,26 +24,25 @@ class TestsController < ApplicationController
       env.save
 
       JSON.parse(params["platforms"]).each do |platform|
-
-        # env.platform_id = Platform
-        # .includes([:test_operating_system,:test_browser])
-        # .where("test_browsers.browser_name" => params[:browser],
-        # "test_browsers.browser_version" => params[:browser_version],
-        # "test_operating_systems.operating_system_name" => params[:os])
-        # .first.id        
-        
         p = env.test_platforms.new
         p.platform_id = platform["id"]
         p.save
         
-        #Resque.enqueue(TestRunner, params.merge(:platform => platform,:test_id => t.id,:execution_environment => application_environment.to_json))
-        job_id = TestRunner.create(params.merge(:platform => platform,:test_id => t.id,:execution_environment => application_environment.to_json))
+        #job_id = TestRunner.create(params.merge(:platform => platform,:test_id => t.id,:execution_environment => application_environment.to_json))
+        
+        # Now!
+        #job_id = HardWorker.perform_async(params.merge(:platform => platform,:test_id => t.id,:execution_environment => application_environment.to_json))
+        
+        # Schedule it!
+        job_id = HardWorker.perform_at(Chronic.parse("#{params["number"]} #{params["time_slice"]} from now"),params.merge(:platform => platform,:test_id => t.id,:execution_environment => application_environment.to_json))
 
+        # May be able to find scheduled job info this way.
+        #Sidekiq.redis { |r| r.zrange("schedule", 0, -1, {withscores: true}) }
+        #Time.at(1423703069.194361).utc
+        #q = Sidekiq::Job.new("e19d5e877d4e0d68b80c75a3","default")?
+        
         p.resque_key = job_id
         p.save        
-        
-        # This is the scheduler part
-        #Resque.enqueue_in(0.1.minutes,TestRunner, params.merge(:platform => platform,:test_id => t.id))
       end
     end
     

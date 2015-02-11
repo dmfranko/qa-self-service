@@ -12,6 +12,10 @@ gem 'parsley-rails'
 
 # Resque stuff
 gem 'redis'
+gem 'sidekiq'
+gem 'sidekiq-status'
+gem 'sinatra', :require => nil
+gem 'chronic'
 gem "resque"
 gem 'resque-web', require: 'resque_web'
 gem 'resque-scheduler','2.5.5'
@@ -20,6 +24,8 @@ gem 'resque-status'
 #Other stuff
 
 gem 'chartkick'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 gem 'awesome_nested_fields'
 gem 'will_paginate-bootstrap'
 gem 'rspec-retry'

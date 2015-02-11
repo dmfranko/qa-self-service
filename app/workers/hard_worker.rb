@@ -1,12 +1,8 @@
-class TestRunner
-  include Resque::Plugins::Status
-  
-  @queue = :testrunner_queue
-  
-  def perform
-    puts "TestRunnerRunning"
-    puts options.inspect
-    
+class HardWorker
+  include Sidekiq::Worker
+  include Sidekiq::Status::Worker
+
+  def perform(options)
     require 'uri'
     url = options["github_url"]
     uri = URI.parse(url)
@@ -36,7 +32,7 @@ class TestRunner
       :environment => JSON.parse(options["execution_environment"]),
       :platform => options["platform"],
       # resque status overrides Hash for some reason?
-      :tags =>  Hash::Hash[options["tag_fields"].map{|(k,v)| [k.to_sym,v.to_i.to_bool]}],
+      :tags =>  Hash[options["tag_fields"].map{|(k,v)| [k.to_sym,v.to_i.to_bool]}],
       :filter => options["filter"],
       :test_id => options["test_id"],
       :notes => options["message"]
