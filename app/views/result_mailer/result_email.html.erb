@@ -49,7 +49,7 @@
 		display: inline-block;
 	}
 
-	p.callout {
+	div.callout {
 		padding:15px;
 		background-color:#ECF8FF;
 		margin-bottom: 15px;
@@ -239,15 +239,14 @@
 <body bgcolor="#FFFFFF">
 
 <!-- HEADER -->
-<table class="head-wrap" bgcolor="#999999">
+<table class="head-wrap" bgcolor="#0E4C92">
 	<tr>
 		<td></td>
 		<td class="header container" >
 				
 				<div class="content">
-				<table bgcolor="#999999">
+				<table>
 					<tr>
-						<td><img src="http://placehold.it/200x50/" /></td>
 						<td align="right"><h6 class="collapse">Test automation report</h6></td>
 					</tr>
 				</table>
@@ -263,27 +262,70 @@
 <table class="body-wrap">
 	<tr>
 		<td></td>
-		<td class="container" bgcolor="#FFFFFF">
+		<td class="container" bgcolor="#f2f2f2">
 
 			<div class="content">
 			<table>
 				<tr>
 					<td>
-						<h3>Test is complete for the '<%= @details.test_environment.test.application.name %>' application.</h3>
+						<h3>Test is complete for the '<%= @t.application.name %>' application.</h3>
 						<p class="lead">
-							 The test has
-							 <% if @details.test_result_details.where(:is_pass => 0).count > 0%>
-							 	Failed :(
-							 <% else %>
-							 	Passed :)
-							 <% end %>
+							<h2>Overall Results</h2>
+							<table>
+								<tr>
+									<td>Total</td>
+									<td class="total"><%= @t.test_result_details.count %></td>
+								</tr>
+								<tr>
+									<td>Fail</td>
+									<td class="fail"><%= @t.test_result_details.where(:is_pass => 0).count %></td>
+								</tr>
+								<tr>
+									<td>Pass</td>
+									<td class="pass"><%= @t.test_result_details.where(:is_pass => 1).count %></td>
+								</tr>
+								<tr>
+									<td>Pending</td>
+									<td class="pending"><%= @t.test_result_details.where(:is_pass => nil).count %></td>
+								</tr>
+							</table>
 						</p>
 						<!-- Callout Panel -->
-						<p class="callout">
-					    	Environment Name:<%= @details.test_environment.application_environment.environment_name %><br />
-					    	Environment URL: <%= @details.test_environment.application_environment.environment_url %><br />
-							The ID is <%= @details.test_environment.test.id %>
-						</p><!-- /Callout Panel -->					
+						<div class="callout">
+							<% @t.test_environments.each do |e| %>
+								<h2>Environment : <%= e.application_environment.environment_name %></h2>
+								<% e.test_platforms.each do |p| %>
+									<h3>Browser : <%= p.platform.test_browser.browser_name %></h3>
+									<table>
+										<tr>
+											<td>Total</td>
+											<td class="total"><%= p.test_result_details.count %></td>
+										</tr>
+										<tr>
+											<td>Fail</td>
+											<td class="fail"><%= p.test_result_details.where(:is_pass => 0).count %></td>
+										</tr>
+										<tr>
+											<td>Pass</td>
+											<td class="pass"><%= p.test_result_details.where(:is_pass => 1).count %></td>
+										</tr>
+										<tr>
+											<td>Pending</td>
+											<td class="pending"><%= p.test_result_details.where(:is_pass => nil).count %></td>
+										</tr>
+									</table>
+									
+									<h4>Failures</h4>
+									<% p.test_result_details.where(:is_pass => 0).each do |ex| %>
+										<h5><%= ex.test_hierarchy.parent.test_hierarchy_description %> <%= ex.test_hierarchy.test_hierarchy_description %></h5>
+										<% ex.test_result_exceptions.each do |et| %>
+											<%= et.exception_text %>
+										<% end %>		
+									<% end %>
+								<% end %>
+							<% end %>							
+
+						</div><!-- /Callout Panel -->					
 												
 						<!-- social & contact -->
 						<table class="social" width="100%">

@@ -1,13 +1,14 @@
 source 'https://rubygems.org'
 
-#gem 'rails', '3.2.3'
 gem 'rails', '4.0.4'
 gem 'rails-dev-tweaks', '~> 1.1'
 gem 'ancestry'
 
+# This is fast!
+gem "puma"
+
 gem 'sqlite3'
 gem 'render_csv'
-#gem 'jquery-rails'
 gem 'parsley-rails'
 
 # Resque stuff
@@ -16,10 +17,6 @@ gem 'sidekiq'
 gem 'sidekiq-status'
 gem 'sinatra', :require => nil
 gem 'chronic'
-gem "resque"
-gem 'resque-web', require: 'resque_web'
-gem 'resque-scheduler','2.5.5'
-gem 'resque-status'
 
 #Other stuff
 

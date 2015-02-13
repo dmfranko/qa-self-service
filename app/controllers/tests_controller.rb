@@ -31,10 +31,12 @@ class TestsController < ApplicationController
         #job_id = TestRunner.create(params.merge(:platform => platform,:test_id => t.id,:execution_environment => application_environment.to_json))
         
         # Now!
-        #job_id = HardWorker.perform_async(params.merge(:platform => platform,:test_id => t.id,:execution_environment => application_environment.to_json))
+        #job_id = TestWorker.perform_async(params.merge(:platform => platform,:test_id => t.id,:execution_environment => application_environment.to_json))
         
         # Schedule it!
-        job_id = HardWorker.perform_at(Chronic.parse("#{params["number"]} #{params["time_slice"]} from now"),params.merge(:platform => platform,:test_id => t.id,:execution_environment => application_environment.to_json))
+        job_id = TestWorker.perform_at(Chronic.parse("#{params["number"]} #{params["time_slice"]} from now"),params.merge(:platform => platform,:test_id => t.id,:execution_environment => application_environment.to_json))
+
+        #MailWorker.perform_async
 
         # May be able to find scheduled job info this way.
         #Sidekiq.redis { |r| r.zrange("schedule", 0, -1, {withscores: true}) }
@@ -120,9 +122,16 @@ class TestsController < ApplicationController
     t.test_run_platform_end_time = Time.now
     t.save
     
-    # Send the details via email    
-    ResultMailer.result_email(t).deliver
+    parent_test = t.test_environment.test
     
+    # Are there other tests left to run?  Is there a better way to do this?
+    # What if a test fails to run, however unlikely that is.   
+    # We only want to send one master report 
+    if parent_test.test_platforms.where(test_run_platform_end_time: nil).count == 0
+      # Send the details via email    
+      ResultMailer.result_email(parent_test).deliver
+    end
+        
     respond_to do |format|
       format.json {render :json => {:status => "OK"}.to_json}
     end

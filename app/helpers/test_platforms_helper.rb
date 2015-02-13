@@ -1,6 +1,5 @@
 module TestPlatformsHelper
   def test_platform_status(platform)
-      #Resque::Plugins::Status::Hash.get(platform.resque_key).status.capitalize if ! platform.resque_key.nil?
       Sidekiq::Status::status(platform.resque_key).capitalize
   end
   

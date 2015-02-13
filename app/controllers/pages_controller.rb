@@ -23,7 +23,7 @@ class PagesController < ApplicationController
 
     # Queue up each one of these to take advantage of threading    
     JSON.parse(params["platforms"]).each do |platform|
-      Resque.enqueue(ScreenshotRunner,params.merge({:id => p.id,:platform => platform}))
+      ScreenshotWorker.perform_async(params.merge({:id => p.id,:platform => platform}))
     end
     
     respond_to do |format|

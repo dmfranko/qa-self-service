@@ -111,7 +111,7 @@
 	<div id="res">
 		<ul class="list-group list r">
 			<% @tree.roots.each do |t| %>
-			<%= nested_messages t.subtree.arrange %>
+				<%= nested_messages t.subtree.arrange %>
 			<% end %>
 		</ul>
 	</div>

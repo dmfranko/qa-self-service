@@ -1,6 +1,8 @@
-class ScreenshotRunner
-  @queue = :screenshot_queue
-  def self.perform(params)
+class ScreenshotWorker
+  include Sidekiq::Worker
+  include Sidekiq::Status::Worker
+
+  def perform(params)
     s = PageTest.find(params["id"])
     s.start_time = Time.now
     s.save

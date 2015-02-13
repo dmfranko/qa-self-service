@@ -1,3 +1,4 @@
+# Don't use this
 module RunDetailsHelper
   def ihash(h)
     h.each_pair do |k,v|

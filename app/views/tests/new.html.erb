@@ -269,15 +269,15 @@
 										<br />
 										<%= label_tag(:datetimepicker, "Specific time") %>
 										<div class='input-group date' id='datetimepicker'>
-											<input type='text' class="form-control" />
+											<%= text_field_tag(:scheduled_time,"",:class => "form-control","data-provide" => "datepicker") %>
 											<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 										</div>
 									</div>
 									<script type="text/javascript">
 										$(function() {
 											$('#datetimepicker').datetimepicker({
-												sideBySide : false
 											});
+											
 										});
 									</script>
 									<style type="text/css">

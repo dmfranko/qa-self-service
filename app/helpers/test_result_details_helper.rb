@@ -8,6 +8,7 @@ module TestResultDetailsHelper
     end
   end
 
+  # Check out _test_hierarchy.html.erb in app > views > test_hierarchy
   def nested_messages(messages)
     messages.map do |message, sub_messages|
       render(message) + content_tag(:div, nested_messages(sub_messages), :class => "nested_messages")
