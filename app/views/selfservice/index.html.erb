@@ -76,20 +76,17 @@
 		<button id="start_tour" class="btn btn-default btn-lg"><i class="fa fa-repeat"></i> Re-take tour</button>
 	</p>
 
-	<% if Run.table_exists? %>
+	<% if Test.table_exists? %>
 	<h2>Some stats</h2>
 	<p>
-		<span class="label label-success"><%= Run.count%></span> Tests have been run using this service.
+		<span class="label label-success"><%= Test.count%></span> Tests have been run using this service.
 	</p>
 	<p>
 		There are <span class="label label-success"><%= Platform.where(:is_available_in_cloud => true).count %></span> platforms available.
 	</p>
+	<% if Test.count > 0 %>
 	<p>
-		There is an average of <span class="label label-success">5</span> test cases per run
-	</p>
-	<% if Run.count > 0 %>
-	<p>
-		On average it takes <span class="label label-success"><%= Run.average('duration').round(2).to_s %></span> seconds for a run.
+		On average it takes <span class="label label-success"><%#= Run.average('duration').round(2).to_s %></span> seconds for a run.
 	</p>
 	<% end %>
 	<% end %>

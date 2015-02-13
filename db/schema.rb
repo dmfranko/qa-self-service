@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203164128) do
+ActiveRecord::Schema.define(version: 20150213212334) do
 
   create_table "application_default_emails", force: true do |t|
     t.integer  "application_id"
@@ -83,36 +83,6 @@ ActiveRecord::Schema.define(version: 20150203164128) do
     t.integer  "is_available_in_cloud"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "results", force: true do |t|
-    t.integer  "run_id"
-    t.integer  "app_id"
-    t.float    "duration"
-    t.text     "description"
-    t.text     "status"
-    t.text     "location"
-    t.text     "exception"
-    t.text     "exception_details"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "screenshot"
-    t.string   "ancestry"
-  end
-
-  add_index "results", ["ancestry"], name: "index_results_on_ancestry"
-
-  create_table "runs", force: true do |t|
-    t.integer  "app_id"
-    t.float    "duration"
-    t.text     "description"
-    t.text     "notes"
-    t.text     "status"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.text     "browser"
-    t.text     "browser_version"
-    t.text     "os"
   end
 
   create_table "test_browsers", force: true do |t|

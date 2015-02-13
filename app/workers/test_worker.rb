@@ -31,7 +31,6 @@ class TestWorker
       :emails => ['dan.franko@yale.edu','jason.shuff@yale.edu'],
       :environment => JSON.parse(options["execution_environment"]),
       :platform => options["platform"],
-      # resque status overrides Hash for some reason?
       :tags =>  Hash[options["tag_fields"].map{|(k,v)| [k.to_sym,v.to_i.to_bool]}],
       :filter => options["filter"],
       :test_id => options["test_id"],

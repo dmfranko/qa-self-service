@@ -1,6 +1,5 @@
 class TestsController < ApplicationController
   # I guess this needs to be required?
-  #require 'resque_scheduler'
 
   def create
     # Create the high level test from the form and pass it down

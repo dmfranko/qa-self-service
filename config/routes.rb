@@ -14,8 +14,6 @@ Qaselfservice::Application.routes.draw do
   resources :selfservice
   resources :uploads
   resources :reports
-  resources :runs
-  resources :runners
   resources :run_details
   resources :platforms
   
