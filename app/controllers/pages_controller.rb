@@ -27,7 +27,6 @@ class PagesController < ApplicationController
     end
     
     respond_to do |format|
-      format.json {render :json => {:status => "Queued",:queue_info => Resque.info}.to_json}
       format.html {redirect_to pages_path}
     end
   end

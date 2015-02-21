@@ -11,7 +11,6 @@ class TestHierarchyController < ApplicationController
     values[1..-2].each do |x|
       @details = @details.children.find_or_create_by(test_hierarchy_description: x,:test_platform_id => params[:id])
     end
-    #@details.children.find_or_create_by(test_hierarchy_description: values.last,:test_platform_id => params[:id])
     
     # If there's a failure we do some extra stuff
     if params[:status] == "Failed"

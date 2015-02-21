@@ -1,6 +1,10 @@
 module TestPlatformsHelper
   def test_platform_status(platform)
-      Sidekiq::Status::status(platform.resque_key).capitalize
+      if platform.resque_key
+        Sidekiq::Status::status(platform.resque_key).capitalize
+      else
+        "Uknown"
+      end
   end
   
   def start_time(platform)
